@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.cassio.Graduation_Project.SettingsActivity">
+    <com.makeramen.roundedimageview.RoundedImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/imageProfile"
+        android:layout_marginTop="67dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/profile_pic"
+        app:riv_corner_radius="30dip"
+        app:riv_border_width="2dip"
+        app:riv_border_color="@color/strokeColor"
+        app:riv_mutate_background="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/userName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageProfile"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:fontFamily="casual"
+        android:text="userName"
+        android:textSize="22.5sp" />
+
+    <TextView
+        android:id="@+id/userStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/userName"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="12dp"
+        android:text="userStatus" />
+
+    <Button
+        android:id="@+id/changeImage"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="92dp"
+        android:background="@drawable/button_bg_rounded_corners"
+        android:text="Change Image Profile"
+        android:textColor="@color/white" />
+
+    <Button
+        android:id="@+id/changeUserStatus"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="38dp"
+        android:text="changeUserStatus"
+        android:textColor="@color/background"
+        android:background="@color/white"/>
+</RelativeLayout>

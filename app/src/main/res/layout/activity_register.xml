@@ -1,0 +1,80 @@
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.cassio.Graduation_Project.RegisterActivity">
+
+
+    <include
+    layout="@layout/app_bar_layout"
+    android:id="@+id/toolbar_id"></include>
+
+
+
+    <TextView
+        android:text="@string/register_title"
+        android:textSize="20sp"
+        android:layout_marginTop="60dp"
+        android:layout_marginBottom="100dp"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_height="wrap_content" />
+
+
+
+        <EditText
+            android:id="@+id/user_name"
+            android:inputType="text"
+            android:singleLine="true"
+            android:imeOptions="actionNext"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="name" />
+
+
+
+
+        <EditText
+            android:id="@+id/user_email"
+            android:inputType="textEmailAddress"
+            android:singleLine="true"
+            android:imeOptions="actionNext"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/email" />
+
+
+
+
+        <EditText
+            android:id="@+id/user_password"
+            android:inputType="textPassword"
+            android:layout_width="fill_parent"
+            android:singleLine="true"
+            android:imeOptions="actionNext"
+            android:layout_height="wrap_content"
+            android:hint="@string/password" />
+
+
+
+
+    <Button
+        android:id="@+id/btn_createAccount"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <ProgressBar
+        android:id="@+id/pb_loader"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+</LinearLayout>
+
