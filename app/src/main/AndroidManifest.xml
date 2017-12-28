@@ -6,10 +6,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-    <!-- <permission -->
-    <!-- android:name="com.example.permission.C2D_MESSAGE" -->
-    <!-- android:protectionLevel="signature" /> -->
-    <!-- <uses-permission android:name="com.example.permission.C2D_MESSAGE" /> -->
+
     <application
         android:name=".AppOffLine_Class_"
         android:allowBackup="true"
@@ -18,15 +15,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-
-
-        <service
-            android:name=".NotificationClass">
+        <service android:name=".NotificationClass">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
         <activity android:name=".SplashWelcomingActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -55,7 +49,9 @@
             android:parentActivityName=".ProfileActivity" />
         <activity android:name=".AddEventActivity" />
         <activity android:name=".AvailableEventActivity" />
-        <activity android:name=".friends_profile"></activity>
+        <activity android:name=".friends_profile" />
+        <activity android:name=".ChatActivity"
+            android:parentActivityName=".ProfileActivity"></activity>
     </application>
 
 </manifest>

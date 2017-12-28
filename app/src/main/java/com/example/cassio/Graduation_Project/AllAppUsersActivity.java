@@ -25,11 +25,7 @@ public class AllAppUsersActivity extends AppCompatActivity {
 
     private Toolbar mtool;
     private RecyclerView listUsers;
-
-
     private DatabaseReference allusersDBReference;
-
-
     private FirebaseAuth mAth; // to get my own id !!
 
 

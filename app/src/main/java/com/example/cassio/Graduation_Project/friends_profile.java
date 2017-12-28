@@ -222,17 +222,17 @@ else {
 
     private void acceptReq() {
         Calendar date = Calendar.getInstance();
-        final SimpleDateFormat currentDate =new SimpleDateFormat("dd-mm-yyyy");
+        final SimpleDateFormat currentDate =new SimpleDateFormat("dd-MMM-yyyy");
         final String saveCurrentDate = currentDate.format(date.getTime());
 
 
-        communityDBReference.child(my_current_id).child(targed_person_id).setValue(saveCurrentDate)
+        communityDBReference.child(my_current_id).child(targed_person_id).child("date").setValue(saveCurrentDate)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
 
 
                     @Override
                     public void onSuccess(Void aVoid) {
-                        communityDBReference.child(targed_person_id).child(my_current_id).setValue(saveCurrentDate).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        communityDBReference.child(targed_person_id).child(my_current_id).child("date").setValue(saveCurrentDate).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
                                 referenceTolistReqs.child(my_current_id).child(targed_person_id).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {

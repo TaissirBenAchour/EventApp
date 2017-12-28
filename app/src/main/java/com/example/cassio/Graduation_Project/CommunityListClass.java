@@ -1,24 +1,24 @@
-package com.example.cassio.Graduation_Project._profileFragments;
+package com.example.cassio.Graduation_Project;
 
 /**
  * Created by cassio on 28/12/17.
  */
 
 public class CommunityListClass {
-    public String Date;
+    public String date;
 
     public CommunityListClass(String date) {
-        Date = date;
+        this.date = date;
     }
 
     public CommunityListClass() {
     }
 
     public String getDate() {
-        return Date;
+        return date;
     }
 
     public void setDate(String date) {
-        Date = date;
+        this.date = date;
     }
 }
