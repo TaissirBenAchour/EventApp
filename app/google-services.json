@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "343085373039",
+    "firebase_url": "https://graduationproject-d1329.firebaseio.com",
+    "project_id": "graduationproject-d1329",
+    "storage_bucket": "graduationproject-d1329.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:343085373039:android:39c215e79e84416b",
+        "android_client_info": {
+          "package_name": "com.example.cassio.Graduation_Project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "343085373039-ejvpnci9k8u6sj2dab0kt6d2023qc0qf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.cassio.Graduation_Project",
+            "certificate_hash": "7fd6abf4083ef1855c7907b3c3a55dab8726072c"
+          }
+        },
+        {
+          "client_id": "343085373039-6f3m8r4ttbf6hkmvc0vkvqnq84lhp199.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.cassio.Graduation_Project",
+            "certificate_hash": "85b79cb911a24cf66c5787dae631f204ec47d7b9"
+          }
+        },
+        {
+          "client_id": "343085373039-k1gnotaqukqk3ich9im3eh6u60ojm1rm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAoCf_cdCDdYGRGLIDjkmY_aEC4FkEjjbM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "343085373039-k1gnotaqukqk3ich9im3eh6u60ojm1rm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

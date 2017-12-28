@@ -80,7 +80,6 @@ public class friends_profile extends AppCompatActivity {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
 
-                    if( dataSnapshot.exists()){
                         if(dataSnapshot.hasChild(targed_person_id)){
                             String req_type = dataSnapshot.child(targed_person_id).child("request_type").getValue().toString();
                             if (req_type.equals("request_sent")){
@@ -103,8 +102,6 @@ public class friends_profile extends AppCompatActivity {
                             }
 
                         }
-
-                    }
                     else { communityDBReference.child(my_current_id).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
