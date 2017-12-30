@@ -1,4 +1,4 @@
-package com.example.cassio.Graduation_Project;
+package com.example.cassio.Graduation_Project.models;
 
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;

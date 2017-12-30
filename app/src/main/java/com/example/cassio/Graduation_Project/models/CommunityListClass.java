@@ -1,4 +1,4 @@
-package com.example.cassio.Graduation_Project;
+package com.example.cassio.Graduation_Project.models;
 
 /**
  * Created by cassio on 28/12/17.

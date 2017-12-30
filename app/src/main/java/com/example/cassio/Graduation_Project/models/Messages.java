@@ -1,4 +1,4 @@
-package com.example.cassio.Graduation_Project;
+package com.example.cassio.Graduation_Project.models;
 
 /**
  * Created by cassio on 29/12/17.
@@ -9,14 +9,16 @@ public class Messages {
     public String message;
     public String type;
     public String msgtime;
+    public String from;
 
     public Messages() {
     }
 
-    public Messages(String message, String type, String msgtime) {
+    public Messages(String message, String type, String msgtime, String from) {
         this.message = message;
         this.type = type;
         this.msgtime = msgtime;
+        this.from=from;
     }
 
     public String getmessage() {
@@ -33,6 +35,14 @@ public class Messages {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getFrom() {
+        return from;
+    }
+
+    public void setFrom(String from) {
+        this.from = from;
     }
 
     public String getmsgtime() {

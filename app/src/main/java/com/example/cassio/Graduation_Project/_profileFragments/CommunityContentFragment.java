@@ -18,7 +18,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.cassio.Graduation_Project.ChatActivity;
-import com.example.cassio.Graduation_Project.CommunityListClass;
+import com.example.cassio.Graduation_Project.models.CommunityListClass;
 import com.example.cassio.Graduation_Project.R;
 import com.example.cassio.Graduation_Project.friends_profile;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;

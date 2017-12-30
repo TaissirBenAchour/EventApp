@@ -1,11 +1,7 @@
 package com.example.cassio.Graduation_Project;
 
 import android.content.Context;
-import android.graphics.drawable.Icon;
 import android.icu.text.SimpleDateFormat;
-import android.support.design.widget.AppBarLayout;
-import android.support.v4.text.TextUtilsCompat;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,13 +16,14 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.cassio.Graduation_Project.Adapters.MessageAdapter;
+import com.example.cassio.Graduation_Project.models.Messages;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
@@ -58,6 +55,9 @@ public class ChatActivity extends AppCompatActivity {
     private final List<Messages>  messagesList = new ArrayList<>();
     private LinearLayoutManager linearLayoutManager ;
     private MessageAdapter messageAdapter;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,7 +95,7 @@ public class ChatActivity extends AppCompatActivity {
         messageAdapter = new MessageAdapter(messagesList);
         sentMessages =(RecyclerView)findViewById(R.id.message_list_id);
         linearLayoutManager = new LinearLayoutManager(this);
-        sentMessages.setHasFixedSize(true);
+       // sentMessages.setHasFixedSize(true);
         sentMessages.setLayoutManager(linearLayoutManager);
         sentMessages.setAdapter(messageAdapter);
         fetchMessages();
@@ -103,7 +103,7 @@ public class ChatActivity extends AppCompatActivity {
 
         recieverName.setText(messageRecieverName);
 
- globalRef.child("Users").child(messageRecieverId).addValueEventListener(new ValueEventListener() {
+        globalRef.child("Users").child(messageRecieverId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -139,6 +139,7 @@ public class ChatActivity extends AppCompatActivity {
                     message.put("message",message_text);
                     message.put("type","text");
                     message.put("msgtime", dateString);
+                    message.put("from",sender_id);
                     Map details = new HashMap();
                     details.put(senderRef+ "/" +pushRef,message);
                     details.put(recieverRef+ "/" +pushRef,message);
