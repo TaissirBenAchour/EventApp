@@ -95,7 +95,9 @@ public class ChatActivity extends AppCompatActivity {
         messageAdapter = new MessageAdapter(messagesList);
         sentMessages =(RecyclerView)findViewById(R.id.message_list_id);
         linearLayoutManager = new LinearLayoutManager(this);
-       // sentMessages.setHasFixedSize(true);
+        sentMessages.setHasFixedSize(true);
+//        linearLayoutManager.setReverseLayout(true);
+        linearLayoutManager.setStackFromEnd(true);
         sentMessages.setLayoutManager(linearLayoutManager);
         sentMessages.setAdapter(messageAdapter);
         fetchMessages();

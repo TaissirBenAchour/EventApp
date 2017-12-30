@@ -12,9 +12,10 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/message_list_id"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@+id/toolbar_chat_id"
         android:layout_above="@+id/linear_id">
+
     </android.support.v7.widget.RecyclerView>
 <LinearLayout
     android:id="@+id/linear_id"
