@@ -21,6 +21,7 @@ import com.example.cassio.Graduation_Project.ChatActivity;
 import com.example.cassio.Graduation_Project.models.CommunityListClass;
 import com.example.cassio.Graduation_Project.R;
 import com.example.cassio.Graduation_Project.friends_profile;
+import com.example.cassio.Graduation_Project.models.Requests;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -38,29 +39,94 @@ public class  CommunityContentFragment extends Fragment {
 
     private RecyclerView listOfJoinedPersons;
     private View myListView;
-    private DatabaseReference CommunityRef,UsersRef;
+    private DatabaseReference CommunityRef,UsersRef,ReqRef;
     private FirebaseAuth mAuth;
     String my_id;
+
+
+    private RecyclerView listOfrequests;
+
+
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         myListView = inflater.inflate(R.layout.community_layout ,container,false);
+
+
+
         listOfJoinedPersons = (RecyclerView) myListView.findViewById(R.id.myListView_id);
+        listOfrequests = (RecyclerView)myListView.findViewById(R.id.myListRequestView_id);
+
         mAuth = FirebaseAuth.getInstance();
         my_id = mAuth.getCurrentUser().getUid();
         CommunityRef = FirebaseDatabase.getInstance().getReference().child("Community").child(my_id);
         UsersRef= FirebaseDatabase.getInstance().getReference().child("Users");
+        ReqRef = FirebaseDatabase.getInstance().getReference().child("join_Community_requests").child(my_id);
+
         listOfJoinedPersons.setHasFixedSize(true);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        listOfJoinedPersons.setLayoutManager(layoutManager);
+        listOfrequests.setHasFixedSize(true);
+
+        LinearLayoutManager layoutManager1 = new LinearLayoutManager(getActivity());
+        LinearLayoutManager layoutManager2 = new LinearLayoutManager(getActivity());
+
+        listOfJoinedPersons.setLayoutManager(layoutManager1);
+        layoutManager2.setReverseLayout(true);
+        layoutManager2.setStackFromEnd(true);
+        listOfrequests.setLayoutManager(layoutManager2);
+
+
+
+
+
         return myListView;
     }
 
     @Override
     public void onStart() {
         super.onStart();
+         FirebaseRecyclerAdapter<Requests, RequestsViewHolder> firebasereqRecyclerAdapter = new FirebaseRecyclerAdapter<Requests, RequestsViewHolder>
+
+                 (
+                         Requests.class,
+                         R.layout.request_layout,
+                         RequestsViewHolder.class,
+                         ReqRef
+
+                 )
+         {
+             @Override
+             protected void populateViewHolder(final RequestsViewHolder viewHolder, Requests model, int position) {
+                 String req_id = getRef(position).getKey();
+                 UsersRef.child(req_id).addValueEventListener(new ValueEventListener() {
+                     @Override
+                     public void onDataChange(DataSnapshot dataSnapshot) {
+                         String name = dataSnapshot.child("userName").getValue().toString();
+                         String status = dataSnapshot.child("userStatus").getValue().toString();
+                         String image = dataSnapshot.child("userImage").getValue().toString();
+
+
+
+                         viewHolder.setUserName(name);
+                         viewHolder.setUserStatus(status);
+                         viewHolder.setUserImage(image,getContext());
+
+                     }
+
+                     @Override
+                     public void onCancelled(DatabaseError databaseError) {
+
+                     }
+                 });
+
+
+             }
+         };
+
+        listOfrequests.setAdapter(firebasereqRecyclerAdapter);
+
+
         FirebaseRecyclerAdapter<CommunityListClass,CommunityViewHolder > firebaseRecyclerAdapter
                 = new FirebaseRecyclerAdapter<CommunityListClass, CommunityViewHolder> (
                 CommunityListClass.class,
@@ -175,5 +241,48 @@ public class  CommunityContentFragment extends Fragment {
 
             }
         }
+    }
+
+    public static class RequestsViewHolder extends RecyclerView.ViewHolder {
+        View mView ;
+
+        public RequestsViewHolder(View itemView) {
+            super(itemView);
+            mView =itemView;
+        }
+
+        public void setUserStatus (String userStatus){
+            TextView user_status=(TextView) mView.findViewById(R.id.status_request_id);
+            user_status.setText(userStatus );
+        }
+        public void setUserName(String userName){
+            TextView username=(TextView) mView.findViewById(R.id.name_request_id);
+            username.setText(userName);
+        }
+        public void  setUserImage(final String userImage, final Context context){
+            final CircleImageView image = (CircleImageView) mView.findViewById(R.id.photo_request_id);
+
+
+            if (!image.equals("profile_pic")) {
+// OFF LINE CASE  !!!!
+                // I SHOULD O BACK TO USERS PROFILE IN CASE I WILL CREATE ONES , TO VERIFY THE OFFLINE MODE ,
+                // DONT FORGET !
+                Picasso.with(context).load(userImage).networkPolicy(NetworkPolicy.OFFLINE)
+                        .placeholder(R.drawable.profile_pic).into(image, new Callback() {
+                    @Override
+                    public void onSuccess() {
+
+                    }
+
+                    @Override
+                    public void onError() {
+                        Picasso.with(context).load(userImage).placeholder(R.drawable.profile_pic).into(image);
+                    }
+                });
+
+            }
+        }
+
+
     }
 }

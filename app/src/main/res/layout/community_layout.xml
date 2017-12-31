@@ -1,19 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
 
+<TextView
+    android:id="@+id/RequestlistText_id"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Available Requests"
+    android:padding="5dp"
+    android:textSize="20dp"
+    android:fontFamily="casual"
+    android:textColor="@color/background"/>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/myListRequestView_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="5dp"
+        android:layout_below="@id/RequestlistText_id"
+        android:layout_above="@+id/communitylistText_id">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <TextView
+        android:id="@+id/communitylistText_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Communities"
+        android:padding="5dp"
+        android:textSize="20dp"
+        android:fontFamily="casual"
+        android:textColor="@color/background"
+        android:layout_below="@id/myListRequestView_id" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/myListView_id"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_marginTop="5dp">
+        android:layout_below="@id/communitylistText_id">
 
     </android.support.v7.widget.RecyclerView>
 
 
 
-</RelativeLayout>
+</LinearLayout>
