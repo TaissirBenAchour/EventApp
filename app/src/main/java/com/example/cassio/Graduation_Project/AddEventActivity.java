@@ -195,7 +195,10 @@ public class AddEventActivity extends AppCompatActivity  {
         final String title = eventTitle.getText().toString().trim();
         final String description = eventDescription.getText().toString().trim();
         final String price = eventPrice.getText().toString().trim();
-        if (!TextUtils.isEmpty(title) && !TextUtils.isEmpty(description) && !TextUtils.isEmpty(price) && imageOfEvent != null) {
+        final String date = txtDate.getText().toString().trim();
+        final String time = txtTime.getText().toString().trim();
+        if (!TextUtils.isEmpty(title) && !TextUtils.isEmpty(description) && !TextUtils.isEmpty(price)
+                && imageOfEvent != null && !TextUtils.isEmpty(date) && !TextUtils.isEmpty(time)) {
 
             StorageReference filePath = mStoreEventReference.child("imageevent_" + title);
             filePath.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -207,6 +210,8 @@ public class AddEventActivity extends AppCompatActivity  {
                     newEvent.child("description").setValue(description);
                     newEvent.child("price").setValue(price);
                     newEvent.child("imageEvent").setValue("imageplaceholder");
+                    newEvent.child("date").setValue(date);
+                    newEvent.child("time").setValue(time);
                    // newEvent.child("imageEvent").setValue(downloadUri.toString());
                     progressing.dismiss();
                     Intent goBackToEventList = new Intent(AddEventActivity.this,AvailableEventActivity.class);
