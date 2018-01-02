@@ -10,8 +10,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        <include layout="@layout/app_bar_layout"
-            android:id="@+id/toolbar"> </include>
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/app_bar_layout"></include>
 
         <ScrollView
             android:layout_width="match_parent"
@@ -47,6 +49,59 @@
                     android:padding="10dp"
                     android:singleLine="true" />
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/setDate"
+                        android:layout_width="273dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/input_outline"
+                        android:hint="dd-mm-yyyy"
+                        android:padding="10dp"
+                        android:focusable="false"/>
+
+                    <ImageButton
+                        android:id="@+id/image_Button_date"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        app:srcCompat="@drawable/ic_today_black_24dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@color/white"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/setTime"
+                        android:layout_width="273dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/input_outline"
+                        android:hint="hh:mm"
+                        android:padding="10dp"
+                        android:focusable="false"/>
+
+                    <ImageButton
+                        android:id="@+id/image_Button_time"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        app:srcCompat="@drawable/ic_access_time_black_24dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@color/white"/>
+                </LinearLayout>
+
                 <EditText
                     android:id="@+id/description_id"
                     android:layout_width="match_parent"
@@ -76,7 +131,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:text="add event" />
+                    android:text="add event"
+                    />
 
             </LinearLayout>
         </ScrollView>

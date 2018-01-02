@@ -1,11 +1,15 @@
 package com.example.cassio.Graduation_Project;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.icu.util.Calendar;
+import android.icu.util.TimeZone;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,8 +21,10 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -31,7 +37,7 @@ import com.google.firebase.storage.UploadTask;
 
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 
-public class AddEventActivity extends AppCompatActivity {
+public class AddEventActivity extends AppCompatActivity  {
 
 
     public static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 123;
@@ -47,9 +53,14 @@ public class AddEventActivity extends AppCompatActivity {
     private DatabaseReference mStoreEvent_dataReference;
 
 
+    ImageButton btnDatePicker, btnTimePicker;
+    EditText txtDate, txtTime;
+    private int mYear, mMonth, mDay, mHour, mMinute;
+
     private Button addEventButton;
 
     private ProgressDialog progressing;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,8 +84,10 @@ public class AddEventActivity extends AppCompatActivity {
 
         setSupportActionBar(mtoolbar);
         progressing = new ProgressDialog(this);
-
-
+        btnDatePicker = (ImageButton) findViewById(R.id.image_Button_date);
+        btnTimePicker = (ImageButton) findViewById(R.id.image_Button_time);
+        txtDate= (EditText) findViewById(R.id.setDate);
+        txtTime = (EditText) findViewById(R.id.setTime);
 
 
 
@@ -101,7 +114,61 @@ public class AddEventActivity extends AppCompatActivity {
             }
         });
 
+        btnDatePicker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                // Get Current Date
+                final Calendar c = Calendar.getInstance();
+                mYear = c.get(Calendar.YEAR);
+                mMonth = c.get(Calendar.MONTH);
+                mDay = c.get(Calendar.DAY_OF_MONTH);
+
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(AddEventActivity.this,
+                        new DatePickerDialog.OnDateSetListener() {
+
+                            @Override
+                            public void onDateSet(DatePicker view, int year,
+                                                  int monthOfYear, int dayOfMonth) {
+
+                                txtDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+
+                            }
+                        }, mYear, mMonth, mDay);
+                datePickerDialog.show();
+
+            }
+        });
+        btnTimePicker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Get Current Time
+                final Calendar c = Calendar.getInstance();
+                mHour = c.get(Calendar.HOUR_OF_DAY);
+                mMinute = c.get(Calendar.MINUTE);
+
+                // Launch Time Picker Dialog
+                TimePickerDialog timePickerDialog = new TimePickerDialog(AddEventActivity.this,
+                        new TimePickerDialog.OnTimeSetListener() {
+
+                            @Override
+                            public void onTimeSet(TimePicker view, int hourOfDay,
+                                                  int minute) {
+
+                                txtTime.setText(hourOfDay + ":" + minute);
+                            }
+                        }, mHour, mMinute, false);
+                timePickerDialog.show();
+            }
+        });
+
+
+
     }
+
+
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
@@ -214,6 +281,7 @@ public class AddEventActivity extends AppCompatActivity {
                         grantResults);
         }
     }
+
 
 
 }
