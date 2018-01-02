@@ -73,7 +73,6 @@ public class AvailableEventActivity extends AppCompatActivity {
 
     public static class EventViewHolder extends RecyclerView.ViewHolder
     {
-        DatabaseReference EventDBReference = FirebaseDatabase.getInstance().getReference().child("Events");
         View mView;
 
         public EventViewHolder(View itemView) {
@@ -92,13 +91,11 @@ public class AvailableEventActivity extends AppCompatActivity {
         }
 
         public void setEvent_Image (final Context context, final String imageEvent){
-            EventDBReference.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    final ImageView image_event =(ImageView) mView.findViewById(R.id.event_image_holder);
-                    final String image = dataSnapshot.child("userImage").getValue().toString();
 
-                    if (!image.equals("imageplaceholder")){
+                    final ImageView image_event =(ImageView) mView.findViewById(R.id.event_image_holder);
+
+
+                    if (!imageEvent.equals("imageplaceholder")){
 // OFF LINE CASE  !!!!
                         // I SHOULD O BACK TO USERS PROFILE IN CASE I WILL CREATE ONES , TO VERIFY THE OFFLINE MODE ,
                         // DONT FORGET !
@@ -118,10 +115,5 @@ public class AvailableEventActivity extends AppCompatActivity {
                     }
                 }
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
 
-                }
-            });
-
-}}}
+}}
