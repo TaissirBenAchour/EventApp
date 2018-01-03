@@ -39,4 +39,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="welcomeTexte">Welcome to the world of higher productivity levels, if you are an event planner , please
     mesmrise us with increadable opportunities , if you are our active freind , then feel free to search for suitable adventures </string>
+    <string name="google_maps_api_key">AIzaSyDTZJo0xOQcDWp-mSWL_t0UR447L4JvOY8</string>
+
 </resources>

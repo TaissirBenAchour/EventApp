@@ -1,24 +1,21 @@
 package com.example.cassio.Graduation_Project;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.icu.util.Calendar;
-import android.icu.util.TimeZone;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -27,6 +24,11 @@ import android.widget.ImageButton;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -35,13 +37,23 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
+import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 
-public class AddEventActivity extends AppCompatActivity  {
-
+public class AddEventActivity extends AppCompatActivity implements OnMapReadyCallback  {
 
     public static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 123;
+    public static final int MY_PERMISSIONS_REQUEST_GOOGLE_MAP= 978;
+    public static final int MY_PERMISSIONS_CODE= 128;
+    public static final int MULTIPLE_PERMISSIONS = 10; // code you want.
     private final static int galery_pick = 1;
+    private static final String TAG = "AddEventActivity";
+    ImageButton btnDatePicker, btnTimePicker;
+    EditText txtDate, txtTime;
     private FirebaseAuth mAuth;
     private StorageReference mStoreEventReference;
     private Toolbar mtoolbar;
@@ -51,16 +63,26 @@ public class AddEventActivity extends AppCompatActivity  {
     private EditText eventPrice;
     private Uri imageUri;
     private DatabaseReference mStoreEvent_dataReference;
-
-
-    ImageButton btnDatePicker, btnTimePicker;
-    EditText txtDate, txtTime;
+   private String[] permissionsList= new String[]{
+            READ_EXTERNAL_STORAGE,
+            ACCESS_COARSE_LOCATION,
+            ACCESS_FINE_LOCATION};
     private int mYear, mMonth, mDay, mHour, mMinute;
 
     private Button addEventButton;
 
     private ProgressDialog progressing;
+    private boolean permessionGranted=false;
+    private GoogleMap gMap;
 
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+
+        Toast.makeText(this, "map is ready !", Toast.LENGTH_SHORT).show();
+        gMap=googleMap;
+
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,13 +111,13 @@ public class AddEventActivity extends AppCompatActivity  {
         txtDate= (EditText) findViewById(R.id.setDate);
         txtTime = (EditText) findViewById(R.id.setTime);
 
-
-
+if (checkGoogleMap()){
+checkPermission(getApplicationContext());}
 
         imageOfEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (checkPermissionREAD_EXTERNAL_STORAGE(AddEventActivity.this)) {
+                if (checkPermission(AddEventActivity.this)) {
 
                     Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
                     photoPickerIntent.setType("image/*");
@@ -224,69 +246,77 @@ public class AddEventActivity extends AppCompatActivity  {
     }
 
 
-    public boolean checkPermissionREAD_EXTERNAL_STORAGE(final Context context) {
-        int currentAPIVersion = Build.VERSION.SDK_INT;
-        if (currentAPIVersion >= android.os.Build.VERSION_CODES.M) {
-            if (ContextCompat.checkSelfPermission(context,
-                    READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                if (ActivityCompat.shouldShowRequestPermissionRationale(
-                        (Activity) context,
-                        READ_EXTERNAL_STORAGE)) {
-                    showDialog("External storage", context, READ_EXTERNAL_STORAGE);
-
-                } else {
-                    ActivityCompat
-                            .requestPermissions(
-                                    (Activity) context,
-                                    new String[]{READ_EXTERNAL_STORAGE},
-                                    MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
-                }
-                return false;
-            } else {
-                return true;
+    public boolean checkPermission(final Context context) {
+        int result;
+        List<String> listPermissionsNeeded = new ArrayList<>();
+        for (String p:permissionsList) {
+            result = ContextCompat.checkSelfPermission(AddEventActivity.this,p);
+            if (result != PackageManager.PERMISSION_GRANTED) {
+                listPermissionsNeeded.add(p);
+                initMap();
             }
-
-        } else {
-            return true;
         }
-    }
-
-    public void showDialog(final String msg, final Context context,
-                           final String permission) {
-        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
-        alertBuilder.setCancelable(true);
-        alertBuilder.setTitle("Permission necessary");
-        alertBuilder.setMessage(msg + " permission is necessary");
-        alertBuilder.setPositiveButton(android.R.string.yes,
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        ActivityCompat.requestPermissions((Activity) context,
-                                new String[]{permission},
-                                MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
-                    }
-                });
-        AlertDialog alert = alertBuilder.create();
-        alert.show();
+        if (!listPermissionsNeeded.isEmpty()) {
+            ActivityCompat.requestPermissions(this, listPermissionsNeeded.toArray(new String[listPermissionsNeeded.size()]),MULTIPLE_PERMISSIONS );
+            return false;
+        }
+        return true;
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            String[] permissions, int[] grantResults) {
+
+
         switch (requestCode) {
-            case MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE:
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // do your stuff
+            case MULTIPLE_PERMISSIONS:{
+                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    // permissions granted.
                 } else {
-                    Toast.makeText(AddEventActivity.this, "GET_ACCOUNTS Denied",
-                            Toast.LENGTH_SHORT).show();
+                    String _permissions = "";
+                    for (String per : permissionsList) {
+                        _permissions += "\n" + per;
+                    }
+                    // permissions list of don't granted permission
                 }
-                break;
-            default:
-                super.onRequestPermissionsResult(requestCode, permissions,
-                        grantResults);
+                return;
+            }
         }
+
     }
+
+    public void initMap()
+    {
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(AddEventActivity.this);
+    }
+
+    public boolean checkGoogleMap ()
+    {
+        Log.d(TAG,"checking google service version");
+        int available = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(AddEventActivity.this);
+        if (available== ConnectionResult.SUCCESS){
+            Log.d(TAG,"google play services is working");
+            return true;
+        }
+        else if (GoogleApiAvailability.getInstance().isUserResolvableError(available))
+        {
+            Log.d(TAG,"Error has occcured but we can fix it");
+            Dialog dialog = GoogleApiAvailability.getInstance().getErrorDialog(AddEventActivity.this,available,MY_PERMISSIONS_REQUEST_GOOGLE_MAP);
+            dialog.show();
+
+        }
+        else {
+            Toast.makeText(this, "we can not make a request for google map", Toast.LENGTH_SHORT).show();
+
+        }return false;
+        }
+
 
 
 
 }
+
+
+
+
