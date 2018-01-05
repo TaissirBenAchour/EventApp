@@ -63,6 +63,7 @@
         <activity android:name=".friends_profile" />
         <activity android:name=".ChatActivity"
             android:parentActivityName=".ProfileActivity"></activity>
+        <activity android:name=".testlocal"></activity>
     </application>
 
 </manifest>

@@ -36,17 +36,19 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:26.0.1'
     compile 'com.github.ViksaaSkool:AwesomeSplash:v1.0.0'
     compile 'com.android.support:support-v4:26.0.1'
-    compile 'com.google.firebase:firebase-messaging:10.0.1'
-    compile 'com.google.firebase:firebase-database:10.0.1'
+    compile 'com.google.firebase:firebase-messaging:11.0.4'
+    compile 'com.google.firebase:firebase-database:11.0.4'
     compile 'com.google.firebase:firebase-auth:10.0.1'
     compile 'com.theartofdev.edmodo:android-image-cropper:2.6.+'
-    compile 'com.google.firebase:firebase-storage:10.0.1'
+    compile 'com.google.firebase:firebase-storage:11.0.4'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'de.hdodenhof:circleimageview:2.2.0'
     compile 'com.firebaseui:firebase-ui-database:1.0.1'
     compile 'com.squareup.okhttp:okhttp:2.5.0'
     testCompile 'junit:junit:4.12'
-    compile 'com.google.android.gms:play-services:10.0.1'
+    compile 'com.google.android.gms:play-services:11.0.4'
+    compile "com.google.android.gms:play-services-location:11.0.4"
+
 
 }
 

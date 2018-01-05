@@ -8,28 +8,53 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.icu.util.Calendar;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.example.cassio.Graduation_Project.Adapters.PlaceArrayAdapter;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.PlaceBuffer;
+import com.google.android.gms.location.places.Places;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -37,6 +62,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,16 +70,16 @@ import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 
-public class AddEventActivity extends AppCompatActivity implements OnMapReadyCallback  {
+public class AddEventActivity extends AppCompatActivity implements
+        GoogleApiClient.OnConnectionFailedListener,
+        GoogleApiClient.ConnectionCallbacks   {
 
-    public static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 123;
     public static final int MY_PERMISSIONS_REQUEST_GOOGLE_MAP= 978;
-    public static final int MY_PERMISSIONS_CODE= 128;
     public static final int MULTIPLE_PERMISSIONS = 10; // code you want.
     private final static int galery_pick = 1;
     private static final String TAG = "AddEventActivity";
-    ImageButton btnDatePicker, btnTimePicker;
-    EditText txtDate, txtTime;
+    private ImageButton btnDatePicker, btnTimePicker;
+    private EditText txtDate, txtTime;
     private FirebaseAuth mAuth;
     private StorageReference mStoreEventReference;
     private Toolbar mtoolbar;
@@ -63,26 +89,30 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
     private EditText eventPrice;
     private Uri imageUri;
     private DatabaseReference mStoreEvent_dataReference;
-   private String[] permissionsList= new String[]{
+    private String[] permissionsList= new String[]{
             READ_EXTERNAL_STORAGE,
             ACCESS_COARSE_LOCATION,
             ACCESS_FINE_LOCATION};
     private int mYear, mMonth, mDay, mHour, mMinute;
-
     private Button addEventButton;
-
     private ProgressDialog progressing;
-    private boolean permessionGranted=false;
-    private GoogleMap gMap;
+    private static final String LOG_TAG = "MainActivity";
+    private static final int GOOGLE_API_CLIENT_ID = 0;
+    private AutoCompleteTextView mAutocompleteTextView;
+    private TextView mNameTextView;
+    private TextView mAddressTextView;
+    private TextView mIdTextView;
+    private TextView mPhoneTextView;
+    private TextView mWebTextView;
+    private TextView mAttTextView;
+    private GoogleApiClient mGoogleApiClient;
+    private PlaceArrayAdapter mPlaceArrayAdapter;
+    private static final LatLngBounds BOUNDS_MOUNTAIN_VIEW = new LatLngBounds(
+            new LatLng(37.398160, -122.180831), new LatLng(37.430610, -121.972090));
 
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-
-        Toast.makeText(this, "map is ready !", Toast.LENGTH_SHORT).show();
-        gMap=googleMap;
 
 
-    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,11 +138,27 @@ public class AddEventActivity extends AppCompatActivity implements OnMapReadyCal
         progressing = new ProgressDialog(this);
         btnDatePicker = (ImageButton) findViewById(R.id.image_Button_date);
         btnTimePicker = (ImageButton) findViewById(R.id.image_Button_time);
-        txtDate= (EditText) findViewById(R.id.setDate);
+        txtDate = (EditText) findViewById(R.id.setDate);
         txtTime = (EditText) findViewById(R.id.setTime);
 
-if (checkGoogleMap()){
-checkPermission(getApplicationContext());}
+        mGoogleApiClient = new GoogleApiClient.Builder(AddEventActivity.this)
+                .addApi(Places.GEO_DATA_API)
+                .enableAutoManage(this, GOOGLE_API_CLIENT_ID, this)
+                .addConnectionCallbacks(this)
+                .build();
+        mAutocompleteTextView = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView);
+        mAutocompleteTextView.setThreshold(3);
+//        mNameTextView = (TextView) findViewById(R.id.name);
+//        mAddressTextView = (TextView) findViewById(R.id.address);
+//        mIdTextView = (TextView) findViewById(R.id.place_id);
+//        mPhoneTextView = (TextView) findViewById(R.id.phone);
+//        mWebTextView = (TextView) findViewById(R.id.web);
+//        mAttTextView = (TextView) findViewById(R.id.att);
+        mAutocompleteTextView.setOnItemClickListener(mAutocompleteClickListener);
+        mPlaceArrayAdapter = new PlaceArrayAdapter(AddEventActivity.this, android.R.layout.simple_list_item_1, BOUNDS_MOUNTAIN_VIEW, null);
+        mAutocompleteTextView.setAdapter(mPlaceArrayAdapter);
+
+
 
         imageOfEvent.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -191,6 +237,90 @@ checkPermission(getApplicationContext());}
 
 
 
+    private AdapterView.OnItemClickListener mAutocompleteClickListener
+            = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            final PlaceArrayAdapter.PlaceAutocomplete item = mPlaceArrayAdapter.getItem(position);
+            final String placeId = String.valueOf(item.placeId);
+            Log.i(LOG_TAG, "Selected: " + item.description);
+            PendingResult<PlaceBuffer> placeResult = Places.GeoDataApi
+                    .getPlaceById(mGoogleApiClient, placeId);
+            placeResult.setResultCallback(mUpdatePlaceDetailsCallback);
+            Log.i(LOG_TAG, "Fetching details for ID: " + item.placeId);
+        }
+    };
+
+    private ResultCallback<PlaceBuffer> mUpdatePlaceDetailsCallback
+            = new ResultCallback<PlaceBuffer>() {
+        @Override
+        public void onResult(PlaceBuffer places) {
+            if (!places.getStatus().isSuccess()) {
+                Log.e(LOG_TAG, "Place query did not complete. Error: " +
+                        places.getStatus().toString());
+                return;
+            }
+            // Selecting the first object buffer.
+            final Place place = places.get(0);
+            CharSequence attributions = places.getAttributions();
+
+//            mNameTextView.setText(Html.fromHtml(place.getName() + ""));
+//            mAddressTextView.setText(Html.fromHtml(place.getAddress() + ""));
+//            mIdTextView.setText(Html.fromHtml(place.getId() + ""));
+//            mPhoneTextView.setText(Html.fromHtml(place.getPhoneNumber() + ""));
+//            mWebTextView.setText(place.getWebsiteUri() + "");
+            if (attributions != null) {
+               // mAttTextView.setText(Html.fromHtml(attributions.toString()));
+            }
+        }
+    };
+
+    @Override
+    public void onConnected(Bundle bundle) {
+        mPlaceArrayAdapter.setGoogleApiClient(mGoogleApiClient);
+        Log.i(LOG_TAG, "Google Places API connected.");
+
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        Log.e(LOG_TAG, "Google Places API connection failed with error code: "
+                + connectionResult.getErrorCode());
+
+        Toast.makeText(this,
+                "Google Places API connection failed with error code:" +
+                        connectionResult.getErrorCode(),
+                Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        mPlaceArrayAdapter.setGoogleApiClient(null);
+        Log.e(LOG_TAG, "Google Places API connection suspended.");
+    }
+
+
+
+
+
+    public boolean checkPermission(final Context context) {
+        int result;
+        List<String> listPermissionsNeeded = new ArrayList<>();
+        for (String p:permissionsList) {
+            result = ContextCompat.checkSelfPermission(AddEventActivity.this,p);
+            if (result != PackageManager.PERMISSION_GRANTED) {
+                listPermissionsNeeded.add(p);
+
+            }
+        }
+        if (!listPermissionsNeeded.isEmpty()) {
+            ActivityCompat.requestPermissions(this, listPermissionsNeeded.toArray(new String[listPermissionsNeeded.size()]),MULTIPLE_PERMISSIONS );
+            return false;
+        }
+        return true;
+    }
+
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
@@ -234,7 +364,7 @@ checkPermission(getApplicationContext());}
                     newEvent.child("imageEvent").setValue("imageplaceholder");
                     newEvent.child("date").setValue(date);
                     newEvent.child("time").setValue(time);
-                   // newEvent.child("imageEvent").setValue(downloadUri.toString());
+                    // newEvent.child("imageEvent").setValue(downloadUri.toString());
                     progressing.dismiss();
                     Intent goBackToEventList = new Intent(AddEventActivity.this,AvailableEventActivity.class);
                     startActivity(goBackToEventList);
@@ -244,74 +374,6 @@ checkPermission(getApplicationContext());}
 
         }
     }
-
-
-    public boolean checkPermission(final Context context) {
-        int result;
-        List<String> listPermissionsNeeded = new ArrayList<>();
-        for (String p:permissionsList) {
-            result = ContextCompat.checkSelfPermission(AddEventActivity.this,p);
-            if (result != PackageManager.PERMISSION_GRANTED) {
-                listPermissionsNeeded.add(p);
-                initMap();
-            }
-        }
-        if (!listPermissionsNeeded.isEmpty()) {
-            ActivityCompat.requestPermissions(this, listPermissionsNeeded.toArray(new String[listPermissionsNeeded.size()]),MULTIPLE_PERMISSIONS );
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String[] permissions, int[] grantResults) {
-
-
-        switch (requestCode) {
-            case MULTIPLE_PERMISSIONS:{
-                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                    // permissions granted.
-                } else {
-                    String _permissions = "";
-                    for (String per : permissionsList) {
-                        _permissions += "\n" + per;
-                    }
-                    // permissions list of don't granted permission
-                }
-                return;
-            }
-        }
-
-    }
-
-    public void initMap()
-    {
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-        mapFragment.getMapAsync(AddEventActivity.this);
-    }
-
-    public boolean checkGoogleMap ()
-    {
-        Log.d(TAG,"checking google service version");
-        int available = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(AddEventActivity.this);
-        if (available== ConnectionResult.SUCCESS){
-            Log.d(TAG,"google play services is working");
-            return true;
-        }
-        else if (GoogleApiAvailability.getInstance().isUserResolvableError(available))
-        {
-            Log.d(TAG,"Error has occcured but we can fix it");
-            Dialog dialog = GoogleApiAvailability.getInstance().getErrorDialog(AddEventActivity.this,available,MY_PERMISSIONS_REQUEST_GOOGLE_MAP);
-            dialog.show();
-
-        }
-        else {
-            Toast.makeText(this, "we can not make a request for google map", Toast.LENGTH_SHORT).show();
-
-        }return false;
-        }
-
 
 
 
