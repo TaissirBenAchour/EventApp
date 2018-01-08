@@ -275,6 +275,46 @@ public class AddEventActivity extends AppCompatActivity implements
         }
     };
 
+
+    public void eventPlan() {
+
+
+
+
+        progressing.setMessage(" image is being downloading .. ");
+        progressing.show();
+        final String title = eventTitle.getText().toString().trim();
+        final String description = eventDescription.getText().toString().trim();
+        final String price = eventPrice.getText().toString().trim();
+        final String date = txtDate.getText().toString().trim();
+        final String time = txtTime.getText().toString().trim();
+        final String address = mAutocompleteTextView.getText().toString().trim();
+        if (!TextUtils.isEmpty(title) && !TextUtils.isEmpty(description) && !TextUtils.isEmpty(price)
+                && imageOfEvent != null && !TextUtils.isEmpty(date) && !TextUtils.isEmpty(time) && !TextUtils.isEmpty(address)) {
+
+            StorageReference filePath = mStoreEventReference.child("imageevent_" + title);
+            filePath.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    Uri downloadUri = taskSnapshot.getDownloadUrl();
+                    DatabaseReference newEvent = mStoreEvent_dataReference.push(); // push() for unique random  ID
+                    newEvent.child("title").setValue(title);
+                    newEvent.child("description").setValue(description);
+                    newEvent.child("price").setValue(price);
+                    newEvent.child("imageEvent").setValue("imageplaceholder");
+                    newEvent.child("date").setValue(date);
+                    newEvent.child("time").setValue(time);
+                    newEvent.child("address").setValue(address);
+                    // newEvent.child("imageEvent").setValue(downloadUri.toString());
+                    progressing.dismiss();
+                    Intent goBackToEventList = new Intent(AddEventActivity.this,AvailableEventActivity.class);
+                    startActivity(goBackToEventList);
+                }
+            });
+
+
+        }
+    }
     @Override
     public void onConnected(Bundle bundle) {
         mPlaceArrayAdapter.setGoogleApiClient(mGoogleApiClient);
@@ -337,43 +377,7 @@ public class AddEventActivity extends AppCompatActivity implements
     }
 
 
-    public void eventPlan() {
 
-
-
-
-        progressing.setMessage(" image is being downloading .. ");
-        progressing.show();
-        final String title = eventTitle.getText().toString().trim();
-        final String description = eventDescription.getText().toString().trim();
-        final String price = eventPrice.getText().toString().trim();
-        final String date = txtDate.getText().toString().trim();
-        final String time = txtTime.getText().toString().trim();
-        if (!TextUtils.isEmpty(title) && !TextUtils.isEmpty(description) && !TextUtils.isEmpty(price)
-                && imageOfEvent != null && !TextUtils.isEmpty(date) && !TextUtils.isEmpty(time)) {
-
-            StorageReference filePath = mStoreEventReference.child("imageevent_" + title);
-            filePath.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Uri downloadUri = taskSnapshot.getDownloadUrl();
-                    DatabaseReference newEvent = mStoreEvent_dataReference.push(); // push() for unique random  ID
-                    newEvent.child("title").setValue(title);
-                    newEvent.child("description").setValue(description);
-                    newEvent.child("price").setValue(price);
-                    newEvent.child("imageEvent").setValue("imageplaceholder");
-                    newEvent.child("date").setValue(date);
-                    newEvent.child("time").setValue(time);
-                    // newEvent.child("imageEvent").setValue(downloadUri.toString());
-                    progressing.dismiss();
-                    Intent goBackToEventList = new Intent(AddEventActivity.this,AvailableEventActivity.class);
-                    startActivity(goBackToEventList);
-                }
-            });
-
-
-        }
-    }
 
 
 
