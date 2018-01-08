@@ -67,13 +67,18 @@ public class CommunityContentFragment extends Fragment {
 
         mAuth = FirebaseAuth.getInstance();
         my_id = mAuth.getCurrentUser().getUid();
+
+
         CommunityRef = FirebaseDatabase.getInstance().getReference().child("Community").child(my_id);
         UsersRef = FirebaseDatabase.getInstance().getReference().child("Users");
+        UsersRef.keepSynced(true);
         ReqRef = FirebaseDatabase.getInstance().getReference().child("join_Community_requests").child(my_id);
 
 
         Community_Ref = FirebaseDatabase.getInstance().getReference().child("Community");
+        Community_Ref.keepSynced(true);
         CommunityReq_Ref = FirebaseDatabase.getInstance().getReference().child("join_Community_requests");
+        CommunityReq_Ref.keepSynced(true);
 
         listOfJoinedPersons.setHasFixedSize(true);
         listOfrequests.setHasFixedSize(true);
@@ -96,9 +101,6 @@ public class CommunityContentFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-
-
-
 
 
         final FirebaseRecyclerAdapter<Requests, RequestsViewHolder> firebasereqRecyclerAdapter =
@@ -476,9 +478,7 @@ public class CommunityContentFragment extends Fragment {
 
 
             if (!image.equals("profile_pic")) {
-// OFF LINE CASE  !!!!
-                // I SHOULD O BACK TO USERS PROFILE IN CASE I WILL CREATE ONES , TO VERIFY THE OFFLINE MODE ,
-                // DONT FORGET !
+
                 Picasso.with(context).load(userImage).networkPolicy(NetworkPolicy.OFFLINE)
                         .placeholder(R.drawable.profile_pic).into(image, new Callback() {
                     @Override

@@ -20,5 +20,6 @@
     <color name="startblue">#c41230</color>
     <color name="endblue">#8bcf3e56</color>
     <color name="Transparent">#00cf3e56</color>
+    <color name="black">#FF1E1D1D</color>
 
 </resources>

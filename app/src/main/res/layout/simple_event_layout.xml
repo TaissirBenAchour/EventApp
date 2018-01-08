@@ -1,16 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+<RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="7dp">
+    android:layout_marginBottom="5dp"
+    android:background="@color/graylight">
 <LinearLayout
-    android:layout_marginTop="5dp"
+    android:id="@+id/linear1_id"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
     android:layout_marginLeft="5dp"
     android:layout_marginRight="5dp"
+    android:layout_marginTop="5dp"
+    android:orientation="vertical"
+
     >
 
     <ImageView
@@ -18,33 +26,62 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:background="@color/light_grey"
+        android:elevation="50dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/imageplaceholder" />
+        android:src="@drawable/imageplaceholder"/>
 
     <TextView
         android:id="@+id/title_field_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="this is the event title"
-        android:singleLine="true"
-        android:textSize="22dp"
-        android:fontFamily="casual"
-        android:textAllCaps="true"
-        android:textStyle="bold"
-        android:padding="5dp"
-        android:textColor="@color/background"
         android:layout_marginLeft="5dp"
+        android:fontFamily="casual"
+        android:padding="5dp"
+        android:singleLine="true"
+        android:text="this is the event title"
+        android:textAllCaps="true"
+        android:textColor="@color/background"
+        android:textSize="22dp"
+        android:textStyle="bold"
         />
     <TextView
         android:id="@+id/desc_field_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="this is the event description"
-        android:lines="3"
         android:layout_marginLeft="17dp"
+        android:lines="3"
+        android:maxLines="1"
+        android:text="this is the event description"
         />
-
-
 </LinearLayout>
 
-    </android.support.v7.widget.CardView>
+    <LinearLayout
+        android:id="@+id/linear2_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linear1_id"
+        android:layout_marginLeft="250dp"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+        <ImageButton
+            android:id="@+id/saveEventbtn_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/graylight"
+            android:padding="5dp"
+            app:srcCompat="@drawable/ic_bookmark_black_24dp"/>
+
+        <ImageButton
+            android:id="@+id/joinEventbtn_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/graylight"
+            android:padding="5dp"
+            app:srcCompat="@drawable/ic_mood_black_24dp"/>
+
+
+    </LinearLayout>
+
+</RelativeLayout>
+</android.support.v7.widget.CardView>

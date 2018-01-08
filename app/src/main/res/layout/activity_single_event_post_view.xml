@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.cassio.Graduation_Project.SingleEventPostView">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+    <ImageView
+        android:id="@+id/SingleView_EventImage"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:src="@drawable/profile_pic"
+        />
+    <TextView
+        android:id="@+id/SingleView_Eventtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/SingleView_EventImage"
+        android:padding="10dp"
+        android:text="Event title"
+        android:textSize="25dp"/>
+    <LinearLayout
+        android:id="@+id/linearLayout_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/SingleView_Eventtitle"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/SingleView_EventDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_today_black_24dp"
+            android:drawablePadding="5dp"
+            android:drawableTint="@color/button_grey"
+            android:paddingRight="2dp"
+            android:text="date of event"
+            android:textColor="@color/button_grey"
+            android:textSize="15dp"/>
+        <TextView
+            android:id="@+id/SingleView_EventTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_access_time_black_24dp"
+            android:drawablePadding="5dp"
+            android:drawableTint="@color/button_grey"
+            android:paddingRight="2dp"
+            android:text="time of event"
+            android:textColor="@color/button_grey"
+            android:textSize="15dp"/>
+        <TextView
+            android:id="@+id/SingleView_EventAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_location_on_black_24dp"
+            android:drawablePadding="5dp"
+            android:drawableTint="@color/button_grey"
+            android:text="address of event"
+            android:textColor="@color/button_grey"
+            android:textSize="15dp"/>
+    </LinearLayout>
+    <TextView
+        android:id="@+id/SingleView_EventDescpription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/linearLayout_id"
+        android:text="here is the event description"
+        />
+    <TextView
+        android:id="@+id/SingleView_EventPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/SingleView_EventDescpription"
+        android:drawableLeft="@drawable/ic_monetization_on_black_24dp"
+        android:drawableTint="@color/button_grey"
+        android:text="Event fees"/>
+    <LinearLayout
+        android:id="@+id/linearLayoutbtn_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/SingleView_EventPrice"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_intresstedInEvent_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Intressted"
+
+            />
+        <Button
+            android:id="@+id/btn_joinEvent_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="I am In"
+            />
+    </LinearLayout>
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

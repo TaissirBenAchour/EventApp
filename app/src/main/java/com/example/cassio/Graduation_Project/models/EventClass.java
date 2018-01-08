@@ -10,16 +10,44 @@ public class EventClass {
     private String imageEvent;
     private String date;
     private String time ;
+    private String address;
+    private String price;
 
     public EventClass() {
     }
 
-    public EventClass(String title, String description, String imageEvent, String date , String time) {
+    public EventClass(String title, String description, String imageEvent, String date, String time, String address, String price) {
         this.title = title;
         this.description = description;
         this.imageEvent = imageEvent;
-        this.date = date ;
-        this.time = time ;
+        this.date = date;
+        this.time = time;
+        this.address = address;
+        this.price = price;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getImageEvent() {
+        return imageEvent;
+    }
+
+    public void setImageEvent(String imageEvent) {
+        this.imageEvent = imageEvent;
     }
 
     public String getDate() {
@@ -38,27 +66,19 @@ public class EventClass {
         this.time = time;
     }
 
-    public String getImage() {
-        return imageEvent;
+    public String getAddress() {
+        return address;
     }
 
-    public void setImage(String image) {
-        this.imageEvent = imageEvent;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public String getTitle() {
-        return title;
+    public String getPrice() {
+        return price;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
+    public void setPrice(String price) {
+        this.price = price;
     }
 }

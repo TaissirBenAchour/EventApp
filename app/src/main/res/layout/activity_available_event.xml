@@ -1,17 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.example.cassio.Graduation_Project.AvailableEventActivity">
-<include layout="@layout/app_bar_layout"
-    android:id="@+id/toolbar_list_events"
+<include android:id="@+id/toolbar_list_events"
+    layout="@layout/app_bar_layout"
   ></include>
+
+    <LinearLayout
+        android:id="@+id/linear_search_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar_list_events"
+        android:orientation="horizontal">
+<EditText
+    android:id="@+id/search_id"
+    android:layout_width="340dp"
+    android:layout_height="wrap_content"
+    android:background="@drawable/input_outline"
+    android:hint="search for event"
+    android:padding="10dp"
+    />
+
+        <ImageButton
+            android:id="@+id/search_event_button"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@color/white"
+            app:srcCompat="@drawable/ic_search_black_24dp"/>
+
+
+    </LinearLayout>
+
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/list_events_id"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-       ></android.support.v7.widget.RecyclerView>
-</LinearLayout>
+        android:layout_below="@+id/linear_search_id" >
+    </android.support.v7.widget.RecyclerView>
+</RelativeLayout>
