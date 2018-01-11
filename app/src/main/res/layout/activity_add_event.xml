@@ -22,36 +22,70 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#FFECB3"
                 android:orientation="vertical">
 
 
-                <ImageButton
-                    android:id="@+id/image_event_id"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="300dp"
-                    android:layout_margin="5dp"
-                    android:adjustViewBounds="true"
-                    android:background="@color/Transparent"
-                    android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/imageplaceholder" />
+                    android:layout_height="400dp"
+                    android:background="@drawable/shape"
+                    android:orientation="vertical">
 
-                <EditText
-                    android:id="@+id/title_id"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginTop="20dp"
-                    android:background="@drawable/input_outline"
-                    android:hint="title"
-                    android:inputType="textPersonName"
-                    android:padding="10dp"
-                    android:singleLine="true" />
+
+                    <ImageButton
+                        android:id="@+id/image_event_id"
+                        android:layout_width="match_parent"
+                        android:layout_height="250dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="15dp"
+                        android:adjustViewBounds="true"
+                        android:autofillHints="click here to add your event picture"
+                        android:background="@drawable/shape2"
+                        android:scaleType="centerCrop"
+                        app:srcCompat="@drawable/imageplaceholder" />
+
+
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="40dp"
+                        android:gravity="center"
+                        android:text="All Fields Are Required"
+                        android:textColor="#FBC02D"
+                        android:textSize="15dp"
+                        android:textStyle="bold" />
+
+
+                </LinearLayout>
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/addeventfieldscolor">
+
+                    <EditText
+                        android:id="@+id/title_id"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/input_outline"
+                        android:hint="Title of the event .."
+                        android:inputType="textPersonName"
+                        android:padding="10dp"
+                        android:singleLine="true" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/addeventfieldscolor"
                     android:orientation="horizontal">
 
                     <EditText
@@ -65,19 +99,23 @@
                         android:background="@drawable/input_outline"
                         android:focusable="false"
                         android:hint="dd-mm-yyyy"
-                        android:padding="10dp"/>
+                        android:padding="10dp" />
 
                     <ImageButton
                         android:id="@+id/image_Button_date"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
+                        android:layout_marginRight="20dp"
                         android:layout_marginTop="20dp"
-                        android:background="@color/white"
-                        app:srcCompat="@drawable/ic_today_black_24dp"/>
+                        android:background="#FBC02D"
+                        android:tint="@color/white"
+                        app:srcCompat="@drawable/ic_today_black_24dp" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/addeventfieldscolor"
                     android:orientation="horizontal">
 
                     <EditText
@@ -91,67 +129,99 @@
                         android:background="@drawable/input_outline"
                         android:focusable="false"
                         android:hint="hh:mm"
-                        android:padding="10dp"/>
+                        android:padding="10dp" />
 
                     <ImageButton
                         android:id="@+id/image_Button_time"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:layout_marginTop="20dp"
-                        android:background="@color/white"
-                        app:srcCompat="@drawable/ic_access_time_black_24dp"/>
+                        android:layout_marginTop="10dp"
+                        android:background="#FBC02D"
+                        android:tint="@color/white"
+                        app:srcCompat="@drawable/ic_access_time_black_24dp" />
                 </LinearLayout>
 
-    <AutoCompleteTextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/ic_magnify"
-        android:layout_centerVertical="true"
-        android:textSize="15sp"
-        android:textColor="#000"
-        android:layout_marginBottom="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:id="@+id/autoCompleteTextView"
-        android:background="@drawable/input_outline"
-        android:hint="Enter Address, City or Zip Code"
-        android:imeOptions="actionSearch"
-        android:padding="10dp"/>
-
-
-
-
-                <EditText
-                    android:id="@+id/description_id"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:background="@drawable/input_outline"
-                    android:hint="description"
-                    android:inputType="textPersonName"
-                    android:padding="10dp" />
+                    android:background="@color/addeventfieldscolor"
+                    android:orientation="horizontal">
 
-                <EditText
-                    android:id="@+id/price_id"
+                    <AutoCompleteTextView
+                        android:id="@+id/autoCompleteTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginTop="20dp"
+
+                        android:layout_toRightOf="@+id/ic_magnify"
+                        android:background="@drawable/input_outline"
+                        android:hint="Address, City or Zip Code .. "
+                        android:imeOptions="actionSearch"
+                        android:padding="10dp" />
+                </LinearLayout>
+
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:background="@drawable/input_outline"
-                    android:hint="Price"
-                    android:inputType="textPersonName"
-                    android:padding="10dp" />
+                    android:background="@color/addeventfieldscolor"
+                    android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/add_id"
+                    <EditText
+                        android:id="@+id/description_id"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginTop="20dp"
+
+                        android:background="@drawable/input_outline"
+                        android:hint="Brief description of the event .."
+                        android:padding="10dp" />
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:text="add event"
-                    />
+                    android:background="@color/addeventfieldscolor">
+
+                    <EditText
+                        android:id="@+id/price_id"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/input_outline"
+                        android:hint="Price .."
+                        android:inputType="textPersonName"
+                        android:padding="10dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#FBC02D"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/add_id"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="20dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/shape_of_add_event_button"
+                        android:elevation="60dp"
+                        android:text="add event"
+                        android:textColor="#FBC02D"
+                        android:textStyle="bold" />
+                </LinearLayout>
 
             </LinearLayout>
         </ScrollView>

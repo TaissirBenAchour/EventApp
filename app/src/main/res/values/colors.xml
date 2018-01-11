@@ -3,10 +3,11 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="pink">#D81B60</color>
     <color name="white">#FFFFFF</color>
     <color name="dark_grey">#424242</color>
     <color name="medium_grey">#9E9E9E</color>
-    <color name="light_grey">#e1d9d9</color>
+    <color name="light_grey">#dcdada</color>
 
     <color name="button_grey">#757575</color>
     <color name="lightorange">#fdf2df</color>
@@ -21,5 +22,7 @@
     <color name="endblue">#8bcf3e56</color>
     <color name="Transparent">#00cf3e56</color>
     <color name="black">#FF1E1D1D</color>
+    <color name="addeventfieldscolor">#FFFDE7</color>
+    <color name="jaune">#FBC02D</color>
 
 </resources>

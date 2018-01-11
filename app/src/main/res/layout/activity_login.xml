@@ -1,73 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context="com.example.cassio.Graduation_Project.loginActivity">>
 
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
     <LinearLayout
+        android:id="@+id/id1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/background"
+        android:layout_height="wrap_content"
+        android:background="@drawable/grad1"
         android:orientation="vertical">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Welcome To Event App"
-            android:textSize="25dp"
-            android:paddingTop="40dp"
-            android:paddingLeft="50dp"
-            android:paddingBottom="10dp"
-            android:textStyle="bold"
             android:fontFamily="casual"
+            android:paddingBottom="10dp"
+            android:paddingLeft="50dp"
+            android:paddingTop="40dp"
+            android:text="Welcome To Event App"
             android:textColor="@color/white"
-            android:background="@color/background"/>
+            android:textSize="25dp"
+            android:textStyle="bold"
+            />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/welcomeTexte"
-            android:textSize="17dp"
-            android:textColor="@color/white"
-            android:padding="15dp"
             android:fontFamily="casual"
+            android:padding="15dp"
+            android:text="@string/welcomeTexte"
+            android:textColor="@color/white"
+            android:textSize="17dp"
             />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center">
+            android:layout_marginBottom="20dp"
+            android:gravity="center"
+            android:orientation="horizontal">
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Learn more"
-                android:textColor="@color/white"
-
                 android:background="@drawable/buttonstyle_learnmore"
+                android:text="Learn more"
+
+                android:textColor="@color/white"
 
 
                 />
 
             <Button
                 android:id="@+id/btn_register"
+                style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:text="join the club"
-                android:textColor="@color/background"
-                android:background="@drawable/buttonstyle_joinus"/>
+                android:background="@drawable/buttonstyle_joinus"
+                android:text="Join The Club"
+                android:textColor="#c4590c"/>
         </LinearLayout>
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/id2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="320dp"
-
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/id1"
         android:background="@color/white"
         android:orientation="vertical">
 
@@ -82,7 +80,7 @@
             android:background="@drawable/input_outline"
             android:drawableLeft="@drawable/ic_person_black_24dp"
             android:drawablePadding="10dp"
-            android:drawableTint="@color/background"
+            android:drawableTint="#c4590c"
             android:hint="Email .."
             android:inputType="textEmailAddress"
             android:padding="10dp"
@@ -98,7 +96,7 @@
             android:background="@drawable/input_outline"
             android:drawableLeft="@drawable/ic_vpn_key_black_24dp"
             android:drawablePadding="10dp"
-            android:drawableTint="@color/background"
+            android:drawableTint="#c4590c"
             android:hint="Password .."
             android:inputType="textPassword"
             android:padding="10dp" />
@@ -108,10 +106,9 @@
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="join the club"
-            android:textColor="@color/background"
-            android:layout_marginLeft="120dp"
-            android:background="@drawable/buttonstyle_login"/>
+            android:layout_gravity="center"
+            android:background="@drawable/buttonstyle_login"
+            android:text="Log IN"
+            android:textColor="#c4590c"/>
     </LinearLayout>
-</RelativeLayout>
-        </LinearLayout>
+        </RelativeLayout>

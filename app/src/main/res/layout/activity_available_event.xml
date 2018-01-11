@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical"
     tools:context="com.example.cassio.Graduation_Project.AvailableEventActivity">
 <include android:id="@+id/toolbar_list_events"
@@ -15,21 +16,31 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/toolbar_list_events"
-        android:orientation="horizontal">
-<EditText
-    android:id="@+id/search_id"
-    android:layout_width="340dp"
-    android:layout_height="wrap_content"
-    android:background="@drawable/input_outline"
-    android:hint="search for event"
-    android:padding="10dp"
-    />
+        android:layout_margin="10dp"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="horizontal"
+    >
+
+        <EditText
+            android:id="@+id/search_id"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/shape_search_bar"
+            android:hint="search for event"
+            android:inputType="textPersonName"
+            android:padding="10dp"
+
+            android:textColorHint="@color/medium_grey" />
 
         <ImageButton
             android:id="@+id/search_event_button"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:background="@color/white"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/background_seach_btn"
+            android:tint="@color/white"
             app:srcCompat="@drawable/ic_search_black_24dp"/>
 
 

@@ -1,87 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white"
     android:orientation="vertical"
     tools:context="com.example.cassio.Graduation_Project.friends_profile">>
-<ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/circleImageView"
-            android:layout_width="120dp"
-            android:layout_height="130dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/profile_pic" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/background"
+            android:layout_height="match_parent"
             android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/username_friend"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="30dp"
-                android:text="username"
-                android:textColor="@color/white"
-                android:textSize="25dp" />
-
-            <TextView
-                android:id="@+id/desc_friend"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="here is a brief description of the user"
-                android:textColor="@color/white"
-                android:textSize="16dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:layout_marginBottom="20dp">
+                android:background="@drawable/shape2profile"
+                android:orientation="vertical">
 
-                <Button
-android:id="@+id/add_request"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/gradjaune"
+                    android:orientation="horizontal">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/circleImageView"
+                        android:layout_width="130dp"
+                        android:layout_height="130dp"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginLeft="25dp"
+                        android:layout_marginTop="20dp"
+                        android:src="@drawable/profile_pic" />
+
+                    <TextView
+                        android:id="@+id/username_friend"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="25dp"
+                        android:fontFamily="cursive"
+                        android:text="username"
+                        android:textColor="#FFF3E0"
+                        android:textSize="35dp" />
+
+                </LinearLayout>
+
+
+                <TextView
+                    android:id="@+id/desc_friend"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/buttonstyle_learnmore"
-                    android:text="add to community"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="cursive"
+                    android:text="here is a brief description of the user"
+                    android:textColor="#be5406"
+                    android:textSize="20dp" />
 
-                    android:textColor="@color/white"
-
-
-                    />
-
-                <Button
-                    android:id="@+id/clear_request"
-                    style="@style/Widget.AppCompat.Button.Borderless"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:background="@drawable/buttonstyle_joinus"
-                    android:text="decline"
-                    android:textColor="@color/background" />
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/add_request"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="20dp"
+                        android:background="@drawable/buttonaddcumunity"
+                        android:drawableLeft="@drawable/ic_person_add_black_24dp"
+                        android:drawablePadding="15dp"
+                        android:drawableTint="@color/jaune"
+                        android:padding="10dp"
+                        android:text="add to community"
+                        android:textColor="@color/jaune" />
+
+                    <Button
+
+                        android:id="@+id/clear_request"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="-160dp"
+                        android:background="@drawable/buttonstyle_decline"
+                        android:drawableLeft="@drawable/ic_cancel_black_24dp"
+                        android:drawablePadding="20dp"
+                        android:drawableTint="@color/white"
+                      android:padding="10dp"
+                        android:text="decline"
+                        android:textColor="#FFFDE7" />
+                </LinearLayout>
             </LinearLayout>
+
+
         </LinearLayout>
-
-
-    </LinearLayout>
-</ScrollView>
-</LinearLayout>
+    </ScrollView>
+</RelativeLayout>

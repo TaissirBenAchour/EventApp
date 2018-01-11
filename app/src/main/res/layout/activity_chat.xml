@@ -1,51 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.cassio.Graduation_Project.ChatActivity">
-<include layout="@layout/app_bar_layout"
-    android:id="@+id/toolbar_chat_id">
+<include android:id="@+id/toolbar_chat_id"
+    layout="@layout/app_bar_layout">
 
 </include>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/message_list_id"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar_chat_id"
-        android:layout_above="@+id/linear_id">
+        android:layout_above="@+id/linear_id"
+        android:layout_below="@+id/toolbar_chat_id">
 
     </android.support.v7.widget.RecyclerView>
 <LinearLayout
     android:id="@+id/linear_id"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="15dp"
     android:layout_alignParentBottom="true"
     android:layout_centerHorizontal="true"
-    android:background="@color/graylight">
+    android:background="@color/white"
+    android:orientation="horizontal"
+    android:padding="15dp">
     <ImageButton
         android:id="@+id/image_button_id"
-        android:layout_width="70dp"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_action_name" />
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/shape_icon"
+        android:src="@drawable/ic_action_name"
+        android:tint="@color/white" />
 
     <EditText
         android:id="@+id/messageText_id"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
         android:layout_weight="1"
         android:ems="10"
         android:hint="write message .."
-        android:inputType="textMultiLine" />
+        android:inputType="textMultiLine"
+        android:textColorHint="@color/medium_grey" />
 
     <ImageButton
         android:id="@+id/sendbutton_id"
-        android:layout_width="70dp"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_action_send" />
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/shape_icon"
+        android:src="@drawable/ic_action_send"
+        android:tint="@color/white" />
 </LinearLayout>
 
 </RelativeLayout>
