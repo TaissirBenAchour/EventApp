@@ -1,11 +1,10 @@
 package com.example.cassio.Graduation_Project;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.LinearLayout;
 
 public class SplashWelcomingActivity extends AppCompatActivity {
@@ -23,7 +22,7 @@ public class SplashWelcomingActivity extends AppCompatActivity {
             @Override
             public void run(){
                 try{
-                    sleep(1800);
+                    sleep(4000);
                 }
                 catch (InterruptedException e){
                     e.printStackTrace();

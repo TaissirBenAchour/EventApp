@@ -8,72 +8,99 @@
 
 
     <include
-    layout="@layout/app_bar_layout"
-    android:id="@+id/toolbar_id"></include>
+    android:id="@+id/toolbar_id"
+    layout="@layout/app_bar_layout"></include>
 
 
-
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
     <TextView
-        android:text="@string/register_title"
-        android:textSize="20sp"
-        android:layout_marginTop="60dp"
-        android:layout_marginBottom="100dp"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_height="wrap_content" />
+        android:layout_marginBottom="100dp"
+        android:layout_marginTop="60dp"
+        android:background="@drawable/grad1"
+        android:fontFamily="cursive"
+        android:padding="55dp"
+        android:text="@string/register_title"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        android:textStyle="bold"/>
 
 
 
         <EditText
             android:id="@+id/user_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/input_outline"
+            android:drawableLeft="@drawable/ic_person_black_24dp"
+            android:drawablePadding="10dp"
+            android:drawableTint="#E65100"
+            android:hint="Name .."
+            android:imeOptions="actionNext"
             android:inputType="text"
-            android:singleLine="true"
-            android:imeOptions="actionNext"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:hint="name" />
+            android:padding="10dp"
+            android:singleLine="true"/>
+
+
+
+    <EditText
+        android:id="@+id/user_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/input_outline"
+        android:drawableLeft="@drawable/ic_email_black_24dp"
+        android:drawablePadding="10dp"
+        android:drawableTint="#E65100"
+        android:hint="Email .."
+        android:imeOptions="actionNext"
+        android:inputType="text"
+        android:padding="10dp"
+        android:singleLine="true"/>
 
 
 
 
-        <EditText
-            android:id="@+id/user_email"
-            android:inputType="textEmailAddress"
-            android:singleLine="true"
-            android:imeOptions="actionNext"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/email" />
-
-
-
-
-        <EditText
-            android:id="@+id/user_password"
-            android:inputType="textPassword"
-            android:layout_width="fill_parent"
-            android:singleLine="true"
-            android:imeOptions="actionNext"
-            android:layout_height="wrap_content"
-            android:hint="@string/password" />
+    <EditText
+        android:id="@+id/user_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/input_outline"
+        android:drawableLeft="@drawable/ic_vpn_key_black_24dp"
+        android:drawablePadding="10dp"
+        android:drawableTint="#E65100"
+        android:hint="Password .."
+        android:imeOptions="actionNext"
+        android:inputType="text"
+        android:padding="10dp"
+        android:singleLine="true"/>
 
 
 
 
     <Button
         android:id="@+id/btn_createAccount"
-        android:layout_marginTop="20dp"
-        android:layout_gravity="center_horizontal"
-        android:text="@string/register"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/register"
+        android:text="Sign up"
+        android:textColor="@color/white"/>
     <ProgressBar
         android:id="@+id/pb_loader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
         android:visibility="invisible"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        />
+</LinearLayout>
 
 
 </LinearLayout>

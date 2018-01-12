@@ -17,9 +17,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/toolbar_list_events"
         android:layout_margin="10dp"
-        android:background="@color/white"
         android:gravity="center"
         android:orientation="horizontal"
+        android:padding="5dp"
     >
 
         <EditText

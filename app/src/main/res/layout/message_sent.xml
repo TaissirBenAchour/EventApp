@@ -9,7 +9,6 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="22dp"
         android:orientation="horizontal">
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -21,7 +20,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginLeft="22dp"
             android:layout_marginStart="22dp"
-            android:layout_marginTop="17dp"
+            android:layout_marginTop="7dp"
             android:src="@drawable/profile_pic" />
 
 
@@ -31,10 +30,11 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="9dp"
             android:background="@drawable/shape_of_sent_message"
             android:padding="10dp"
-            android:text="message"/>
+            android:text="message"
+            android:textColor="@color/white"/>
 
     </LinearLayout>
 

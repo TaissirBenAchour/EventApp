@@ -15,16 +15,20 @@
         android:id="@+id/SingleView_EventImage"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:src="@drawable/profile_pic"
-        />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/imageplaceholder" />
     <TextView
         android:id="@+id/SingleView_Eventtitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/SingleView_EventImage"
+        android:fontFamily="cursive"
         android:padding="10dp"
         android:text="Event title"
-        android:textSize="25dp"/>
+        android:textColor="@color/background1"
+        android:textSize="35dp"/>
     <LinearLayout
         android:id="@+id/linearLayout_id"
         android:layout_width="match_parent"
@@ -37,7 +41,7 @@
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ic_today_black_24dp"
             android:drawablePadding="5dp"
-            android:drawableTint="@color/button_grey"
+            android:drawableTint="@color/background1"
             android:paddingRight="2dp"
             android:text="date of event"
             android:textColor="@color/button_grey"
@@ -48,7 +52,7 @@
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ic_access_time_black_24dp"
             android:drawablePadding="5dp"
-            android:drawableTint="@color/button_grey"
+            android:drawableTint="@color/background1"
             android:paddingRight="2dp"
             android:text="time of event"
             android:textColor="@color/button_grey"
@@ -59,16 +63,42 @@
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ic_location_on_black_24dp"
             android:drawablePadding="5dp"
-            android:drawableTint="@color/button_grey"
+            android:drawableTint="@color/background1"
             android:text="address of event"
             android:textColor="@color/button_grey"
             android:textSize="15dp"/>
     </LinearLayout>
+            <LinearLayout
+                android:id="@+id/desc_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/linearLayout_id"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="9dp"
+                android:layout_marginTop="25dp"
+                android:background="@drawable/event_details"
+                android:orientation="vertical">
+            <TextView
+                android:id="@+id/EventDescpription"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="9dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="15dp"
+                android:fontFamily="cursive"
+                android:text="Description"
+                android:textColor="@color/white"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                />
     <TextView
         android:id="@+id/SingleView_EventDescpription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/linearLayout_id"
+      android:layout_below="@+id/EventDescpription"
+        android:background="@color/white"
+        android:padding="15dp"
         android:text="here is the event description"
         />
     <TextView
@@ -76,30 +106,95 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/SingleView_EventDescpription"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="9dp"
         android:drawableLeft="@drawable/ic_monetization_on_black_24dp"
-        android:drawableTint="@color/button_grey"
-        android:text="Event fees"/>
+        android:drawablePadding="10dp"
+        android:drawableTint="@color/background1"
+        android:fontFamily="cursive"
+        android:text="price"
+        android:textColor="@color/white"
+        android:textSize="25dp"/>
+            </LinearLayout>
     <LinearLayout
         android:id="@+id/linearLayoutbtn_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/SingleView_EventPrice"
+        android:layout_below="@+id/desc_id"
+        android:layout_marginBottom="25dp"
+        android:layout_marginTop="45dp"
         android:gravity="center"
         android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:orientation="horizontal"
+              >
 
-        <Button
-            android:id="@+id/btn_intresstedInEvent_id"
+
+                <Button
+                    android:id="@+id/btn_intresstedInEvent_id"
+                    style="@android:style/Widget.Material.Light.Button.Borderless"
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/grad1"
+                    android:fontFamily="cursive"
+                    android:paddingLeft="40dp"
+                    android:text="Intrested"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+
+
+                    android:textSize="20dp" />
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="-140dp"
+                    android:layout_marginTop="20dp"
+                android:background="@drawable/interested"
+                    android:padding="9dp"
+                    android:src="@drawable/ic_bookmark_black_24dp"
+                    android:tint="@color/background1"/>
+
+            </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Intressted"
+            android:layout_marginLeft="12dp"
+            android:orientation="horizontal"
+            >
 
-            />
-        <Button
-            android:id="@+id/btn_joinEvent_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="I am In"
-            />
+
+            <Button
+                android:id="@+id/btn_joinEvent_id"
+                style="@android:style/Widget.Material.Light.Button.Borderless"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/grad1"
+                android:fontFamily="cursive"
+                android:paddingLeft="40dp"
+                android:text="I am in"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+
+
+                android:textSize="20dp" />
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="-140dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/interested"
+                android:padding="9dp"
+                android:src="@drawable/ic_pan_tool_black_24dp"
+                android:tint="@color/background1"/>
+
+        </LinearLayout>
+
+
     </LinearLayout>
         </RelativeLayout>
     </ScrollView>

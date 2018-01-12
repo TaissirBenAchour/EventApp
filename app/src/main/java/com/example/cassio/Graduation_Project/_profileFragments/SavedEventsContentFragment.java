@@ -54,15 +54,6 @@ public class  SavedEventsContentFragment extends Fragment {
         EventDBReference.keepSynced(true);
         savedEventsDBRefrence.keepSynced(true);
 
-
-
-
-
-
-
-
-
-
         return m_View;
     }
 
@@ -77,7 +68,6 @@ public class  SavedEventsContentFragment extends Fragment {
                         R.layout.single_saved_event,
                         SavedEventsContentFragment.savedEventsViewHolder.class,
                         savedEventsDBRefrence
-                        // dependes on number of the items that exist in this path , it gives the length of the recyclerview
                 )
         {
             @Override

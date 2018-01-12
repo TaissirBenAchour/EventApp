@@ -1,15 +1,10 @@
 package com.example.cassio.Graduation_Project.Adapters;
 
-import android.app.Dialog;
-import android.content.Context;
-import android.graphics.Color;
-import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.cassio.Graduation_Project.R;
@@ -17,7 +12,6 @@ import com.example.cassio.Graduation_Project.models.Messages;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
-import java.util.jar.Attributes;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -51,12 +45,12 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
         if(sender_id.equals(messagefrom_id)) {
             holder.messageText.setBackgroundResource(R.drawable.shape_of_recieved_message);
-            holder.messageText.setGravity(Gravity.LEFT);
+            holder.messageText.setGravity(Gravity.RIGHT);
         }
         else
         {
             holder.messageText.setBackgroundResource(R.drawable.shape_of_sent_message);
-            holder.messageText.setGravity(Gravity.RIGHT);
+            holder.messageText.setGravity(Gravity.LEFT | Gravity.END);
         }
         holder.messageText.setText(messages.getmessage());
 

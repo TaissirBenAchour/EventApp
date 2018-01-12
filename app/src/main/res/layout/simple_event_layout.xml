@@ -1,47 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="5dp"
-    android:background="@color/graylight">
 <LinearLayout
     android:id="@+id/linear1_id"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="5dp"
     android:layout_marginLeft="5dp"
     android:layout_marginRight="5dp"
     android:layout_marginTop="5dp"
-    android:orientation="vertical"
-
-    >
+    android:background="#94fff9c4"
+    android:orientation="vertical">
 
     <ImageView
         android:id="@+id/event_image_holder"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="@color/light_grey"
-        android:elevation="50dp"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
         android:scaleType="centerCrop"
         android:src="@drawable/imageplaceholder"/>
 
     <TextView
         android:id="@+id/title_field_id"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:fontFamily="casual"
-        android:padding="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="-70dp"
+        android:background="@color/jaune"
+        android:fontFamily="cursive"
         android:singleLine="true"
-        android:text="this is the event title"
-        android:textAllCaps="true"
-        android:textColor="@color/background"
-        android:textSize="22dp"
+        android:text="This is the event title"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="32dp"
         android:textStyle="bold"
         />
     <TextView
@@ -49,18 +44,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="17dp"
-        android:lines="3"
-        android:maxLines="1"
-        android:text="this is the event description"
-        />
-</LinearLayout>
-
+        android:layout_marginRight="17dp"
+        android:layout_marginTop="40dp"
+        android:background="@color/white"
+        android:lines="2"
+        android:padding="5dp"
+        android:text="this is the event description" />
     <LinearLayout
         android:id="@+id/linear2_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/linear1_id"
         android:layout_marginLeft="250dp"
+        android:layout_marginTop="5dp"
         android:orientation="horizontal"
         android:padding="5dp">
 
@@ -68,20 +64,25 @@
             android:id="@+id/saveEventbtn_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/graylight"
+            android:background="@drawable/interested"
             android:padding="5dp"
+            android:tint="@color/jaune"
             app:srcCompat="@drawable/ic_bookmark_black_24dp"/>
 
         <ImageButton
             android:id="@+id/joinEventbtn_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/graylight"
+            android:layout_marginLeft="3dp"
+            android:background="@drawable/interested"
             android:padding="5dp"
+            android:tint="@color/jaune"
             app:srcCompat="@drawable/ic_mood_black_24dp"/>
 
 
     </LinearLayout>
+</LinearLayout>
+
+
 
 </RelativeLayout>
-</android.support.v7.widget.CardView>
