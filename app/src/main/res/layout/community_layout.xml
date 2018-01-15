@@ -4,34 +4,41 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical">
-
-
-<TextView
-    android:id="@+id/RequestlistText_id"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="12dp"
-    android:background="@drawable/grad1"
-    android:drawableBottom="@drawable/ic_group_add_black_24dp"
-    android:drawableTint="@color/jaune"
-    android:elevation="122dp"
-    android:fontFamily="cursive"
-    android:text="Available Requests"
-    android:textAlignment="center"
-    android:textColor="@color/white"
-    android:textSize="20dp"
- />
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/myListRequestView_id"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/communitylistText_id"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@id/RequestlistText_id"
-        android:layout_marginTop="5dp">
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/RequestlistText_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/grad1"
+            android:drawableBottom="@drawable/ic_group_add_black_24dp"
+            android:drawableTint="@color/jaune"
+            android:elevation="122dp"
+            android:fontFamily="cursive"
+            android:text="Available Requests"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/myListRequestView_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/communitylistText_id"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/RequestlistText_id"
+            android:layout_marginTop="5dp">
+        </android.support.v7.widget.RecyclerView>
 
-    </android.support.v7.widget.RecyclerView>
+    </LinearLayout>
 
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
     <TextView
         android:id="@+id/communitylistText_id"
         android:layout_width="match_parent"
@@ -55,6 +62,9 @@
         android:layout_below="@id/communitylistText_id">
 
     </android.support.v7.widget.RecyclerView>
+</LinearLayout>
+
+
 
 
 

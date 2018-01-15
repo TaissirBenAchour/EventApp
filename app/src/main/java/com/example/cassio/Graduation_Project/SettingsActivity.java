@@ -16,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,8 +47,7 @@ public class SettingsActivity extends AppCompatActivity {
  private RoundedImageView imageProfileSittings;
     private TextView userNameSettings;
     private  TextView statusUserSettings;
-    private Button changePictureBtnSettings;
-    private Button changeStatusBtnSetting;
+    private ImageButton changePictureBtnSettings;
     private DatabaseReference storedDataReference;
     private StorageReference storedProfileReference;
     private FirebaseAuth mAuth;
@@ -64,7 +64,7 @@ public class SettingsActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         String get_Unique_Id = mAuth.getInstance().getCurrentUser().getUid();
         storedDataReference = FirebaseDatabase.getInstance().getReference().child("Users").child(get_Unique_Id);
-        storedDataReference.keepSynced(true);//for offline mode
+        storedDataReference.keepSynced(true);
 
 
         storedProfileReference = FirebaseStorage.getInstance().getReference().child("Profile_images");
@@ -73,8 +73,7 @@ public class SettingsActivity extends AppCompatActivity {
         userNameSettings = (TextView)findViewById(R.id.userName);
         statusUserSettings = (TextView)findViewById(R.id.userStatus);
 
-        changePictureBtnSettings = (Button) findViewById(R.id.changeImage);
-        changeStatusBtnSetting = (Button) findViewById(R.id.changeUserStatus);
+        changePictureBtnSettings = (ImageButton) findViewById(R.id.changeImage);
 
         storedDataReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -82,7 +81,6 @@ public class SettingsActivity extends AppCompatActivity {
                 String name = dataSnapshot.child("userName").getValue().toString();
                 final String image = dataSnapshot.child("userImage").getValue().toString();
                 String status = dataSnapshot.child("userStatus").getValue().toString();
-//               String thumbImage = dataSnapshot.child("userThumbImage").getValue().toString();
 
                 userNameSettings.setText(name);
                 statusUserSettings.setText(status);
@@ -136,33 +134,28 @@ public class SettingsActivity extends AppCompatActivity {
 
 
         switch (requestCode) {
-            case galery_pick:
+            case galery_pick: if (imageReturnedIntent!=null) {
                 if (resultCode == RESULT_OK) {
                     Toast.makeText(SettingsActivity.this, "Image selected", Toast.LENGTH_SHORT).show();
-                     SelectedImageUri = imageReturnedIntent.getData();}
-
-                            String user_id = mAuth.getCurrentUser().getUid();
-                            //create reference to images folder and assing a name to the file that will be uploaded
-                            StorageReference filePath = storedProfileReference.child(user_id + ".jpg");
+                    SelectedImageUri = imageReturnedIntent.getData();
+                }
 
 
-                //creating and showing progress dialog
+                String user_id = mAuth.getCurrentUser().getUid();
+                StorageReference filePath = storedProfileReference.child(user_id + ".jpg");
+
+
                 progressDialog = new ProgressDialog(this);
                 progressDialog.setMax(100);
                 progressDialog.setMessage("Uploading...");
                 progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
                 progressDialog.show();
                 progressDialog.setCancelable(false);
-
-
-                //starting upload
                 final UploadTask uploadTask = filePath.putFile(SelectedImageUri);
 
-                // Observe state change events such as progress, pause, and resume
                 uploadTask.addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                        //sets and increments value of progressbar
                         progressDialog.incrementProgressBy(15);
                     }
                 });
@@ -170,32 +163,33 @@ public class SettingsActivity extends AppCompatActivity {
                 filePath.putFile(SelectedImageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                        if (task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             progressDialog.incrementProgressBy(15);
-                            Toast.makeText(SettingsActivity.this,"Upload successful",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SettingsActivity.this, "Upload successful", Toast.LENGTH_SHORT).show();
                             progressDialog.dismiss();
                             String downloadPic = task.getResult().getDownloadUrl().toString();
                             storedDataReference.child("userImage").setValue(downloadPic)
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
-                                            Toast.makeText(SettingsActivity.this,"successful",Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(SettingsActivity.this, "successful", Toast.LENGTH_SHORT).show();
                                         }
                                     });
-                        }else {
-                            Toast.makeText(SettingsActivity.this,"Error in uploading!",Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(SettingsActivity.this, "Error in uploading!", Toast.LENGTH_SHORT).show();
                             progressDialog.dismiss();
                         }
                     }
                 });
 
 
+            }
+
+default:break;
 
 
-
-
-
-                }}
+                }
+    }
 
 
     @Override
@@ -204,7 +198,6 @@ public class SettingsActivity extends AppCompatActivity {
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE:
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // do your stuff
                 } else {
                     Toast.makeText(SettingsActivity.this, "GET_ACCOUNTS Denied",
                             Toast.LENGTH_SHORT).show();

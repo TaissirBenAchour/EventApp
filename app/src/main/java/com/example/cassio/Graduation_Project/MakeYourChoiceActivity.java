@@ -67,7 +67,6 @@ public class MakeYourChoiceActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_related_to_choice_activity, menu);
 
         return super.onCreateOptionsMenu(menu);
@@ -86,13 +85,8 @@ public class MakeYourChoiceActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_logout) {
             mAuth.signOut();
             logout_account();
@@ -104,7 +98,7 @@ public class MakeYourChoiceActivity extends AppCompatActivity {
         }
 
         if (id == R.id.action_profile) {
-            Intent goBacktoLoginPageIntent = new Intent(MakeYourChoiceActivity.this, ProfileActivity.class);
+            Intent goBacktoLoginPageIntent = new Intent(MakeYourChoiceActivity.this, FragmentsUnionActivity.class);
             startActivity(goBacktoLoginPageIntent);
         }
 

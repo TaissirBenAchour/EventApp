@@ -10,11 +10,9 @@
     <string name="register_title">Inscription</string>
     <string name="pseudo">Pseudo</string>
     <string name="email">Email</string>
-    <string name="password">Mot de passe</string>
-    <string name="password2">Retaper votre mot de passe</string>
     <string name="title_activity_login">loginActivity</string>
     <string name="title_activity_premiere">PremiereActivity</string>
-    <string name="logout">deconnection</string>
+    <string name="logout">Log out</string>
 
 
 
@@ -25,7 +23,6 @@
     <string name="sign_in_google">Sign in with Google</string>
     <string name="logout_text">Sign out</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="welcomeTexte">Welcome to the world of higher productivity levels, if you are an event planner , please
     mesmrise us with increadable opportunities , if you are our active freind , then feel free to search for suitable adventures </string>
     <string name="google_maps_api_key">AIzaSyDTZJo0xOQcDWp-mSWL_t0UR447L4JvOY8</string>

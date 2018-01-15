@@ -22,11 +22,10 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.example.cassio.Graduation_Project.Adapters.PlaceArrayAdapter;
+import com.example.cassio.Graduation_Project.Adapters.AddressListAdapter;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -36,13 +35,11 @@ import com.google.android.gms.location.places.PlaceBuffer;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,13 +50,11 @@ import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 
 public class AddEventActivity extends AppCompatActivity implements
         GoogleApiClient.OnConnectionFailedListener,
-        GoogleApiClient.ConnectionCallbacks   {
+        GoogleApiClient.ConnectionCallbacks {
 
-    public static final int MY_PERMISSIONS_REQUEST_GOOGLE_MAP= 978;
-    public static final int MULTIPLE_PERMISSIONS = 10; // code you want.
+    public static final int MULTIPLE_PERMISSIONS = 10;
     private final static int galery_pick = 1;
     private static final String TAG = "AddEventActivity";
-    private static final String LOG_TAG = "MainActivity";
     private static final int GOOGLE_API_CLIENT_ID = 0;
     private static final LatLngBounds BOUNDS_MOUNTAIN_VIEW = new LatLngBounds(
             new LatLng(37.398160, -122.180831), new LatLng(37.430610, -121.972090));
@@ -74,7 +69,7 @@ public class AddEventActivity extends AppCompatActivity implements
     private EditText eventPrice;
     private Uri imageUri;
     private DatabaseReference mStoreEvent_dataReference;
-    private String[] permissionsList= new String[]{
+    private String[] permissionsList = new String[]{
             READ_EXTERNAL_STORAGE,
             ACCESS_COARSE_LOCATION,
             ACCESS_FINE_LOCATION};
@@ -82,50 +77,12 @@ public class AddEventActivity extends AppCompatActivity implements
     private Button addEventButton;
     private ProgressDialog progressing;
     private AutoCompleteTextView mAutocompleteTextView;
-    private TextView mNameTextView;
-    private TextView mAddressTextView;
-    private TextView mIdTextView;
-    private TextView mPhoneTextView;
-    private TextView mWebTextView;
-    private TextView mAttTextView;
     private GoogleApiClient mGoogleApiClient;
-    private PlaceArrayAdapter mPlaceArrayAdapter;
-    private ResultCallback<PlaceBuffer> mUpdatePlaceDetailsCallback
-            = new ResultCallback<PlaceBuffer>() {
-        @Override
-        public void onResult(PlaceBuffer places) {
-            if (!places.getStatus().isSuccess()) {
-                Log.e(LOG_TAG, "Place query did not complete. Error: " +
-                        places.getStatus().toString());
-                return;
-            }
-            // Selecting the first object buffer.
-            final Place place = places.get(0);
-            CharSequence attributions = places.getAttributions();
+    private AddressListAdapter mAddressListAdapter;
 
-//            mNameTextView.setText(Html.fromHtml(place.getName() + ""));
-//            mAddressTextView.setText(Html.fromHtml(place.getAddress() + ""));
-//            mIdTextView.setText(Html.fromHtml(place.getId() + ""));
-//            mPhoneTextView.setText(Html.fromHtml(place.getPhoneNumber() + ""));
-//            mWebTextView.setText(place.getWebsiteUri() + "");
-            if (attributions != null) {
-               // mAttTextView.setText(Html.fromHtml(attributions.toString()));
-            }
-        }
-    };
-    private AdapterView.OnItemClickListener mAutocompleteClickListener
-            = new AdapterView.OnItemClickListener() {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            final PlaceArrayAdapter.PlaceAutocomplete item = mPlaceArrayAdapter.getItem(position);
-            final String placeId = String.valueOf(item.placeId);
-            Log.i(LOG_TAG, "Selected: " + item.description);
-            PendingResult<PlaceBuffer> placeResult = Places.GeoDataApi
-                    .getPlaceById(mGoogleApiClient, placeId);
-            placeResult.setResultCallback(mUpdatePlaceDetailsCallback);
-            Log.i(LOG_TAG, "Fetching details for ID: " + item.placeId);
-        }
-    };
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,11 +91,9 @@ public class AddEventActivity extends AppCompatActivity implements
 
         mAuth = FirebaseAuth.getInstance();
 
-        //FOR STORAGE
         mStoreEventReference = FirebaseStorage.getInstance().getReference().child("Events");
-        //fOR DATABASE
         mStoreEvent_dataReference = FirebaseDatabase.getInstance().getReference().child("Events");
-        mStoreEvent_dataReference.keepSynced(true); //for offline mode
+        mStoreEvent_dataReference.keepSynced(true);
 
         mtoolbar = (Toolbar) findViewById(R.id.toolbar_id);
         imageOfEvent = (ImageButton) findViewById(R.id.image_event_id);
@@ -160,17 +115,10 @@ public class AddEventActivity extends AppCompatActivity implements
                 .addConnectionCallbacks(this)
                 .build();
         mAutocompleteTextView = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView);
-        mAutocompleteTextView.setThreshold(3);
-//        mNameTextView = (TextView) findViewById(R.id.name);
-//        mAddressTextView = (TextView) findViewById(R.id.address);
-//        mIdTextView = (TextView) findViewById(R.id.place_id);
-//        mPhoneTextView = (TextView) findViewById(R.id.phone);
-//        mWebTextView = (TextView) findViewById(R.id.web);
-//        mAttTextView = (TextView) findViewById(R.id.att);
+        mAutocompleteTextView.setThreshold(2);
         mAutocompleteTextView.setOnItemClickListener(mAutocompleteClickListener);
-        mPlaceArrayAdapter = new PlaceArrayAdapter(AddEventActivity.this, android.R.layout.simple_list_item_1, BOUNDS_MOUNTAIN_VIEW, null);
-        mAutocompleteTextView.setAdapter(mPlaceArrayAdapter);
-
+        mAddressListAdapter = new AddressListAdapter(AddEventActivity.this, android.R.layout.simple_list_item_1, BOUNDS_MOUNTAIN_VIEW, null);
+        mAutocompleteTextView.setAdapter(mAddressListAdapter);
 
 
         imageOfEvent.setOnClickListener(new View.OnClickListener() {
@@ -199,7 +147,6 @@ public class AddEventActivity extends AppCompatActivity implements
             @Override
             public void onClick(View view) {
 
-                // Get Current Date
                 final Calendar c = Calendar.getInstance();
                 mYear = c.get(Calendar.YEAR);
                 mMonth = c.get(Calendar.MONTH);
@@ -224,12 +171,10 @@ public class AddEventActivity extends AppCompatActivity implements
         btnTimePicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Get Current Time
                 final Calendar c = Calendar.getInstance();
                 mHour = c.get(Calendar.HOUR_OF_DAY);
                 mMinute = c.get(Calendar.MINUTE);
 
-                // Launch Time Picker Dialog
                 TimePickerDialog timePickerDialog = new TimePickerDialog(AddEventActivity.this,
                         new TimePickerDialog.OnTimeSetListener() {
 
@@ -245,12 +190,9 @@ public class AddEventActivity extends AppCompatActivity implements
         });
 
 
-
     }
 
     public void eventPlan() {
-
-
 
 
         progressing.setMessage(" image is being downloading .. ");
@@ -262,96 +204,111 @@ public class AddEventActivity extends AppCompatActivity implements
         final String time = txtTime.getText().toString().trim();
         final String address = mAutocompleteTextView.getText().toString().trim();
         if (!TextUtils.isEmpty(title) && !TextUtils.isEmpty(description) && !TextUtils.isEmpty(price)
-                && imageOfEvent != null && !TextUtils.isEmpty(date) && !TextUtils.isEmpty(time) && !TextUtils.isEmpty(address)) {
+                && !TextUtils.isEmpty(date) && !TextUtils.isEmpty(time) && !TextUtils.isEmpty(address)) {
 
             StorageReference filePath = mStoreEventReference.child("imageevent_" + title);
-            filePath.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Uri downloadUri = taskSnapshot.getDownloadUrl();
-                    DatabaseReference newEvent = mStoreEvent_dataReference.push(); // push() for unique random  ID
-                    newEvent.child("title").setValue(title);
-                    newEvent.child("description").setValue(description);
-                    newEvent.child("price").setValue(price);
-                    newEvent.child("imageEvent").setValue("imageplaceholder");
-                    newEvent.child("date").setValue(date);
-                    newEvent.child("time").setValue(time);
-                    newEvent.child("address").setValue(address);
-                    newEvent.child("imageEvent").setValue(downloadUri.toString());
-                    progressing.dismiss();
-                    Intent goBackToEventList = new Intent(AddEventActivity.this,AvailableEventActivity.class);
-                    startActivity(goBackToEventList);
-                }
-            });
+//            filePath.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//                @Override
+//                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                    Uri downloadUri = taskSnapshot.getDownloadUrl();
+            DatabaseReference newEvent = mStoreEvent_dataReference.push(); // push() for unique random  ID
+            newEvent.child("title").setValue(title);
+            newEvent.child("description").setValue(description);
+            newEvent.child("price").setValue(price);
+            newEvent.child("imageEvent").setValue("imageplaceholder");
+            newEvent.child("date").setValue(date);
+            newEvent.child("time").setValue(time);
+            newEvent.child("address").setValue(address);
+            // newEvent.child("imageEvent").setValue(downloadUri.toString());
+            progressing.dismiss();
+            Intent goBackToEventList = new Intent(AddEventActivity.this, AvailableEventActivity.class);
+            startActivity(goBackToEventList);
+//                }
+//            });
 
 
         }
     }
+
     @Override
     public void onConnected(Bundle bundle) {
-        mPlaceArrayAdapter.setGoogleApiClient(mGoogleApiClient);
-        Log.i(LOG_TAG, "Google Places API connected.");
+        mAddressListAdapter.setGoogleApiClient(mGoogleApiClient);
 
     }
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
-        Log.e(LOG_TAG, "Google Places API connection failed with error code: "
-                + connectionResult.getErrorCode());
 
-        Toast.makeText(this,
-                "Google Places API connection failed with error code:" +
-                        connectionResult.getErrorCode(),
-                Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Google Places API connection failed" , Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onConnectionSuspended(int i) {
-        mPlaceArrayAdapter.setGoogleApiClient(null);
-        Log.e(LOG_TAG, "Google Places API connection suspended.");
+        mAddressListAdapter.setGoogleApiClient(null);
     }
-
-
-
 
 
     public boolean checkPermission(final Context context) {
         int result;
         List<String> listPermissionsNeeded = new ArrayList<>();
-        for (String p:permissionsList) {
-            result = ContextCompat.checkSelfPermission(AddEventActivity.this,p);
+        for (String p : permissionsList) {
+            result = ContextCompat.checkSelfPermission(AddEventActivity.this, p);
             if (result != PackageManager.PERMISSION_GRANTED) {
                 listPermissionsNeeded.add(p);
 
             }
         }
         if (!listPermissionsNeeded.isEmpty()) {
-            ActivityCompat.requestPermissions(this, listPermissionsNeeded.toArray(new String[listPermissionsNeeded.size()]),MULTIPLE_PERMISSIONS );
+            ActivityCompat.requestPermissions(this, listPermissionsNeeded.toArray(new String[listPermissionsNeeded.size()]), MULTIPLE_PERMISSIONS);
             return false;
         }
         return true;
     }
 
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
         super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
 
-
-        switch (requestCode) {
-            case galery_pick:
-                if (resultCode == RESULT_OK) {
-                    imageUri = imageReturnedIntent.getData();
-                    imageOfEvent.setImageURI(imageUri);
-                }
+        if (imageReturnedIntent != null) {
+            switch (requestCode) {
+                case galery_pick:
+                    if (resultCode == RESULT_OK) {
+                        imageUri = imageReturnedIntent.getData();
+                        imageOfEvent.setImageURI(imageUri);
+                    }
+            }
         }
     }
 
 
 
+    private ResultCallback<PlaceBuffer> mUpdatePlaceDetailsCallback
+            = new ResultCallback<PlaceBuffer>() {
+        @Override
+        public void onResult(PlaceBuffer places) {
+            if (!places.getStatus().isSuccess()) {
+                return;
+            }
+            CharSequence attributions = places.getAttributions();
+
+            if (attributions != null) {
+            }
+        }
+    };
 
 
+    private AdapterView.OnItemClickListener mAutocompleteClickListener
+            = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            final AddressListAdapter.PlaceAutocomplete item = mAddressListAdapter.getItem(position);
+            final String placeId = String.valueOf(item.placeId);
+            PendingResult<PlaceBuffer> placeResult = Places.GeoDataApi
+                    .getPlaceById(mGoogleApiClient, placeId);
+            placeResult.setResultCallback(mUpdatePlaceDetailsCallback);
+        }
+    };
 
 }
 

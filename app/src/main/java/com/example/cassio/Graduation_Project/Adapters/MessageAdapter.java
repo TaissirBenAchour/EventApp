@@ -1,5 +1,6 @@
 package com.example.cassio.Graduation_Project.Adapters;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import com.example.cassio.Graduation_Project.R;
 import com.example.cassio.Graduation_Project.models.Messages;
 import com.google.firebase.auth.FirebaseAuth;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -30,29 +32,30 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
     @Override
     public MessageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View v = LayoutInflater.from(parent.getContext())
-                                .inflate(R.layout.message_sent,parent,false);
-        mAuth=FirebaseAuth.getInstance();
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.message_sent, parent, false);
+        mAuth = FirebaseAuth.getInstance();
 
         return new MessageViewHolder(v);
     }
 
+
+
     @Override
     public void onBindViewHolder(MessageViewHolder holder, int position) {
+
         String sender_id = mAuth.getCurrentUser().getUid();
         Messages messages = messages_List.get(position);
         String messagefrom_id = messages.getFrom();
 
-        if(sender_id.equals(messagefrom_id)) {
+        if (sender_id.equals(messagefrom_id)) {
             holder.messageText.setBackgroundResource(R.drawable.shape_of_recieved_message);
-            holder.messageText.setGravity(Gravity.RIGHT);
-        }
-        else
-        {
+        } else {
             holder.messageText.setBackgroundResource(R.drawable.shape_of_sent_message);
-            holder.messageText.setGravity(Gravity.LEFT | Gravity.END);
         }
         holder.messageText.setText(messages.getmessage());
+        holder.timeOfMessage.setText(messages.getmsgtime());
+
+
 
 
     }
@@ -62,14 +65,16 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         return messages_List.size();
     }
 
-    public class MessageViewHolder extends RecyclerView.ViewHolder{
+    public class MessageViewHolder extends RecyclerView.ViewHolder {
         public TextView messageText;
+        public TextView timeOfMessage;
         public CircleImageView profileImage;
 
         public MessageViewHolder(View view) {
             super(view);
-            messageText =(TextView) view.findViewById(R.id.custom_message_id);
-//            profileImage=(CircleImageView) view.findViewById(R.id.messageOfSender_id);
+            messageText = (TextView) view.findViewById(R.id.custom_message_id);
+            timeOfMessage = (TextView) view.findViewById(R.id.timeOfSendingTheMessage_id);
+            profileImage=(CircleImageView) view.findViewById(R.id.messageOfSender_id);
         }
     }
 }

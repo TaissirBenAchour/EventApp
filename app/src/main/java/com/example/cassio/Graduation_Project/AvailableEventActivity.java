@@ -46,7 +46,7 @@ public class AvailableEventActivity extends AppCompatActivity{
         list_events.setLayoutManager(new LinearLayoutManager(this));
 
         mAuth = FirebaseAuth.getInstance();
-         my_id= mAuth.getCurrentUser().getUid();
+        my_id= mAuth.getCurrentUser().getUid();
         EventDBReference = FirebaseDatabase.getInstance().getReference().child("Events");
         savedEventsDBRefrence = FirebaseDatabase.getInstance().getReference().child("SavedEvents");
 
@@ -66,32 +66,32 @@ public class AvailableEventActivity extends AppCompatActivity{
 
     }
 
-private void searchEvent(String search) {
-    Query query = EventDBReference.orderByChild("title").startAt(search).endAt(search + "\uf8ff");
+    private void searchEvent(String search) {
+        Query query = EventDBReference.orderByChild("title").startAt(search).endAt(search + "\uf8ff");
 
-    FirebaseRecyclerAdapter<EventClass,AvailableEventActivity.EventViewHolder> firebaseRecyclerAdapter
-            = new FirebaseRecyclerAdapter<EventClass, AvailableEventActivity.EventViewHolder>
-            (
-                    EventClass.class,
-                    R.layout.simple_event_layout,
-                    AvailableEventActivity.EventViewHolder.class,
-                    query
-            )
-    {
-        @Override
-        protected void populateViewHolder(EventViewHolder viewHolder, EventClass model, final int position) {
+        FirebaseRecyclerAdapter<EventClass,AvailableEventActivity.EventViewHolder> firebaseRecyclerAdapter
+                = new FirebaseRecyclerAdapter<EventClass, AvailableEventActivity.EventViewHolder>
+                (
+                        EventClass.class,
+                        R.layout.simple_event_layout,
+                        AvailableEventActivity.EventViewHolder.class,
+                        query
+                )
+        {
+            @Override
+            protected void populateViewHolder(EventViewHolder viewHolder, EventClass model, final int position) {
 
-            viewHolder.setEvent_title(model.getTitle());
-            viewHolder.setEvent_description(model.getDescription());
-            // viewHolder.setEvent_Image(getApplicationContext(),model.getImage());
-
-
-
-        }
+                viewHolder.setEvent_title(model.getTitle());
+                viewHolder.setEvent_description(model.getDescription());
+                // viewHolder.setEvent_Image(getApplicationContext(),model.getImage());
 
 
-    };
-    list_events.setAdapter(firebaseRecyclerAdapter);
+
+            }
+
+
+        };
+        list_events.setAdapter(firebaseRecyclerAdapter);
 
     }
 
@@ -112,7 +112,7 @@ private void searchEvent(String search) {
 
                 viewHolder.setEvent_title(model.getTitle());
                 viewHolder.setEvent_description(model.getDescription());
-             //   viewHolder.setEvent_Image(getApplicationContext(),model.getImage());
+                //   viewHolder.setEvent_Image(getApplicationContext(),model.getImage());
                 viewHolder.setSaveBtn(event_id);
                 viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -130,11 +130,11 @@ private void searchEvent(String search) {
                     public void onClick(View view) {
                         saveProcess = true;
 
-                            savedEventsDBRefrence.addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(DataSnapshot dataSnapshot) {
-                                    if (saveProcess)
-                                    {
+                        savedEventsDBRefrence.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                if (saveProcess)
+                                {
                                     if (dataSnapshot.child(event_id).hasChild(my_id))
                                     {
                                         savedEventsDBRefrence.child(event_id).child(my_id).removeValue();
@@ -154,11 +154,11 @@ private void searchEvent(String search) {
 
                                 }}
 
-                                @Override
-                                public void onCancelled(DatabaseError databaseError) {
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
 
-                                }
-                            });
+                            }
+                        });
 
                     }
                 });
@@ -255,4 +255,4 @@ private void searchEvent(String search) {
 //                }
 
 
-}}
+    }}

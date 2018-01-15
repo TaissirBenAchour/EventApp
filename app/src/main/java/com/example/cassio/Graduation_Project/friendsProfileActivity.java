@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -24,9 +24,9 @@ import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class friends_profile extends AppCompatActivity {
-    private Button send_req;
-    private Button dec_req;
+public class friendsProfileActivity extends AppCompatActivity {
+    private ImageButton send_req;
+    private ImageButton dec_req;
     private TextView username;
     private TextView desc;
     private DatabaseReference referenceTolistReqs, referenceToUsersList , communityDBReference ;
@@ -39,13 +39,13 @@ public class friends_profile extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_friends_profile);
+        setContentView(R.layout.activity_main_profile);
 
 
-        send_req = (Button) findViewById(R.id.add_request);
-        dec_req = (Button) findViewById(R.id.clear_request);
-        username = (TextView) findViewById(R.id.username_friend);
-        desc = (TextView) findViewById(R.id.desc_friend);
+        send_req = (ImageButton) findViewById(R.id.add_request);
+        dec_req = (ImageButton) findViewById(R.id.clear_request);
+        username = (TextView) findViewById(R.id.username_id);
+        desc = (TextView) findViewById(R.id.userstatus_id);
         imageProfileFriend = (CircleImageView) findViewById(R.id.circleImageView);
 
 
@@ -72,7 +72,7 @@ public class friends_profile extends AppCompatActivity {
 
                 username.setText(name);
                 desc.setText(status);
-                Picasso.with(friends_profile.this).load(image).placeholder(R.drawable.profile_pic).into(imageProfileFriend);
+                Picasso.with(friendsProfileActivity.this).load(image).placeholder(R.drawable.profile_pic).into(imageProfileFriend);
 
 
 
@@ -84,13 +84,13 @@ public class friends_profile extends AppCompatActivity {
                             String req_type = dataSnapshot.child(targed_person_id).child("request_type").getValue().toString();
                             if (req_type.equals("request_sent")){
                                 relation_state="request_sent";
-                                send_req.setText("cancel demand");
+                                send_req.setImageResource(R.drawable.ic_clear_black_24dp);
                                 dec_req.setVisibility(View.INVISIBLE);
                                 dec_req.setEnabled(false);
                             }
                             else if (req_type.equals("request_recieved")){
                                 relation_state="request_recieved";
-                                send_req.setText("Accept");
+                                send_req.setImageResource(R.drawable.ic_check_black_24dp);
                                 dec_req.setVisibility(View.VISIBLE);
                                 dec_req.setEnabled(true);
                                 dec_req.setOnClickListener(new View.OnClickListener() {
@@ -107,7 +107,7 @@ public class friends_profile extends AppCompatActivity {
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             if (dataSnapshot.hasChild(targed_person_id)){
                                 relation_state="friends";
-                                send_req.setText("un-join this person");
+                                send_req.setImageResource(R.drawable.ic_clear_black_24dp);
                                 dec_req.setVisibility(View.INVISIBLE);
                                 dec_req.setEnabled(false);
                             }
@@ -143,10 +143,7 @@ if (! my_current_id.equals(targed_person_id)){
     send_req.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            send_req.setEnabled(false); // is set to false so i can add some validation , because it creates
-            //random key and it may crash
-
-
+            send_req.setEnabled(false);
             if (relation_state.equals("unfriend")) {
                 sendRequest();
             }
@@ -186,7 +183,7 @@ else {
                             if (task.isSuccessful()){
                                 relation_state="unfriend";
                                 send_req.setEnabled(true);
-                                send_req.setText("add again");
+                                send_req.setImageResource(R.drawable.ic_person_add_black_24dp);
                                 dec_req.setVisibility(View.INVISIBLE);
                                 dec_req.setEnabled(false);
                             }}
@@ -209,7 +206,7 @@ else {
                          if (task.isSuccessful()) {
                              send_req.setEnabled(true);
                              relation_state="unfriend";
-                             send_req.setText("add");
+                             send_req.setImageResource(R.drawable.ic_person_add_black_24dp);
                              dec_req.setVisibility(View.INVISIBLE);
                              dec_req.setEnabled(false);
                          }
@@ -246,7 +243,7 @@ else {
                                                     if (task.isSuccessful()){
                                                         send_req.setEnabled(true);
                                                         relation_state="friends";
-                                                        send_req.setText("unfriend");
+                                                        send_req.setImageResource(R.drawable.ic_clear_black_24dp);
                                                         dec_req.setVisibility(View.INVISIBLE);
                                                         dec_req.setEnabled(false);
                                                     }}
@@ -274,7 +271,7 @@ else {
                             if (task.isSuccessful()){
                                 relation_state="unfriend";
                                 send_req.setEnabled(true);
-                                send_req.setText("add again");
+                                send_req.setImageResource(R.drawable.ic_person_add_black_24dp);
                                 dec_req.setVisibility(View.INVISIBLE);
                                 dec_req.setEnabled(false);
                             }}
@@ -285,7 +282,6 @@ else {
     }
 
     private void sendRequest() {
-        // getting the id to whome i will send the friend request
         referenceTolistReqs.child(my_current_id)
                 .child(targed_person_id)
                 .child("request_type")
@@ -317,7 +313,7 @@ else {
                                                        send_req.setEnabled(true);
                                                        relation_state = "request_sent";
 
-                                                       send_req.setText("cancel demand");
+                                                       send_req.setImageResource(R.drawable.ic_clear_black_24dp);
                                                        dec_req.setVisibility(View.INVISIBLE);
                                                        dec_req.setEnabled(false);
                                                    }

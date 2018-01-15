@@ -18,6 +18,6 @@
         android:id="@+id/action_profile"
         app:showAsAction="always|never"
         android:icon="@drawable/ic_person_black_24dp"
-        android:iconTint="@color/white"
+        android:iconTint="@color/background1"
       android:title="Profile"/>
         </menu>

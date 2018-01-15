@@ -19,8 +19,8 @@ public class Messages {
         this.message = message;
         this.type = type;
         this.msgtime = msgtime;
-        this.from=from;
-        this.date=date;
+        this.from = from;
+        this.date = date;
     }
 
     public String getDate() {

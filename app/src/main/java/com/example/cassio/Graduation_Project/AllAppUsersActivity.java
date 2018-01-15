@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.example.cassio.Graduation_Project.models.AllUsersClass;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Callback;
@@ -27,7 +26,6 @@ public class AllAppUsersActivity extends AppCompatActivity {
     private Toolbar mtool;
     private RecyclerView listUsers;
     private DatabaseReference allusersDBReference;
-    private FirebaseAuth mAth; // to get my own id !!
 
 
     @Override
@@ -38,8 +36,6 @@ public class AllAppUsersActivity extends AppCompatActivity {
 
         mtool = (Toolbar) findViewById(R.id.all_users);
         listUsers = (RecyclerView) findViewById(R.id.recycle_id);
-
-
         setSupportActionBar(mtool);
         getSupportActionBar().setTitle("Profile");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -48,16 +44,12 @@ public class AllAppUsersActivity extends AppCompatActivity {
         listUsers.setLayoutManager(new LinearLayoutManager(this));
 
         allusersDBReference = FirebaseDatabase.getInstance().getReference().child("Users");
-        allusersDBReference.keepSynced(true);//for offline mode
-
-
-// To read data at a path and listen for changes, use the addValueEventListener() !!
+        allusersDBReference.keepSynced(true);
 
 
     }
 
 
-    // because i want to retrieve data on real time so , onstart method is the solution for that
     @Override
     protected void onStart() {
         super.onStart();
@@ -72,7 +64,6 @@ public class AllAppUsersActivity extends AppCompatActivity {
             @Override // to set values for the recycler views
             // so after setting the parameters , i have to fill up the fields ; a55 !
             protected void populateViewHolder(final AllUserViewHolder viewHolder, AllUsersClass model, final int position) {
-                // position now is final :p
                 viewHolder.setUser_name(model.getUserName());
                 viewHolder.setUser_status(model.getUserStatus());
                 viewHolder.setUser_Image(getApplicationContext(), model.getUserImage());
@@ -82,7 +73,7 @@ public class AllAppUsersActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         String targed_person_id = getRef(position).getKey();
-                        Intent goToTargetPersonProfile = new Intent(AllAppUsersActivity.this, friends_profile.class);
+                        Intent goToTargetPersonProfile = new Intent(AllAppUsersActivity.this, friendsProfileActivity.class);
                         goToTargetPersonProfile.putExtra("targed_person_id", targed_person_id);
                         startActivity(goToTargetPersonProfile);
                     }
@@ -122,9 +113,7 @@ public class AllAppUsersActivity extends AppCompatActivity {
 
 
             if (!image.equals("profile_pic")) {
-// OFF LINE CASE  !!!!
-                // I SHOULD O BACK TO USERS PROFILE IN CASE I WILL CREATE ONES , TO VERIFY THE OFFLINE MODE ,
-                // DONT FORGET !
+
                 Picasso.with(context).load(userImage).networkPolicy(NetworkPolicy.OFFLINE)
                         .placeholder(R.drawable.profile_pic).into(image, new Callback() {
                     @Override

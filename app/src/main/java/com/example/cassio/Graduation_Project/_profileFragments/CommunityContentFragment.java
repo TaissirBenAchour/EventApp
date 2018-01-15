@@ -18,13 +18,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.cassio.Graduation_Project.ChatActivity;
+import com.example.cassio.Graduation_Project.MessagesActivity;
 import com.example.cassio.Graduation_Project.R;
-import com.example.cassio.Graduation_Project.friends_profile;
+import com.example.cassio.Graduation_Project.friendsProfileActivity;
 import com.example.cassio.Graduation_Project.models.CommunityListClass;
 import com.example.cassio.Graduation_Project.models.Requests;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -48,12 +48,9 @@ public class CommunityContentFragment extends Fragment {
     String my_id;
     private RecyclerView listOfJoinedPersons;
     private View myListView;
-    private DatabaseReference CommunityRef, UsersRef, ReqRef;
+    private DatabaseReference CommunityRef, UsersRef, Community_Ref, CommunityReq_Ref;
     private FirebaseAuth mAuth;
     private RecyclerView listOfrequests;
-
-
-    private DatabaseReference Community_Ref, CommunityReq_Ref;
 
 
     @Override
@@ -72,7 +69,6 @@ public class CommunityContentFragment extends Fragment {
         CommunityRef = FirebaseDatabase.getInstance().getReference().child("Community").child(my_id);
         UsersRef = FirebaseDatabase.getInstance().getReference().child("Users");
         UsersRef.keepSynced(true);
-        ReqRef = FirebaseDatabase.getInstance().getReference().child("join_Community_requests").child(my_id);
 
 
         Community_Ref = FirebaseDatabase.getInstance().getReference().child("Community");
@@ -92,249 +88,12 @@ public class CommunityContentFragment extends Fragment {
         listOfrequests.setLayoutManager(layoutManager2);
 
 
-
-
-
-        return myListView;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-
-        final FirebaseRecyclerAdapter<Requests, RequestsViewHolder> firebasereqRecyclerAdapter =
-                new FirebaseRecyclerAdapter<Requests, RequestsViewHolder>
-
-                (
-                        Requests.class,
-                        R.layout.request_layout,
-                        RequestsViewHolder.class,
-                        ReqRef)
-                {
-            @Override
-            protected void populateViewHolder(final RequestsViewHolder viewHolder, Requests model, final int position) {
-                final String req_id = getRef(position).getKey();
-
-                DatabaseReference typeRef = getRef(position).child("request_type").getRef();
-                typeRef.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.exists()) {
-                            String type = dataSnapshot.getValue().toString();
-
-
-
-
-                            if (type.equals("request_recieved"))
-                            {
-
-                                UsersRef.child(req_id).addValueEventListener(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(DataSnapshot dataSnapshot) {
-                                        String name = dataSnapshot.child("userName").getValue().toString();
-                                        String status = dataSnapshot.child("userStatus").getValue().toString();
-                                        String image = dataSnapshot.child("userImage").getValue().toString();
-
-
-                                        viewHolder.setUserName(name);
-                                        viewHolder.setUserStatus(status);
-                                        viewHolder.setUserImage(image, getContext());
-
-                                        viewHolder.AcceptBtn.setOnClickListener(new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View view) {
-
-                                                CharSequence options[] = new CharSequence[]{
-
-                                                        "Accept this person"
-
-                                                };
-                                                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                                                builder.setTitle("Verification");
-                                                builder.setItems(options, new DialogInterface.OnClickListener() {
-                                                    @Override
-                                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                                        if (i == 0) {
-                                                            Calendar date = Calendar.getInstance();
-                                                            final SimpleDateFormat currentDate = new SimpleDateFormat("dd-MMM-yyyy");
-                                                            final String saveCurrentDate = currentDate.format(date.getTime());
-
-                                                            Community_Ref.child(my_id).child(req_id).child("date").setValue(saveCurrentDate)
-                                                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-
-
-                                                                        @Override
-                                                                        public void onSuccess(Void aVoid) {
-                                                                            Community_Ref.child(req_id).child(my_id).child("date").setValue(saveCurrentDate).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                                                @Override
-                                                                                public void onSuccess(Void aVoid) {
-                                                                                    CommunityReq_Ref.child(my_id).child(req_id).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                                                        @Override
-                                                                                        public void onComplete(@NonNull Task<Void> task) {
-                                                                                            if (task.isSuccessful()) {
-                                                                                                CommunityReq_Ref.child(req_id).child(my_id).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                                                                    @Override
-                                                                                                    public void onComplete(@NonNull Task<Void> task) {
-                                                                                                        if (task.isSuccessful()) {
-
-                                                                                                            Toast.makeText(getContext(), "it works ! ", Toast.LENGTH_SHORT).show();
-
-                                                                                                        }
-                                                                                                    }
-                                                                                                });
-                                                                                            }
-                                                                                        }
-                                                                                    });
-                                                                                }
-                                                                            });
-
-                                                                        }
-                                                                    });
-
-
-                                                        }
-
-                                                    }
-                                                });
-                                                builder.show();
-                                            }
-                                        });
-
-
-                                        viewHolder.DeclineBtn.setOnClickListener(new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View view) {
-
-                                                CommunityReq_Ref.child(my_id).child(req_id).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                    @Override
-                                                    public void onComplete(@NonNull Task<Void> task) {
-                                                        if (task.isSuccessful())
-                                                        {
-                                                            CommunityReq_Ref.child(req_id).child(my_id).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                                @Override
-                                                                public void onComplete(@NonNull Task<Void> task) {
-                                                                    if (task.isSuccessful()){
-                                                                        Toast.makeText(getContext(), "cancel successful", Toast.LENGTH_SHORT).show();
-
-                                                                    }}
-                                                            });
-                                                        }
-                                                    }
-                                                });
-
-                                            }
-                                        });
-
-                                    }
-
-                                    @Override
-                                    public void onCancelled(DatabaseError databaseError) {
-
-                                    }
-                                });
-
-                            }
-
-                            else if (type.equals("request_sent")) {
-                                viewHolder.AcceptBtn.setText("cancel req");
-                                viewHolder.DeclineBtn.setVisibility(View.INVISIBLE);
-
-
-
-
-                                UsersRef.child(req_id).addValueEventListener(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(DataSnapshot dataSnapshot) {
-                                        String name = dataSnapshot.child("userName").getValue().toString();
-                                        String status = dataSnapshot.child("userStatus").getValue().toString();
-                                        String image = dataSnapshot.child("userImage").getValue().toString();
-
-
-                                        viewHolder.setUserName(name);
-                                        viewHolder.setUserStatus(status);
-                                        viewHolder.setUserImage(image, getContext());
-
-                                        viewHolder.AcceptBtn.setOnClickListener(new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View view) {
-
-                                                CharSequence options[] = new CharSequence[]{
-
-                                                        "cancel Req"
-
-                                                };
-                                                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                                                builder.setTitle("Verification");
-                                                builder.setItems(options, new DialogInterface.OnClickListener() {
-                                                    @Override
-                                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                                        if (i == 0) {
-                                                            CommunityReq_Ref.child(my_id).child(req_id).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                                @Override
-                                                                public void onComplete(@NonNull Task<Void> task) {
-                                                                    if (task.isSuccessful())
-                                                                    {
-                                                                        CommunityReq_Ref.child(req_id).child(my_id).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                                            @Override
-                                                                            public void onComplete(@NonNull Task<Void> task) {
-                                                                                if (task.isSuccessful()){
-
-
-                                                                                    Toast.makeText(getContext(), "cancel successful", Toast.LENGTH_SHORT).show();
-                                                                                }}
-                                                                        });
-                                                                    }
-                                                                }
-                                                            });
-
-                                                        }
-
-                                                    }
-                                                });
-                                                builder.show();
-
-                                            }
-                                        });
-
-
-                                    }
-
-                                    @Override
-                                    public void onCancelled(DatabaseError databaseError) {
-
-                                    }
-                                });
-
-
-
-
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-
-
-            }
-        };
-
-        listOfrequests.setAdapter(firebasereqRecyclerAdapter);
-
-
-
-
         FirebaseRecyclerAdapter<CommunityListClass, CommunityViewHolder> firebaseRecyclerAdapter
                 = new FirebaseRecyclerAdapter<CommunityListClass, CommunityViewHolder>(
                 CommunityListClass.class,
                 R.layout.dispaly_users_layout,
                 CommunityViewHolder.class,
-                CommunityRef)
-        {
+                CommunityRef) {
             @Override
             protected void populateViewHolder(final CommunityViewHolder viewHolder, final CommunityListClass model, int position) {
                 final String listCommunityUid = getRef(position).getKey();
@@ -374,12 +133,12 @@ public class CommunityContentFragment extends Fragment {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
                                         if (i == 0) {
-                                            Intent goToprofile = new Intent(getContext(), friends_profile.class);
+                                            Intent goToprofile = new Intent(getContext(), friendsProfileActivity.class);
                                             goToprofile.putExtra("targed_person_id", listCommunityUid);
                                             startActivity(goToprofile);
                                         }
                                         if (i == 1) {
-                                            Intent goToChat = new Intent(getContext(), ChatActivity.class);
+                                            Intent goToChat = new Intent(getContext(), MessagesActivity.class);
                                             goToChat.putExtra("targed_person_id", listCommunityUid);
                                             goToChat.putExtra("user_name", name);
                                             startActivity(goToChat);
@@ -404,6 +163,227 @@ public class CommunityContentFragment extends Fragment {
         };
 
         listOfJoinedPersons.setAdapter(firebaseRecyclerAdapter);
+
+
+        return myListView;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+
+        final FirebaseRecyclerAdapter<Requests, RequestsViewHolder> firebasereqRecyclerAdapter =
+                new FirebaseRecyclerAdapter<Requests, RequestsViewHolder>
+
+                        (
+                                Requests.class,
+                                R.layout.request_layout,
+                                RequestsViewHolder.class,
+                                CommunityRef) {
+                    @Override
+                    protected void populateViewHolder(final RequestsViewHolder viewHolder, Requests model, final int position) {
+                        final String req_id = getRef(position).getKey();
+
+                        DatabaseReference typeRef = getRef(position).child("request_type").getRef();
+                        typeRef.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                if (dataSnapshot.exists()) {
+                                    String type = dataSnapshot.getValue().toString();
+
+
+                                    if (type.equals("request_recieved")) {
+
+                                        UsersRef.child(req_id).addValueEventListener(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                                String name = dataSnapshot.child("userName").getValue().toString();
+                                                String status = dataSnapshot.child("userStatus").getValue().toString();
+                                                String image = dataSnapshot.child("userImage").getValue().toString();
+
+
+                                                viewHolder.setUserName(name);
+                                                viewHolder.setUserStatus(status);
+                                                viewHolder.setUserImage(image, getContext());
+
+                                                viewHolder.AcceptBtn.setOnClickListener(new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View view) {
+
+                                                        CharSequence options[] = new CharSequence[]{
+
+                                                                "Accept this person"
+
+                                                        };
+                                                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                                                        builder.setTitle("Verification");
+                                                        builder.setItems(options, new DialogInterface.OnClickListener() {
+                                                            @Override
+                                                            public void onClick(DialogInterface dialogInterface, int i) {
+                                                                if (i == 0) {
+                                                                    Calendar date = Calendar.getInstance();
+                                                                    final SimpleDateFormat currentDate = new SimpleDateFormat("dd-MMM-yyyy");
+                                                                    final String saveCurrentDate = currentDate.format(date.getTime());
+
+                                                                    Community_Ref.child(my_id).child(req_id).child("date").setValue(saveCurrentDate)
+                                                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+
+
+                                                                                @Override
+                                                                                public void onSuccess(Void aVoid) {
+                                                                                    Community_Ref.child(req_id).child(my_id).child("date").setValue(saveCurrentDate).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                                        @Override
+                                                                                        public void onSuccess(Void aVoid) {
+                                                                                            CommunityReq_Ref.child(my_id).child(req_id).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                                                @Override
+                                                                                                public void onComplete(@NonNull Task<Void> task) {
+                                                                                                    if (task.isSuccessful()) {
+                                                                                                        CommunityReq_Ref.child(req_id).child(my_id).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                                                            @Override
+                                                                                                            public void onComplete(@NonNull Task<Void> task) {
+                                                                                                                if (task.isSuccessful()) {
+
+                                                                                                                    Toast.makeText(getContext(), "it works ! ", Toast.LENGTH_SHORT).show();
+
+                                                                                                                }
+                                                                                                            }
+                                                                                                        });
+                                                                                                    }
+                                                                                                }
+                                                                                            });
+                                                                                        }
+                                                                                    });
+
+                                                                                }
+                                                                            });
+
+
+                                                                }
+
+                                                            }
+                                                        });
+                                                        builder.show();
+                                                    }
+                                                });
+
+
+                                                viewHolder.DeclineBtn.setOnClickListener(new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View view) {
+
+                                                        CommunityReq_Ref.child(my_id).child(req_id).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                            @Override
+                                                            public void onComplete(@NonNull Task<Void> task) {
+                                                                if (task.isSuccessful()) {
+                                                                    CommunityReq_Ref.child(req_id).child(my_id).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                        @Override
+                                                                        public void onComplete(@NonNull Task<Void> task) {
+                                                                            if (task.isSuccessful()) {
+                                                                                Toast.makeText(getContext(), "cancel successful", Toast.LENGTH_SHORT).show();
+
+                                                                            }
+                                                                        }
+                                                                    });
+                                                                }
+                                                            }
+                                                        });
+
+                                                    }
+                                                });
+
+                                            }
+
+                                            @Override
+                                            public void onCancelled(DatabaseError databaseError) {
+
+                                            }
+                                        });
+
+                                    } else if (type.equals("request_sent")) {
+                                        viewHolder.DeclineBtn.setVisibility(View.INVISIBLE);
+
+
+                                        UsersRef.child(req_id).addValueEventListener(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                                String name = dataSnapshot.child("userName").getValue().toString();
+                                                String status = dataSnapshot.child("userStatus").getValue().toString();
+                                                String image = dataSnapshot.child("userImage").getValue().toString();
+
+
+                                                viewHolder.setUserName(name);
+                                                viewHolder.setUserStatus(status);
+                                                viewHolder.setUserImage(image, getContext());
+
+                                                viewHolder.AcceptBtn.setOnClickListener(new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View view) {
+
+                                                        CharSequence options[] = new CharSequence[]{
+
+                                                                "cancel Req"
+
+                                                        };
+                                                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                                                        builder.setTitle("Verification");
+                                                        builder.setItems(options, new DialogInterface.OnClickListener() {
+                                                            @Override
+                                                            public void onClick(DialogInterface dialogInterface, int i) {
+                                                                if (i == 0) {
+                                                                    CommunityReq_Ref.child(my_id).child(req_id).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                        @Override
+                                                                        public void onComplete(@NonNull Task<Void> task) {
+                                                                            if (task.isSuccessful()) {
+                                                                                CommunityReq_Ref.child(req_id).child(my_id).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                                    @Override
+                                                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                                                        if (task.isSuccessful()) {
+
+
+                                                                                            Toast.makeText(getContext(), "cancel successful", Toast.LENGTH_SHORT).show();
+                                                                                        }
+                                                                                    }
+                                                                                });
+                                                                            }
+                                                                        }
+                                                                    });
+
+                                                                }
+
+                                                            }
+                                                        });
+                                                        builder.show();
+
+                                                    }
+                                                });
+
+
+                                            }
+
+                                            @Override
+                                            public void onCancelled(DatabaseError databaseError) {
+
+                                            }
+                                        });
+
+
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
+
+                    }
+                };
+
+        listOfrequests.setAdapter(firebasereqRecyclerAdapter);
+
 
     }
 
@@ -431,9 +411,7 @@ public class CommunityContentFragment extends Fragment {
 
 
             if (!image.equals("profile_pic")) {
-// OFF LINE CASE  !!!!
-                // I SHOULD O BACK TO USERS PROFILE IN CASE I WILL CREATE ONES , TO VERIFY THE OFFLINE MODE ,
-                // DONT FORGET !
+
                 Picasso.with(context).load(user_image).networkPolicy(NetworkPolicy.OFFLINE)
                         .placeholder(R.drawable.profile_pic).into(image, new Callback() {
                     @Override
@@ -453,14 +431,14 @@ public class CommunityContentFragment extends Fragment {
 
     public static class RequestsViewHolder extends RecyclerView.ViewHolder {
         View mView;
-        Button AcceptBtn;
-        Button DeclineBtn;
+        ImageButton AcceptBtn;
+        ImageButton DeclineBtn;
 
         public RequestsViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
-            AcceptBtn = (Button) mView.findViewById(R.id.acceptbtn_id);
-            DeclineBtn = (Button) mView.findViewById(R.id.declinebtn_id);
+            AcceptBtn = (ImageButton) mView.findViewById(R.id.acceptbtn_id);
+            DeclineBtn = (ImageButton) mView.findViewById(R.id.declinebtn_id);
         }
 
         public void setUserStatus(String userStatus) {
@@ -496,9 +474,7 @@ public class CommunityContentFragment extends Fragment {
         }
 
 
-
     }
-
 
 
 }

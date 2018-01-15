@@ -39,10 +39,10 @@
             android:layout_gravity="center"
             android:layout_marginTop="100dp"
             android:fontFamily="casual"
-            android:text="Direct is relaxing"
+            android:text="A different journey is about to start"
             android:textAlignment="center"
             android:textColor="@color/background1"
-            android:textSize="30sp"
+            android:textSize="20dp"
             />
 
 

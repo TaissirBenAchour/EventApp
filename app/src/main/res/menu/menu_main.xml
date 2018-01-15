@@ -16,7 +16,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ProfileActivity">
+    tools:context=".FragmentsUnionActivity">
     <item
 
         android:id="@+id/action_settings"
@@ -37,6 +37,6 @@
         android:id="@+id/action_choice"
         app:showAsAction="always|never"
         android:icon="@drawable/ic_wb_incandescent_black_24dp"
-        android:iconTint="@color/white"
+        android:iconTint="@color/black"
         android:title="Profile"/>
 </menu>

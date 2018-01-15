@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,9 +18,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
-import com.google.firebase.auth.FirebaseAuthUserCollisionException;
-import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -107,7 +103,7 @@ public class loginActivity extends AppCompatActivity {
                                 usersReference.child(current_id).child("deviceToken").setValue(dviceToken).addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
-                                        Intent goToProfileIntent = new Intent(loginActivity.this,ProfileActivity.class);
+                                        Intent goToProfileIntent = new Intent(loginActivity.this,FragmentsUnionActivity.class);
                                         goToProfileIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                         startActivity(goToProfileIntent);
                                         finish();
@@ -136,7 +132,7 @@ public class loginActivity extends AppCompatActivity {
     private void updateUI(FirebaseUser user) {
         if (user != null) {
 
-            startActivity(new Intent(loginActivity.this, ProfileActivity.class));
+            startActivity(new Intent(loginActivity.this, FragmentsUnionActivity.class));
         } else {
             //returns to login
         }

@@ -109,15 +109,14 @@ public class RegisterActivity extends AppCompatActivity {
                                 storeUserDefaultDataReference.child("userStatus").setValue(" I am productive !");
                                 storeUserDefaultDataReference.child("userImage").setValue("profile_pic");
                                 storeUserDefaultDataReference.child("deviceToken").setValue(dviceToken);
-                                storeUserDefaultDataReference.child("userThumbImage").setValue("default_image") // from crop image
+                                storeUserDefaultDataReference.child("userThumbImage").setValue("default_image")
                                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
-                                                // check if data is well stored in database
                                                 if (task.isSuccessful()) {
 
 
-                                                    Intent goToProfileIntent = new Intent(RegisterActivity.this, ProfileActivity.class);
+                                                    Intent goToProfileIntent = new Intent(RegisterActivity.this, FragmentsUnionActivity.class);
                                                     goToProfileIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                                     startActivity(goToProfileIntent);
                                                     finish();

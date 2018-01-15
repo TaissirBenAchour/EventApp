@@ -5,9 +5,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.example.cassio.Graduation_Project._profileFragments.ChatContentFragment;
+import com.example.cassio.Graduation_Project._profileFragments.MessagesListContentFragment;
 import com.example.cassio.Graduation_Project._profileFragments.CommunityContentFragment;
-import com.example.cassio.Graduation_Project._profileFragments.ProfileContentFragment;
+import com.example.cassio.Graduation_Project._profileFragments.MainProfileContentFragment;
 import com.example.cassio.Graduation_Project._profileFragments.SavedEventsContentFragment;
 
 /**
@@ -25,12 +25,12 @@ class TabPagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                ProfileContentFragment profileContentFragment= new ProfileContentFragment();
-                return profileContentFragment;
+                MainProfileContentFragment mainProfileContentFragment = new MainProfileContentFragment();
+                return mainProfileContentFragment;
 
             case 1:
-                ChatContentFragment chatContentFragment =new ChatContentFragment();
-                return chatContentFragment;
+                MessagesListContentFragment messagesListContentFragment =new MessagesListContentFragment();
+                return messagesListContentFragment;
             case 2:
                 CommunityContentFragment communityContentFragment = new CommunityContentFragment();
                 return communityContentFragment;

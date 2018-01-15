@@ -10,7 +10,7 @@ import com.squareup.picasso.Picasso;
  * Created by cassio on 22/12/17.
  */
 
-public class AppOffLine_Class_ extends Application {
+public class OfflineModeActivity extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
