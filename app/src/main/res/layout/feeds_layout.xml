@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/image_comment"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/profile_pic"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+    <TextView
+        android:id="@+id/username_comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="user name"
+        android:textStyle="bold"
+        android:textSize="19dp"
+        android:layout_marginTop="10dp"
+        android:paddingLeft="10dp"
+        />
+        <TextView
+            android:id="@+id/time_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="time of comment"
+            android:paddingLeft="10dp"
+            />
+    </LinearLayout>
+</LinearLayout>
+    <TextView
+        android:id="@+id/commentText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="user name"
+        android:textStyle="bold"
+        android:textSize="19dp"
+        android:layout_marginTop="15dp"
+        android:paddingLeft="10dp"
+        android:background="@color/white"
+        />
+</LinearLayout>

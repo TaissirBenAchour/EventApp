@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.cassio.Graduation_Project.SurveyActivity">
+    <LinearLayout
+        android:id="@+id/l1"
+        android:layout_width="match_parent"
+        android:layout_height="190dp"
+        android:orientation="vertical"
+        android:background="@color/dot_dark_screen2">
+        <TextView
+            android:textColor="@color/lightorange"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Question 1"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:textSize="60sp"
+            android:textStyle="bold"/>
+        <TextView
+            android:textColor="@color/lightorange"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/quest1"
+            android:layout_gravity="center"
+            android:textStyle="bold"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center">
+            <Button
+                android:id="@+id/yes_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="35dp"
+                android:text="yes"/>
+            <Button
+                android:id="@+id/no_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="35dp"
+                android:text="No"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_below="@+id/l1"
+        android:id="@+id/l2"
+        android:layout_width="match_parent"
+        android:layout_height="190dp"
+        android:orientation="vertical"
+        android:background="@color/dot_dark_screen1">
+        <TextView
+            android:textColor="@color/lightorange"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Question 2"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:textSize="60sp"
+            android:textStyle="bold"/>
+        <TextView
+            android:textColor="@color/lightorange"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/quest2"
+            android:layout_gravity="center"
+            android:textStyle="bold"
+            android:gravity="center"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+           >
+            <EditText
+                android:id="@+id/sugg_txt_id"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/input_outline"
+                android:layout_margin="15dp"
+                android:hint=" write your suggestions .."
+                android:fontFamily="sans-serif-condensed"
+                android:padding="5dp"
+                />
+            <Button
+                android:id="@+id/submit_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Submit"
+                android:layout_gravity="center"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_below="@+id/l2"
+        android:id="@+id/l3"
+        android:layout_width="match_parent"
+        android:layout_height="190dp"
+        android:orientation="vertical"
+        android:background="@color/dot_dark_screen4">
+        <TextView
+            android:textColor="@color/lightorange"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Question 3"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:textSize="60sp"
+            android:textStyle="bold"/>
+        <TextView
+            android:textColor="@color/lightorange"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/quest3"
+            android:layout_gravity="center"
+            android:textStyle="bold"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center">
+            <RatingBar
+                android:id="@+id/rate_id"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="15dp"/>
+            <ImageView
+                android:id="@+id/check_id"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="15dp"
+                android:src="@drawable/ic_check_black_24dp"
+                android:tint="@color/white"
+                android:onClick="rateMe"
+                android:background="@drawable/check"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+</RelativeLayout>

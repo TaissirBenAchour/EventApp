@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:orientation="vertical"-->
+    <!--&gt;-->
+
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:orientation="horizontal">-->
+
+    <!--<android.support.v7.widget.CardView-->
+    <!--android:id="@+id/available_events_id"-->
+    <!--android:layout_width="180dp"-->
+    <!--android:layout_height="140dp"-->
+
+    <!--android:layout_margin="5dp"-->
+    <!--android:background="@drawable/test"-->
+    <!--app:cardBackgroundColor="#25e45cab">-->
+
+    <!--<ImageView-->
+    <!--android:layout_width="150dp"-->
+    <!--android:layout_height="80dp"-->
+    <!--android:layout_marginTop="70dp"-->
+    <!--android:layout_marginLeft="90dp"-->
+    <!--android:background="@drawable/cards" />-->
+
+    <!--<View-->
+
+
+    <!--android:layout_width="150dp"-->
+    <!--android:layout_height="1dp"-->
+    <!--android:layout_marginLeft="25dp"-->
+    <!--android:layout_marginTop="70dp"-->
+    <!--android:alpha="0.3"-->
+    <!--android:background="@android:color/black"-->
+
+    <!--/>-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginTop="-15dp"-->
+    <!--android:orientation="horizontal">-->
+
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginLeft="25dp"-->
+    <!--android:layout_marginTop="30dp"-->
+    <!--android:fontFamily="cursive"-->
+    <!--android:text="A"-->
+    <!--android:textSize="50dp" />-->
+
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginTop="30dp"-->
+    <!--android:fontFamily="sans-serif-condensed"-->
+    <!--android:text="ll available Events" />-->
+    <!--</LinearLayout>-->
+
+
+    <!--</android.support.v7.widget.CardView>-->
+
+
+    <!--<android.support.v7.widget.CardView-->
+    <!--android:id="@+id/appealscard_id"-->
+    <!--android:layout_width="185dp"-->
+    <!--android:layout_height="140dp"-->
+    <!--android:layout_marginLeft="2dp"-->
+    <!--android:layout_marginRight="15dp"-->
+    <!--android:layout_marginTop="5dp"-->
+    <!--android:background="@drawable/test"-->
+    <!--android:elevation="10dp"-->
+    <!--app:cardBackgroundColor="#255ce2e4">-->
+
+
+    <!--<ImageView-->
+    <!--android:layout_width="150dp"-->
+    <!--android:layout_height="100dp"-->
+    <!--android:background="@drawable/cards2"-->
+    <!--android:layout_marginLeft="50dp"-->
+    <!--/>-->
+    <!--<View-->
+
+
+    <!--android:layout_width="150dp"-->
+    <!--android:layout_height="1dp"-->
+    <!--android:layout_marginLeft="25dp"-->
+    <!--android:layout_marginTop="70dp"-->
+    <!--android:alpha="0.3"-->
+    <!--android:background="@android:color/black"-->
+
+    <!--/>-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginTop="-15dp"-->
+    <!--android:orientation="horizontal">-->
+
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginLeft="25dp"-->
+    <!--android:layout_marginTop="30dp"-->
+    <!--android:fontFamily="cursive"-->
+    <!--android:text="E"-->
+    <!--android:textSize="50dp" />-->
+
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginTop="30dp"-->
+    <!--android:fontFamily="sans-serif-condensed"-->
+    <!--android:text="vent Plan" />-->
+    <!--</LinearLayout>-->
+
+
+    <!--</android.support.v7.widget.CardView>-->
+    <!--</LinearLayout>-->
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:orientation="horizontal">-->
+
+    <!--<android.support.v7.widget.CardView-->
+    <!--android:id="@+id/survey_id"-->
+    <!--android:layout_width="180dp"-->
+    <!--android:layout_height="140dp"-->
+
+    <!--android:layout_margin="5dp"-->
+    <!--android:background="@drawable/test"-->
+    <!--app:cardBackgroundColor="#25e2e45c">-->
+
+    <!--<ImageView-->
+    <!--android:layout_width="170dp"-->
+    <!--android:layout_height="290dp"-->
+    <!--android:layout_marginTop="30dp"-->
+    <!--android:background="@drawable/cards4" />-->
+
+    <!--<View-->
+
+
+    <!--android:layout_width="150dp"-->
+    <!--android:layout_height="1dp"-->
+    <!--android:layout_marginLeft="25dp"-->
+    <!--android:layout_marginTop="70dp"-->
+    <!--android:alpha="0.3"-->
+    <!--android:background="@android:color/black"-->
+
+    <!--/>-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginTop="-15dp"-->
+    <!--android:orientation="horizontal">-->
+
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginLeft="25dp"-->
+    <!--android:layout_marginTop="30dp"-->
+    <!--android:fontFamily="cursive"-->
+    <!--android:text="C"-->
+    <!--android:textSize="50dp" />-->
+
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginTop="30dp"-->
+    <!--android:fontFamily="sans-serif-condensed"-->
+    <!--android:text="alendar" />-->
+    <!--</LinearLayout>-->
+
+
+    <!--</android.support.v7.widget.CardView>-->
+
+
+    <!--<android.support.v7.widget.CardView-->
+    <!--android:id="@+id/logistics_id"-->
+    <!--android:layout_width="185dp"-->
+    <!--android:layout_height="140dp"-->
+    <!--android:layout_marginLeft="2dp"-->
+    <!--android:layout_marginRight="15dp"-->
+    <!--android:layout_marginTop="5dp"-->
+    <!--android:background="@drawable/test"-->
+    <!--android:elevation="10dp"-->
+    <!--app:cardBackgroundColor="#257e3d12">-->
+
+
+    <!--<ImageView-->
+    <!--android:layout_width="150dp"-->
+    <!--android:layout_height="90dp"-->
+    <!--android:background="@drawable/cards3"-->
+    <!--android:layout_marginLeft="100dp" />-->
+    <!--<View-->
+
+
+    <!--android:layout_width="150dp"-->
+    <!--android:layout_height="1dp"-->
+    <!--android:layout_marginLeft="25dp"-->
+    <!--android:layout_marginTop="70dp"-->
+    <!--android:alpha="0.3"-->
+    <!--android:background="@android:color/black"-->
+
+    <!--/>-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginTop="-15dp"-->
+    <!--android:orientation="horizontal">-->
+
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginLeft="25dp"-->
+    <!--android:layout_marginTop="30dp"-->
+    <!--android:fontFamily="cursive"-->
+    <!--android:text="S"-->
+    <!--android:textSize="50dp" />-->
+
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginTop="30dp"-->
+    <!--android:fontFamily="sans-serif-condensed"-->
+    <!--android:text="peakers" />-->
+    <!--</LinearLayout>-->
+
+
+    <!--</android.support.v7.widget.CardView>-->
+    <!--</LinearLayout>-->
+    <!--</LinearLayout>-->
+
+</android.support.constraint.ConstraintLayout>
