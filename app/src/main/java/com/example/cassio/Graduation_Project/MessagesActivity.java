@@ -77,7 +77,7 @@ public class MessagesActivity extends AppCompatActivity {
 
 
 
-        Toast.makeText(MessagesActivity.this,messageRecieverName,Toast.LENGTH_SHORT).show();
+       // Toast.makeText(MessagesActivity.this,messageRecieverName,Toast.LENGTH_SHORT).show();
 
 
         mtool = (Toolbar) findViewById(R.id.toolbar_chat_id);

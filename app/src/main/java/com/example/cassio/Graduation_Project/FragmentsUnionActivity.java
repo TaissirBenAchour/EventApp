@@ -7,31 +7,28 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.LinearLayout;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.nightonke.boommenu.BoomButtons.HamButton;
+import com.nightonke.boommenu.BoomButtons.OnBMClickListener;
 import com.nightonke.boommenu.BoomMenuButton;
 
 public class FragmentsUnionActivity extends AppCompatActivity {
 
     public static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 123;
-    String key ;
+    String key;
     BoomMenuButton boomMenuButton;
+    BoomMenuButton bmb;
     private FirebaseAuth mAuth;
     private DatabaseReference storedDataReference;
     private ViewPager myMainViewPager;
     private TabLayout mytabLayout;
-    private Toolbar toolbar;
     private TabPagerAdapter mainPagerAdapter;
     private boolean init = false;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,20 +42,65 @@ public class FragmentsUnionActivity extends AppCompatActivity {
         storedDataReference = FirebaseDatabase.getInstance().getReference().child("Users").child(get_Unique_Id);
         storedDataReference.keepSynced(true);
         myMainViewPager = (ViewPager) findViewById(R.id.viewpager_fragment);
-      toolbar = (Toolbar) findViewById(R.id.appbar_profile);
         mainPagerAdapter = new TabPagerAdapter(getSupportFragmentManager());
         myMainViewPager.setAdapter(mainPagerAdapter);
         mytabLayout = (TabLayout) findViewById(R.id.main_tab_id);
         mytabLayout.setupWithViewPager(myMainViewPager);
-       setSupportActionBar(toolbar);
-      getSupportActionBar().setTitle("E-App");
+
+        bmb = (BoomMenuButton) findViewById(R.id.bmb4);
+
+
+        HamButton.Builder newBuilder1 = new HamButton.Builder()
+                .normalTextRes(R.string.Setting)
+                .normalImageRes(R.drawable.ic_settings_black_24dp)
+                .listener(new OnBMClickListener() {
+                    @Override
+                    public void onBoomButtonClick(int index) {
+                        Intent intent1 = new Intent(FragmentsUnionActivity.this, SettingsActivity.class);
+                        startActivity(intent1);
+                    }
+                });
+        bmb.addBuilder(newBuilder1);
+        HamButton.Builder newBuilder2 = new HamButton.Builder()
+                .normalTextRes(R.string.AnsweraSurvey)
+                .normalImageRes(R.drawable.ic_content_paste_black_24dp)
+                .listener(new OnBMClickListener() {
+                    @Override
+                    public void onBoomButtonClick(int index) {
+                        Intent intent2 = new Intent(FragmentsUnionActivity.this, SurveyActivity.class);
+                        startActivity(intent2);
+                    }
+                });
+        bmb.addBuilder(newBuilder2);
+        HamButton.Builder newBuilder3 = new HamButton.Builder()
+                .normalTextRes(R.string.logout)
+                .normalImageRes(R.drawable.ic_subdirectory_arrow_left_black_24dp)
+                .listener(new OnBMClickListener() {
+                    @Override
+                    public void onBoomButtonClick(int index) {
+                        mAuth.signOut();
+                        logout_account();
+                    }
+                });
+        bmb.addBuilder(newBuilder3);
+        HamButton.Builder newBuilder4 = new HamButton.Builder()
+                .normalTextRes(R.string.ignore)
+                .normalImageRes(R.drawable.ic_subdirectory_arrow_right_black_24dp)
+                .listener(new OnBMClickListener() {
+                    @Override
+                    public void onBoomButtonClick(int index) {
+
+                    }
+                });
+        bmb.addBuilder(newBuilder4);
+
 
         mytabLayout.getTabAt(0).setIcon(R.drawable.ic_home_black_24dp);
         mytabLayout.getTabAt(1).setIcon(R.drawable.ic_perm_identity_black_24dp);
         mytabLayout.getTabAt(2).setIcon(R.drawable.ic_chat_bubble_outline_black_24dp);
         mytabLayout.getTabAt(3).setIcon(R.drawable.ic_people_outline_black_24dp);
         myMainViewPager.setOffscreenPageLimit(3);
-        LinearLayout linearLayout = (LinearLayout)mytabLayout.getChildAt(0);
+        LinearLayout linearLayout = (LinearLayout) mytabLayout.getChildAt(0);
         linearLayout.setShowDividers(LinearLayout.SHOW_DIVIDER_MIDDLE);
         GradientDrawable drawable = new GradientDrawable();
         drawable.setColor(Color.LTGRAY);
@@ -69,73 +111,19 @@ public class FragmentsUnionActivity extends AppCompatActivity {
         mytabLayout.setSelectedTabIndicatorHeight((int) (1 * getResources().getDisplayMetrics().density));
 
 
-
-
-
-
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-    if (currentUser == null) {
-    Intent intent = new Intent(FragmentsUnionActivity.this, loginActivity.class);
-        startActivity(intent);
-        finish();
-    }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+        if (currentUser == null) {
+            Intent intent = new Intent(FragmentsUnionActivity.this, loginActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        super.onOptionsItemSelected(item);
-        if (item.getItemId() == R.id.action_logout) {
-            mAuth.signOut();
-            logout_account();
-        }
-
-        if (item.getItemId() == R.id.action_settings) {
-            Intent goToSettingsPageIntent = new Intent(FragmentsUnionActivity.this, SettingsActivity.class);
-            startActivity(goToSettingsPageIntent);
-        }
-        if (item.getItemId() == R.id.action_survey) {
-            Intent goToSurveyPageIntent = new Intent(FragmentsUnionActivity.this, SurveyActivity.class);
-            startActivity(goToSurveyPageIntent);
-        }
-        if (item.getItemId() == R.id.action_choice) {
-            Intent goToSettingsPageIntent = new Intent(FragmentsUnionActivity.this, AppealForEvents.class);
-            startActivity(goToSettingsPageIntent);
-        }
-        if (item.getItemId() == R.id.action_users) {
-            Intent goToSettingsPageIntent = new Intent(FragmentsUnionActivity.this, AllAppUsersActivity.class);
-            startActivity(goToSettingsPageIntent);
-        }
-        if (item.getItemId() == R.id.action_event) {
-            Intent goToSettingsPageIntent = new Intent(FragmentsUnionActivity.this, AvailableEventActivity.class);
-            startActivity(goToSettingsPageIntent);
-        }
-        if (item.getItemId() == R.id.action_speaker) {
-            Intent goToSettingsPageIntent = new Intent(FragmentsUnionActivity.this, LogisticsActivity.class);
-            startActivity(goToSettingsPageIntent);
-        }
-        if (item.getItemId() == R.id.action_appeal) {
-            Intent goToSettingsPageIntent = new Intent(FragmentsUnionActivity.this, AppealsList.class);
-            startActivity(goToSettingsPageIntent);
-        }
-        if (item.getItemId() == R.id.action_calendar) {
-            Intent goToSettingsPageIntent = new Intent(FragmentsUnionActivity.this, testCalendar.class);
-            startActivity(goToSettingsPageIntent);
-        }
-
-        return true;
-    }
 
     private void logout_account() {
         FirebaseUser currentUser = mAuth.getCurrentUser();
@@ -148,8 +136,7 @@ public class FragmentsUnionActivity extends AppCompatActivity {
     }
 
 
-
-    }
+}
 
 
 

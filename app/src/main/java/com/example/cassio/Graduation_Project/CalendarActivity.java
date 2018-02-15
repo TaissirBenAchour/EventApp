@@ -110,10 +110,8 @@ public class CalendarActivity extends AppCompatActivity {
                                                                                   String title = dataSnapshot.child("title").getValue().toString();
 
                                                                                   while (saved_event_id.equals(events_id)) {
-                                                                                      Toast.makeText(CalendarActivity.this, events_id, Toast.LENGTH_SHORT).show();
                                                                                       if (month_in_saved_event.equals(month)){
 
-                                                                                              Toast.makeText(CalendarActivity.this, month, Toast.LENGTH_SHORT).show();
                                                                                           Child.add(new EventClass(title));
 
                                                                                       }

@@ -125,7 +125,6 @@ public class MainProfileContentFragment extends Fragment {
                                     });
 
                                 } else {
-                                    // Toast.makeText(getContext(), "your event has not been rated", Toast.LENGTH_SHORT).show();
                                 }
 
                             }

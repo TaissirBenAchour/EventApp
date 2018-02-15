@@ -80,7 +80,6 @@ public class FreindsListFragment extends Fragment {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         viewHolder.setDate(model.getDate());
-                        Toast.makeText(getContext(), dataSnapshot.toString(), Toast.LENGTH_SHORT).show();
 
                     }
 

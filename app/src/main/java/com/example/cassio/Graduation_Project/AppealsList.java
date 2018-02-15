@@ -1,5 +1,6 @@
 package com.example.cassio.Graduation_Project;
 
+import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -34,7 +35,7 @@ import java.util.List;
  * Created by cassio on 21/01/18.
  */
 
-public class AppealsList extends AppCompatActivity {
+public class AppealsList extends android.support.v4.app.Fragment {
     private FirebaseAuth mAuth;
     private String my_id;
     private  Bundle bundle = new Bundle();
@@ -42,19 +43,25 @@ public class AppealsList extends AppCompatActivity {
 
     private RecyclerView recycler_view_event,recycler_view_committee ;
 
+    View mView;
+
+
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_appeals_list);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState)
+    {
+        mView = inflater.inflate(R.layout.activity_appeals_list, container, false);
+
 
 
         //Define recycleview
-        recycler_view_event = (RecyclerView) findViewById(R.id.listAppeals_id);
-        recycler_view_committee = (RecyclerView) findViewById(R.id.listcommitteeAppeal_id);
-        LinearLayoutManager layoutManager1 = new LinearLayoutManager(this);
+        recycler_view_event = (RecyclerView) mView.findViewById(R.id.listAppeals_id);
+        recycler_view_committee = (RecyclerView) mView.findViewById(R.id.listcommitteeAppeal_id);
+        LinearLayoutManager layoutManager1 = new LinearLayoutManager(getContext());
 
        recycler_view_event.setLayoutManager(layoutManager1);
-        LinearLayoutManager layoutManager2 = new LinearLayoutManager(this);
+        LinearLayoutManager layoutManager2 = new LinearLayoutManager(getContext());
         recycler_view_committee.setLayoutManager(layoutManager2);
 
         //Initialize your Firebase app
@@ -115,7 +122,7 @@ public class AppealsList extends AppCompatActivity {
                                         Parent.add(new ParentList2(name, Child));
                                         DocExpandableRecyclerAdapter adapter = new DocExpandableRecyclerAdapter(Parent);
 
-                                        Toast.makeText(AppealsList.this,dataSnapshot.getChildren().toString() , Toast.LENGTH_SHORT).show();
+                                   //     Toast.makeText(getContext(),dataSnapshot.getChildren().toString() , Toast.LENGTH_SHORT).show();
 
 
 
@@ -176,7 +183,7 @@ public class AppealsList extends AppCompatActivity {
                 final List<ParentList3> Parent = new ArrayList<>();
                 for (final DataSnapshot snapshot : dataSnapshot.getChildren()){
                     final String parents =snapshot.getKey();
-                    Toast.makeText(AppealsList.this, parents, Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(getContext(), parents, Toast.LENGTH_SHORT).show();
 
                     parentReference_com.child(parents).addValueEventListener(new ValueEventListener() {
                         @Override
@@ -190,7 +197,7 @@ public class AppealsList extends AppCompatActivity {
 
 
                                         String test = dataSnapshot.child("test").getValue().toString();
-                                        Toast.makeText(AppealsList.this,test, Toast.LENGTH_SHORT).show();
+                                     //   Toast.makeText(getContext(),test, Toast.LENGTH_SHORT).show();
 
 
                                       Child.add(new Committee(test));
@@ -217,14 +224,14 @@ public class AppealsList extends AppCompatActivity {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     String name = dataSnapshot.child("userName").getValue().toString();
-                                    Toast.makeText(AppealsList.this, name, Toast.LENGTH_SHORT).show();
+                                //    Toast.makeText(getContext(), name, Toast.LENGTH_SHORT).show();
 
                                     //   Toast.makeText(testlistevents.this, name, Toast.LENGTH_SHORT).show();
                                     if (!parents.equals(my_id)){
                                         Parent.add(new ParentList3(name, Child));
                                         DocExpandableRecyclerAdapter_com adapter1 = new DocExpandableRecyclerAdapter_com(Parent);
 
-                                        Toast.makeText(AppealsList.this,dataSnapshot.getChildren().toString() , Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getContext(),dataSnapshot.getChildren().toString() , Toast.LENGTH_SHORT).show();
 
 
 
@@ -278,7 +285,7 @@ public class AppealsList extends AppCompatActivity {
             }
         });
 
-
+return mView;
     }
 
 

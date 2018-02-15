@@ -51,5 +51,8 @@
     <string name="quest2">woud you suggest other features to improve our app , to costum your needs ?</string>
     <string name="quest3">On a scale of five , hwo can you rate our app ?</string>
     <string name="sponsoring"> Welcome to Event App , If you are a business owner , open to creative marketing strategies , you believe in win win opportunities , you can sponsor others events that may put you in direct contact with a potential target market ! </string>
+    <string name="Setting">Settings</string>
+    <string name="AnsweraSurvey">Answer a servey</string>
+    <string name="ignore">Ignore</string>
 
 </resources>

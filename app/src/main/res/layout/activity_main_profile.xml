@@ -195,7 +195,6 @@
             android:id="@+id/viewpager_fragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/appbar_profile"
 
 
             app:layout_behavior="@string/appbar_scrolling_view_behavior"

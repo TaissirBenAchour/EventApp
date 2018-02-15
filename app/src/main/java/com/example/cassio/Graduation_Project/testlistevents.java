@@ -131,7 +131,6 @@ public class testlistevents extends AppCompatActivity {
                                             Parent.add(new ParentList(name, Child));
                                             DocExpandableRecyclerAdapter adapter = new DocExpandableRecyclerAdapter(Parent);
 
-                                            Toast.makeText(testlistevents.this,dataSnapshot.getChildren().toString() , Toast.LENGTH_SHORT).show();
 
 
 

@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 final List<ParentList> Parent = new ArrayList<>();
                 for (final DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    Toast.makeText(MainActivity.this, parentReference.toString(), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(MainActivity.this, parentReference.toString(), Toast.LENGTH_SHORT).show();
 
 
 
@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
                             for (DataSnapshot snapshot1:dataSnapshot.getChildren())
                             {
                                 final String ChildValue =  snapshot1.getValue().toString();
-                                Toast.makeText(MainActivity.this, ChildValue, Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(MainActivity.this, ChildValue, Toast.LENGTH_SHORT).show();
 
 
                                 snapshot1.child("titre").getValue();
@@ -147,8 +147,8 @@ public class MainActivity extends AppCompatActivity {
             holder.listChild.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast toast = Toast.makeText(getApplicationContext(), TitleChild, Toast.LENGTH_SHORT);
-                    toast.show();
+                  //  Toast toast = Toast.makeText(getApplicationContext(), TitleChild, Toast.LENGTH_SHORT);
+                   // toast.show();
                 }
 
             });
@@ -165,8 +165,8 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
 
-                        Toast toast = Toast.makeText(getApplicationContext(), group.toString(), Toast.LENGTH_SHORT);
-                        toast.show();
+//                        Toast toast = Toast.makeText(getApplicationContext(), group.toString(), Toast.LENGTH_SHORT);
+//                        toast.show();
                     }
                 });
 

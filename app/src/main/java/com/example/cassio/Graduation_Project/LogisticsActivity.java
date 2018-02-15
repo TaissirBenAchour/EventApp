@@ -1,11 +1,14 @@
 package com.example.cassio.Graduation_Project;
 
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,26 +23,31 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LogisticsActivity extends AppCompatActivity {
+public class LogisticsActivity extends Fragment {
 
     DatabaseReference sponsorsRef, userRef ;
     RecyclerView sponsor_list;
 
+    View mView;
+
+
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_logistics);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState)
+    {
+        mView = inflater.inflate(R.layout.activity_logistics, container, false);
+
          sponsorsRef = FirebaseDatabase.getInstance().getReference().child("Sponsors");
         userRef = FirebaseDatabase.getInstance().getReference().child("Users");
 
-        sponsor_list = (RecyclerView)findViewById(R.id.sponsorlist_id);
-        LinearLayoutManager layoutManager = new GridLayoutManager(LogisticsActivity.this, 2);
+        sponsor_list = (RecyclerView)mView.findViewById(R.id.sponsorlist_id);
+        LinearLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
         sponsor_list.setLayoutManager(layoutManager);
         sponsor_list.setHasFixedSize(true);
 
 
-
+return mView;
     }
     public void onStart() {
 

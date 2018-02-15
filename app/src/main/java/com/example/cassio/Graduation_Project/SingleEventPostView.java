@@ -168,7 +168,6 @@ public class SingleEventPostView extends AppCompatActivity {
                                     String searchedMonth = listofmonths.get(j);
 
                                     DatabaseReference parent = dataSnapshot.child(my_id).child(searchedMonth).child(key_id).getRef();
-                                    Toast.makeText(SingleEventPostView.this, month, Toast.LENGTH_SHORT).show();
                                     parent.setValue(null);
 
                                     saveProcess = false;
@@ -340,7 +339,6 @@ public class SingleEventPostView extends AppCompatActivity {
                         viewHolder.setCommentTime(model.getTimeOfComment());
 
 
-                        Toast.makeText(SingleEventPostView.this, model.getTimeOfComment(), Toast.LENGTH_SHORT).show();
 
 
 

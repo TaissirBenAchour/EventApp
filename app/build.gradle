@@ -55,9 +55,10 @@ dependencies {
     compile 'com.thoughtbot:expandablerecyclerview:1.3'
     compile 'com.bignerdranch.android:expandablerecyclerview:3.0.0-SNAPSHOT'
     compile 'com.github.IntruderShanky:Sectioned-RecyclerView:2.1.1'
-    compile 'com.nightonke:boommenu:1.0.9'
+    compile 'com.nightonke:boommenu:2.1.1'
     testCompile 'junit:junit:4.12'
 }
+
 
 
 

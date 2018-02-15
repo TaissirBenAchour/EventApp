@@ -2,6 +2,9 @@ package com.example.cassio.Graduation_Project;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -31,22 +34,23 @@ import java.util.List;
  * Created by cassio on 21/01/18.
  */
 
-public class AvailableEventActivity extends AppCompatActivity {
+public class AvailableEventActivity extends Fragment {
     DatabaseReference parentReference;
     private FirebaseAuth mAuth;
     private String my_id;
     private  Bundle bundle = new Bundle();
     private RecyclerView recycler_view;
+    private View mView;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_available_event);
-
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState)
+    {
+        mView = inflater.inflate(R.layout.activity_available_event, container, false);
 
         //Define recycleview
-        recycler_view = (RecyclerView) findViewById(R.id.list_events_id);
-        recycler_view.setLayoutManager(new LinearLayoutManager(this));
+        recycler_view = (RecyclerView) mView.findViewById(R.id.list_events_id);
+        recycler_view.setLayoutManager(new LinearLayoutManager(getContext()));
 
         //Initialize your Firebase app
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -56,8 +60,6 @@ public class AvailableEventActivity extends AppCompatActivity {
         // Reference to your entire Firebase database
         parentReference = database.getReference().child("Events");
         final DatabaseReference parentReferenceusers = database.getReference().child("Users");
-
-        //reading data from firebase
         parentReference.addValueEventListener(new ValueEventListener() {
 
             @Override
@@ -133,7 +135,7 @@ public class AvailableEventActivity extends AppCompatActivity {
                                         Parent.add(new ParentList(name, Child));
                                         DocExpandableRecyclerAdapter adapter = new DocExpandableRecyclerAdapter(Parent);
 
-                                        Toast.makeText(AvailableEventActivity.this,dataSnapshot.getChildren().toString() , Toast.LENGTH_SHORT).show();
+                                       // Toast.makeText(getContext(),dataSnapshot.getChildren().toString() , Toast.LENGTH_SHORT).show();
 
 
 
@@ -187,8 +189,10 @@ public class AvailableEventActivity extends AppCompatActivity {
             }
         });
 
+        return mView;
 
     }
+
 
 
 
@@ -218,7 +222,7 @@ public class AvailableEventActivity extends AppCompatActivity {
             final EventClass childItem = ((ParentList) group).getItems().get(childIndex);
 
             holder.onBind(childItem.getTitle(),childItem.getDescription(),childItem.getDate(),childItem.getMonth());
-            Toast.makeText(AvailableEventActivity.this, childItem.getTitle(), Toast.LENGTH_SHORT).show();
+         //   Toast.makeText(getContext(), childItem.getTitle(), Toast.LENGTH_SHORT).show();
 
 
 
@@ -243,7 +247,7 @@ public class AvailableEventActivity extends AppCompatActivity {
                                 bundle.putString("title",title);
 
 
-                                Intent intent = new Intent(AvailableEventActivity.this, SingleEventPostView.class);
+                                Intent intent = new Intent(getContext(), SingleEventPostView.class);
                                 intent.putExtras(bundle);
                                 startActivity(intent);
 

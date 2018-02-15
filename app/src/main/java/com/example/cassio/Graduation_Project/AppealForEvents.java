@@ -36,7 +36,6 @@ public class AppealForEvents extends AppCompatActivity {
         storedDataReference = FirebaseDatabase.getInstance().getReference().child("Users").child(get_Unique_Id);
         storedDataReference.keepSynced(true);
         myMainViewPager = (ViewPager) findViewById(R.id.viewpager_fragment);
-        toolbar = (Toolbar) findViewById(R.id.appbar_profile);
         mainPagerAdapter = new AppealPagerAdapter(getSupportFragmentManager());
         myMainViewPager.setAdapter(mainPagerAdapter);
         mytabLayout = (TabLayout) findViewById(R.id.main_tab_id);
