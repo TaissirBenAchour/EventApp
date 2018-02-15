@@ -14,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.example.cassio.Graduation_Project.MessagesActivity;
@@ -54,6 +55,8 @@ public class MessagesListContentFragment extends Fragment {
         messagesList.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         messagesList.setLayoutManager(layoutManager);
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
 
         return mView;
     }

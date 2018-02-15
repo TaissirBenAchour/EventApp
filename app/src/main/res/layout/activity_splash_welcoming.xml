@@ -14,14 +14,14 @@
             android:layout_width="wrap_content"
             android:layout_height="300dp"
             android:layout_gravity="center"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="120dp"
             android:background="@drawable/imagesplash"
             android:fontFamily="cursive"
             android:gravity="center_vertical"
             android:padding="70dp"
             android:text="E"
             android:textAllCaps="false"
-            android:textColor="#FFF59D"
+            android:textColor="#aceddf7f"
             android:textSize="155dp"
             android:textStyle="bold" />
         <TextView
@@ -29,21 +29,11 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="-65dp"
+            android:fontFamily="cursive"
             android:text="Event application"
 
             android:textColor="#FFF59D"
            />
-        <TextView
-            android:layout_width="398dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="100dp"
-            android:fontFamily="casual"
-            android:text="A different journey is about to start"
-            android:textAlignment="center"
-            android:textColor="@color/background1"
-            android:textSize="20dp"
-            />
 
 
 

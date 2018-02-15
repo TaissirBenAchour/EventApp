@@ -7,17 +7,19 @@
     <LinearLayout
         android:id="@+id/linear1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_above="@id/linear2">
 <include android:id="@+id/toolbar_chat_id"
     layout="@layout/app_bar_layout">
 
 </include>
     </LinearLayout>
+
 <LinearLayout
     android:id="@+id/linear2"
     android:layout_width="match_parent"
     android:layout_height="430dp"
-    android:layout_below="@id/linear1">
+    android:layout_above="@id/linea_r_id">
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout_id"
         android:layout_width="match_parent"
@@ -25,8 +27,8 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/message_list_id"
         android:layout_width="match_parent"
-        android:layout_below="@+id/toolbar_chat_id"
-        android:layout_height="161dp">
+        android:layout_height="161dp"
+        android:layout_below="@+id/toolbar_chat_id">
 
     </android.support.v7.widget.RecyclerView>
     </android.support.v4.widget.SwipeRefreshLayout>

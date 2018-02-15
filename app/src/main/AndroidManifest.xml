@@ -30,7 +30,10 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".SplashWelcomingActivity">
+        <activity
+            android:name=".SplashWelcomingActivity"
+            android:label="@string/app_name"
+            android:windowSoftInputMode="stateAlwaysHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -45,24 +48,47 @@
             android:name=".loginActivity"
             android:label="@string/title_activity_login"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".FragmentsUnionActivity" />
+        <activity android:name=".WelcomeActivity" />
         <activity android:name=".SettingsActivity" />
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
-        <activity android:name=".MakeYourChoiceActivity" />
+        <activity android:name=".AppealForEvents" />
         <activity
             android:name=".AllAppUsersActivity"
             android:parentActivityName=".FragmentsUnionActivity" />
-        <activity android:name=".AddEventActivity" />
-        <activity android:name=".AvailableEventActivity" />
-        <activity android:name=".friendsProfileActivity" />
+        <activity
+            android:name=".AddEventActivity"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".AvailableEventActivity"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity android:name=".FragmentsUnionActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+
+
         <activity
             android:name=".MessagesActivity"
-            android:parentActivityName=".FragmentsUnionActivity" />
-        <activity android:name=".testlocal" />
-        <activity android:name=".SingleEventPostView"></activity>
+            android:parentActivityName=".FragmentsUnionActivity"
+            />
+        <activity android:name=".SingleEventPostView"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".friendsProfileActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".SurveyActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".testCalendar"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".AppealsList"
+            android:label="@string/title_activity_appeals_list"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".LogisticsActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".SponsoringActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

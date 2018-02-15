@@ -20,23 +20,51 @@
     <item
 
         android:id="@+id/action_settings"
+        android:orderInCategory="100"
         android:title="@string/action_settings"
-        android:orderInCategory="100"
         app:showAsAction="never" />
+
     <item
-        android:id="@+id/action_logout"
-        android:title="@string/logout"
+        android:id="@+id/action_survey"
         android:orderInCategory="100"
+        android:title="Survey"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_users"
-        android:title="All users "
         android:orderInCategory="100"
+        android:title="All users "
         app:showAsAction="never" />
     <item
         android:id="@+id/action_choice"
-        app:showAsAction="always|never"
-        android:icon="@drawable/ic_wb_incandescent_black_24dp"
+        android:icon="@drawable/ic_add_black_24dp"
         android:iconTint="@color/black"
-        android:title="Profile"/>
+        android:title="add event appeal"
+        app:showAsAction="always|never"
+        />
+
+    <item
+        android:id="@+id/action_speaker"
+        android:orderInCategory="100"
+        android:title="speakers "
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_calendar"
+        android:orderInCategory="100"
+        android:title="calendar"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_appeal"
+        android:orderInCategory="100"
+        android:title="apeals"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_event"
+        android:orderInCategory="100"
+        android:title="events"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_logout"
+        android:orderInCategory="100"
+        android:title="@string/logout"
+        app:showAsAction="never" />
 </menu>

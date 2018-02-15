@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.icu.util.Calendar;
@@ -11,11 +12,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -30,16 +32,17 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.PlaceBuffer;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,6 +61,8 @@ public class AddEventActivity extends AppCompatActivity implements
     private static final int GOOGLE_API_CLIENT_ID = 0;
     private static final LatLngBounds BOUNDS_MOUNTAIN_VIEW = new LatLngBounds(
             new LatLng(37.398160, -122.180831), new LatLng(37.430610, -121.972090));
+    String my_id ;
+    String _Month;
     private ImageButton btnDatePicker, btnTimePicker;
     private EditText txtDate, txtTime;
     private FirebaseAuth mAuth;
@@ -68,7 +73,7 @@ public class AddEventActivity extends AppCompatActivity implements
     private EditText eventDescription;
     private EditText eventPrice;
     private Uri imageUri;
-    private DatabaseReference mStoreEvent_dataReference;
+    private DatabaseReference mStoreEvent_dataReference,postsRef;
     private String[] permissionsList = new String[]{
             READ_EXTERNAL_STORAGE,
             ACCESS_COARSE_LOCATION,
@@ -79,10 +84,30 @@ public class AddEventActivity extends AppCompatActivity implements
     private AutoCompleteTextView mAutocompleteTextView;
     private GoogleApiClient mGoogleApiClient;
     private AddressListAdapter mAddressListAdapter;
+    private ResultCallback<PlaceBuffer> mUpdatePlaceDetailsCallback
+            = new ResultCallback<PlaceBuffer>() {
+        @Override
+        public void onResult(PlaceBuffer places) {
+            if (!places.getStatus().isSuccess()) {
+                return;
+            }
+            CharSequence attributions = places.getAttributions();
 
-
-
-
+            if (attributions != null) {
+            }
+        }
+    };
+    private AdapterView.OnItemClickListener mAutocompleteClickListener
+            = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            final AddressListAdapter.PlaceAutocomplete item = mAddressListAdapter.getItem(position);
+            final String placeId = String.valueOf(item.placeId);
+            PendingResult<PlaceBuffer> placeResult = Places.GeoDataApi
+                    .getPlaceById(mGoogleApiClient, placeId);
+            placeResult.setResultCallback(mUpdatePlaceDetailsCallback);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,8 +115,10 @@ public class AddEventActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_add_event);
 
         mAuth = FirebaseAuth.getInstance();
+        my_id = mAuth.getCurrentUser().getUid();
 
         mStoreEventReference = FirebaseStorage.getInstance().getReference().child("Events");
+        postsRef= FirebaseDatabase.getInstance().getReference().child("Post");
         mStoreEvent_dataReference = FirebaseDatabase.getInstance().getReference().child("Events");
         mStoreEvent_dataReference.keepSynced(true);
 
@@ -161,6 +188,11 @@ public class AddEventActivity extends AppCompatActivity implements
                                                   int monthOfYear, int dayOfMonth) {
 
                                 txtDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+                                _Month = Integer.toString(monthOfYear);
+
+
+
+
 
                             }
                         }, mYear, mMonth, mDay);
@@ -194,6 +226,12 @@ public class AddEventActivity extends AppCompatActivity implements
 
     public void eventPlan() {
 
+        View _view = AddEventActivity.this.getCurrentFocus();
+        if (_view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(_view.getWindowToken(), 0);
+        }
+
 
         progressing.setMessage(" image is being downloading .. ");
         progressing.show();
@@ -207,11 +245,16 @@ public class AddEventActivity extends AppCompatActivity implements
                 && !TextUtils.isEmpty(date) && !TextUtils.isEmpty(time) && !TextUtils.isEmpty(address)) {
 
             StorageReference filePath = mStoreEventReference.child("imageevent_" + title);
-//            filePath.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//                @Override
-//                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                    Uri downloadUri = taskSnapshot.getDownloadUrl();
-            DatabaseReference newEvent = mStoreEvent_dataReference.push(); // push() for unique random  ID
+          filePath.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {               @Override
+              public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    Uri downloadUri = taskSnapshot.getDownloadUrl();
+
+            DatabaseReference keyRef = mStoreEvent_dataReference.child(my_id).push();
+            final DatabaseReference newEvent = keyRef;
+            final String pushRef= keyRef.getKey();
+
+
+            // push() for unique random  ID
             newEvent.child("title").setValue(title);
             newEvent.child("description").setValue(description);
             newEvent.child("price").setValue(price);
@@ -219,12 +262,42 @@ public class AddEventActivity extends AppCompatActivity implements
             newEvent.child("date").setValue(date);
             newEvent.child("time").setValue(time);
             newEvent.child("address").setValue(address);
-            // newEvent.child("imageEvent").setValue(downloadUri.toString());
+            newEvent.child("month").setValue(_Month);
+            newEvent.child("pushId").setValue(pushRef);
+            newEvent.child("eventId").setValue(my_id);
+
+             newEvent.child("imageEvent").setValue(downloadUri.toString());
             progressing.dismiss();
-            Intent goBackToEventList = new Intent(AddEventActivity.this, AvailableEventActivity.class);
-            startActivity(goBackToEventList);
-//                }
-//            });
+
+
+            final AlertDialog.Builder builder = new AlertDialog.Builder(AddEventActivity.this);
+
+
+            builder.setTitle("You HAVE A NEW EVENT !")
+                    .setMessage("do you want to add a post about how great your new event is going to be?")
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            String new_Event = "I am sharing a new Event called " + title + ", Come and check ! ";
+                            DatabaseReference keyRef = postsRef.child(my_id).push();
+                            final DatabaseReference newEvent = keyRef;
+                            final String pushRef= keyRef.getKey();
+                            newEvent.child("eventId").setValue(new_Event);
+                            Intent goBackToEventList = new Intent(AddEventActivity.this, FragmentsUnionActivity.class);
+                            startActivity(goBackToEventList);
+
+                        }
+                    })
+                    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent goBackToEventList = new Intent(AddEventActivity.this, FragmentsUnionActivity.class);
+                            goBackToEventList.putExtra("keyRef",pushRef);
+                            startActivity(goBackToEventList);                        }
+                    });builder.show();
+
+
+
+                }
+            });
 
 
         }
@@ -247,7 +320,6 @@ public class AddEventActivity extends AppCompatActivity implements
         mAddressListAdapter.setGoogleApiClient(null);
     }
 
-
     public boolean checkPermission(final Context context) {
         int result;
         List<String> listPermissionsNeeded = new ArrayList<>();
@@ -265,7 +337,6 @@ public class AddEventActivity extends AppCompatActivity implements
         return true;
     }
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
         super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
@@ -280,35 +351,6 @@ public class AddEventActivity extends AppCompatActivity implements
             }
         }
     }
-
-
-
-    private ResultCallback<PlaceBuffer> mUpdatePlaceDetailsCallback
-            = new ResultCallback<PlaceBuffer>() {
-        @Override
-        public void onResult(PlaceBuffer places) {
-            if (!places.getStatus().isSuccess()) {
-                return;
-            }
-            CharSequence attributions = places.getAttributions();
-
-            if (attributions != null) {
-            }
-        }
-    };
-
-
-    private AdapterView.OnItemClickListener mAutocompleteClickListener
-            = new AdapterView.OnItemClickListener() {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            final AddressListAdapter.PlaceAutocomplete item = mAddressListAdapter.getItem(position);
-            final String placeId = String.valueOf(item.placeId);
-            PendingResult<PlaceBuffer> placeResult = Places.GeoDataApi
-                    .getPlaceById(mGoogleApiClient, placeId);
-            placeResult.setResultCallback(mUpdatePlaceDetailsCallback);
-        }
-    };
 
 }
 

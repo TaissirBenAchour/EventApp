@@ -196,6 +196,65 @@
 
 
     </LinearLayout>
+            <LinearLayout
+                android:id="@+id/txtrating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/linearLayoutbtn_id"
+
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/txtrating1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="rate this event"
+
+                    />
+
+                <RatingBar
+                    android:id="@+id/rating_rating_bar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="101dp"
+                    android:numStars="5"
+                    android:stepSize="10" />
+                <Button
+                    android:id="@+id/submit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ratingBar"
+                    android:layout_marginLeft="15dp"
+                    android:onClick="rateMe"
+                    android:text="Submit"/>
+            </LinearLayout>
+
+
+            <EditText
+
+                android:id="@+id/addcomment_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtrating"
+                android:background="@drawable/input_outline"
+                android:lines="3"
+                />
+            <Button
+                android:id="@+id/submitcommentbtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/addcomment_id"
+                android:text="submit"/>
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/listofcomments_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/submitcommentbtn">
+
+            </android.support.v7.widget.RecyclerView>
         </RelativeLayout>
     </ScrollView>
 </RelativeLayout>

@@ -4,9 +4,12 @@ import android.icu.text.SimpleDateFormat;
 import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -18,35 +21,53 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class friendsProfileActivity extends AppCompatActivity {
+    TextView  rated, numevents;
+    RatingBar ratingbar;
+    float i = 0;
     private ImageButton send_req;
     private ImageButton dec_req;
     private TextView username;
     private TextView desc;
-    private DatabaseReference referenceTolistReqs, referenceToUsersList , communityDBReference ;
+    private DatabaseReference referenceTolistReqs, referenceToUsersList ,rateRef, communityDBReference,eventsRef ;
     private CircleImageView imageProfileFriend;
     private String relation_state ;
     private FirebaseAuth mAuth;
-   private String my_current_id ,  targed_person_id;
+   private String my_current_id ,  targed_person_id,myString;
     private DatabaseReference notificationReference;
+    private ViewPager myMainViewPager;
+    private TabLayout mytabLayout;
+    private profiletabAdapter mainPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_profile);
+        rated = (TextView)findViewById(R.id.rated_id);
+        ratingbar = (RatingBar) findViewById(R.id.ratebar);
+        numevents = (TextView) findViewById(R.id.numevents);
 
 
-        send_req = (ImageButton) findViewById(R.id.add_request);
+       send_req = (ImageButton) findViewById(R.id.add_request);
         dec_req = (ImageButton) findViewById(R.id.clear_request);
         username = (TextView) findViewById(R.id.username_id);
         desc = (TextView) findViewById(R.id.userstatus_id);
-        imageProfileFriend = (CircleImageView) findViewById(R.id.circleImageView);
+        myMainViewPager = (ViewPager) findViewById(R.id.viewpager_fragment);
+        mainPagerAdapter = new profiletabAdapter(getSupportFragmentManager());
+        myMainViewPager.setAdapter(mainPagerAdapter);
+        mytabLayout = (TabLayout) findViewById(R.id.main_tab_id);
+        mytabLayout.setupWithViewPager(myMainViewPager);
+        myMainViewPager.setAdapter(mainPagerAdapter);
+        mytabLayout.getTabAt(0).setIcon(R.drawable.ic_perm_identity_black_24dp);
+        mytabLayout.getTabAt(1).setIcon(R.drawable.ic_info_outline_black_24dp);
+
+
+//        imageProfileFriend = (CircleImageView) findViewById(R.id.circleImageView);
 
 
         mAuth = FirebaseAuth.getInstance();
@@ -57,8 +78,72 @@ public class friendsProfileActivity extends AppCompatActivity {
         referenceTolistReqs = FirebaseDatabase.getInstance().getReference().child("join_Community_requests");
         communityDBReference = FirebaseDatabase.getInstance().getReference().child("Community");
         notificationReference =FirebaseDatabase.getInstance().getReference().child("Notification");
+        rateRef=FirebaseDatabase.getInstance().getReference().child("Rate");
+        eventsRef=FirebaseDatabase.getInstance().getReference().child("Events");
+
         notificationReference.keepSynced(true);
         relation_state = "unfriend";
+
+
+
+        eventsRef.child(targed_person_id).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (final DataSnapshot snapshotevents : dataSnapshot.getChildren()) {
+                    long num_events = dataSnapshot.getChildrenCount();
+                    numevents.setText(String.valueOf(num_events));
+                    if (num_events!=0){
+                    rateRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            for (DataSnapshot snapshotrates : dataSnapshot.getChildren()) {
+
+                                if (snapshotevents.getKey().equals(snapshotrates.getKey())) {
+
+                                    rateRef.child(snapshotrates.getKey()).addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(DataSnapshot dataSnapshot) {
+                                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                                long tuto = dataSnapshot.getChildrenCount();
+                                                String rate = snapshot.child("rate").getValue().toString();
+                                                float ratenumber = Float.valueOf(rate);
+                                                i = (i + ratenumber) / tuto;
+                                                String j = String.valueOf(i);
+                                                rated.setText(j);
+                                                ratingbar.setRating(i);
+
+
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onCancelled(DatabaseError databaseError) {
+
+                                        }
+                                    });
+
+                                } else {
+                                    // Toast.makeText(getContext(), "your event has not been rated", Toast.LENGTH_SHORT).show();
+                                }
+
+                            }
+                        }
+
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });}
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
 
         referenceToUsersList.child(targed_person_id).addValueEventListener(new ValueEventListener() {
             @Override
@@ -72,10 +157,7 @@ public class friendsProfileActivity extends AppCompatActivity {
 
                 username.setText(name);
                 desc.setText(status);
-                Picasso.with(friendsProfileActivity.this).load(image).placeholder(R.drawable.profile_pic).into(imageProfileFriend);
-
-
-
+//                Picasso.with(friendsProfileActivity.this).load(image).placeholder(R.drawable.profile_pic).into(imageProfileFriend);
                 referenceTolistReqs.child(my_current_id).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -192,6 +274,9 @@ else {
             }
         });
 
+    }
+    public String getMyData() {
+        return targed_person_id;
     }
 
     private void unJoinComunity() {

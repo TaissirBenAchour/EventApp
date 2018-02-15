@@ -8,21 +8,18 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -38,24 +35,21 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
-import com.theartofdev.edmodo.cropper.CropImage;
-import com.theartofdev.edmodo.cropper.CropImageView;
 
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 
 public class SettingsActivity extends AppCompatActivity {
+    public  static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 123;
+    private final static int galery_pick = 1;
  private RoundedImageView imageProfileSittings;
     private TextView userNameSettings;
-    private  TextView statusUserSettings;
+    private TextView statusUserSettings;
     private ImageButton changePictureBtnSettings;
     private DatabaseReference storedDataReference;
     private StorageReference storedProfileReference;
     private FirebaseAuth mAuth;
-    private final static int galery_pick = 1;
     private ProgressDialog progressDialog;
     private Uri SelectedImageUri;
-    public static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 123;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,15 +59,13 @@ public class SettingsActivity extends AppCompatActivity {
         String get_Unique_Id = mAuth.getInstance().getCurrentUser().getUid();
         storedDataReference = FirebaseDatabase.getInstance().getReference().child("Users").child(get_Unique_Id);
         storedDataReference.keepSynced(true);
-
-
         storedProfileReference = FirebaseStorage.getInstance().getReference().child("Profile_images");
         imageProfileSittings = (RoundedImageView) findViewById(R.id.imageProfile);
-
         userNameSettings = (TextView)findViewById(R.id.userName);
         statusUserSettings = (TextView)findViewById(R.id.userStatus);
-
         changePictureBtnSettings = (ImageButton) findViewById(R.id.changeImage);
+
+
 
         storedDataReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -92,6 +84,7 @@ public class SettingsActivity extends AppCompatActivity {
                             into(imageProfileSittings, new Callback() {
                                 @Override
                                 public void onSuccess() {
+
 
                                 }
 

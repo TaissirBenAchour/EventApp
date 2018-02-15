@@ -1,71 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent"
+    android:layout_height="wrap_content" android:background="@color/graylight"
     android:orientation="vertical">
-    <LinearLayout
+
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <TextView
-            android:id="@+id/RequestlistText_id"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:background="@drawable/grad1"
-            android:drawableBottom="@drawable/ic_group_add_black_24dp"
-            android:drawableTint="@color/jaune"
-            android:elevation="122dp"
-            android:fontFamily="cursive"
-            android:text="Available Requests"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textSize="20dp"
-            />
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/myListRequestView_id"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/communitylistText_id"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@id/RequestlistText_id"
-            android:layout_marginTop="5dp">
-        </android.support.v7.widget.RecyclerView>
+        android:layout_below="@id/appBarLayout"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        />
 
-    </LinearLayout>
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
-    <TextView
-        android:id="@+id/communitylistText_id"
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/myListRequestView_id"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/grad1"
-        android:drawableBottom="@drawable/ic_group_black_24dp"
-        android:drawableTint="@color/jaune"
-        android:elevation="122dp"
-        android:fontFamily="cursive"
-        android:text="Communities"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="20dp" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/myListView_id"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/communitylistText_id">
+        >
 
-    </android.support.v7.widget.RecyclerView>
-</LinearLayout>
+        <android.support.design.widget.TabLayout
+            android:id="@+id/main_tab_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:background="@color/Transparent"
+            android:dividerPadding="0dp"
+            app:tabBackground="@drawable/tab_color_selector"
+            app:tabIndicatorColor="@color/jaune"
+            >
+
+        </android.support.design.widget.TabLayout>
+    </android.support.design.widget.AppBarLayout>
+</RelativeLayout>
 
 
 
 
 
-</LinearLayout>
+
+
+
+

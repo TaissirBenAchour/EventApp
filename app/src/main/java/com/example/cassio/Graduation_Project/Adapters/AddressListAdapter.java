@@ -6,6 +6,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
 
+import com.example.cassio.Graduation_Project.AddEventActivity;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.Status;
@@ -28,11 +29,19 @@ public class AddressListAdapter extends ArrayAdapter<AddressListAdapter.PlaceAut
 
 
 
-    public AddressListAdapter(Context context, int resource, LatLngBounds bounds, AutocompleteFilter filter)
+    public AddressListAdapter(AddEventActivity context, int resource, LatLngBounds bounds, AutocompleteFilter filter)
     {
         super(context, resource);
         mBounds = bounds;
         mPlaceFilter = filter;
+    }
+
+
+
+    public AddressListAdapter(Context context, int simple_list_item_1, LatLngBounds boundsMountainView, AutocompleteFilter o) {
+        super(context, simple_list_item_1);
+        mBounds = boundsMountainView;
+        mPlaceFilter = o;
     }
 
 

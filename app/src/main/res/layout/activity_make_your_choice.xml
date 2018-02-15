@@ -1,113 +1,321 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/shape1524"
     android:orientation="vertical">
 
-
     <include
-    android:id="@+id/toolbar"
-    layout="@layout/app_bar_layout">
-</include>
+        android:id="@+id/toolbar"
+        layout="@layout/app_bar_layout"></include>
 
-
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:orientation="vertical">
-    <TextView
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal">
+        <View
+
+            android:layout_width="4dp"
+            android:layout_height="70dp"
+            android:layout_marginLeft="10dp"
+            android:alpha=".9"
+            android:background="@android:color/holo_blue_dark" />
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            >
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginLeft="5dp"
+
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/theme_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="Event Theme"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:background="@drawable/input_outline"
+                    android:lines="3" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="250dp"
+                    android:layout_marginTop="-27dp"
+                    android:background="#c6eaad9e"
+                    android:elevation="10dp"
+                    android:padding="5dp"
+                    android:text="Suggestions"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+
+
+        </android.support.v7.widget.CardView>
+
+    </LinearLayout>
+
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:background="@drawable/choice"
-        android:fontFamily="cursive"
-        android:gravity="center"
-        android:padding="10dp"
-        android:text="@string/stringchoice1"
-        android:textColor="@color/white"
-        android:textSize="15dp"
-        android:textStyle="bold"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="cursive"
-        android:gravity="center"
-        android:text="@string/stringchoice2"
-        android:textColor="#A1887F"
-        android:textSize="19dp"
-        android:textStyle="bold"/>
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal">
+        <View
+
+            android:layout_width="4dp"
+            android:layout_height="70dp"
+            android:layout_marginLeft="10dp"
+            android:alpha=".9"
+            android:background="@android:color/holo_red_dark" />
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            >
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginLeft="5dp"
+
+                android:orientation="vertical">
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="Event content"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:background="@drawable/input_outline"
+                    android:lines="3" />
+                <TextView
+                    android:id="@+id/content_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="250dp"
+                    android:layout_marginTop="-27dp"
+                    android:background="#c6eaad9e"
+                    android:elevation="10dp"
+                    android:padding="5dp"
+                    android:text="Suggestions"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+
+
+        </android.support.v7.widget.CardView>
+
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
         android:orientation="horizontal">
-<LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+        <View
 
-        <Button
-            android:id="@+id/add_events_id"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="180dp"
-            android:layout_height="180dp"
+            android:layout_width="4dp"
+            android:layout_height="70dp"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="60dp"
-            android:background="@drawable/addeventbutton"
-            android:fontFamily="cursive"
-            android:text="I plan for events  "
-            android:textAllCaps="false"
-            android:textColor="#A1887F"
-            android:textSize="25dp"
-            android:textStyle="bold"/>
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="-115dp"
-            android:layout_marginTop="170dp"
-            android:src="@drawable/idea"
-            android:tint="#A1887F"/>
-            />
-</LinearLayout>
-<LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
-    <Button
-        android:id="@+id/find_events_id"
-    style="@style/Widget.AppCompat.Button.Borderless"
-    android:layout_width="180dp"
-    android:layout_height="180dp"
-    android:layout_marginTop="120dp"
-    android:background="@drawable/addeventbutton"
-        android:fontFamily="cursive"
-    android:text="I am confused "
-        android:textAllCaps="false"
-        android:textColor="#A1887F"
-        android:textSize="25dp"
-        android:textStyle="bold"
+            android:alpha=".9"
+            android:background="@android:color/holo_purple" />
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            >
 
-        />
 
-    <ImageView
-        android:id="@+id/imageView"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginLeft="5dp"
+
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/why_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="where is the event"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:background="@drawable/input_outline"
+                    android:lines="3" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="250dp"
+                    android:layout_marginTop="-27dp"
+                    android:background="#c6eaad9e"
+                    android:elevation="10dp"
+                    android:padding="5dp"
+                    android:text="Suggestions"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+
+
+        </android.support.v7.widget.CardView>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal">
+        <View
+
+            android:layout_width="4dp"
+            android:layout_height="70dp"
+            android:layout_marginLeft="10dp"
+            android:alpha=".9"
+            android:background="@android:color/holo_orange_light" />
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            >
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginLeft="5dp"
+
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/sugges_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="other suggestions"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:background="@drawable/input_outline"
+                    android:lines="3" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="250dp"
+                    android:layout_marginTop="-27dp"
+                    android:background="#c6eaad9e"
+                    android:elevation="10dp"
+                    android:padding="5dp"
+                    android:text="Suggestions"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+
+
+        </android.support.v7.widget.CardView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal">
+        <View
+
+            android:layout_width="4dp"
+            android:layout_height="70dp"
+            android:layout_marginLeft="10dp"
+            android:alpha=".9"
+            android:background="@android:color/holo_red_light" />
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            >
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginLeft="5dp"
+
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/sugg_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="other suggestions"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:background="@drawable/input_outline"
+                    android:lines="3" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="250dp"
+                    android:layout_marginTop="-27dp"
+                    android:background="#c6eaad9e"
+                    android:elevation="10dp"
+                    android:padding="5dp"
+                    android:text="Suggestions"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+
+
+        </android.support.v7.widget.CardView>
+
+    </LinearLayout>
+
+    <android.support.v7.widget.CardView
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginLeft="60dp"
-        android:layout_marginTop="-60dp"
-        android:src="@drawable/confused"
-        android:tint="#A1887F"/>
-</LinearLayout>
-    </LinearLayout>
+        android:layout_gravity="center"
+        android:layout_marginTop="25dp"
+        app:cardCornerRadius="20dp">
+    <ImageButton
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@color/Transparent"
+    android:elevation="10dp"
+        android:src="@drawable/ic_add_black_24dp"
+        android:tint="@color/background"/>
+
+    </android.support.v7.widget.CardView>
+
+
+
 
 </LinearLayout>
-    </LinearLayout>
 
 

@@ -1,8 +1,6 @@
 package com.example.cassio.Graduation_Project.Adapters;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +9,6 @@ import android.widget.TextView;
 import com.example.cassio.Graduation_Project.R;
 import com.example.cassio.Graduation_Project.models.Messages;
 import com.google.firebase.auth.FirebaseAuth;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -25,7 +22,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
     private List<Messages> messages_List;
     private FirebaseAuth mAuth;
 
-    public MessageAdapter(List<Messages> messages_List) {
+    public MessageAdapter(List<Messages> messages_List)
+    {
         this.messages_List = messages_List;
     }
 
@@ -47,10 +45,15 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         Messages messages = messages_List.get(position);
         String messagefrom_id = messages.getFrom();
 
+
         if (sender_id.equals(messagefrom_id)) {
+
             holder.messageText.setBackgroundResource(R.drawable.shape_of_recieved_message);
         } else {
+
             holder.messageText.setBackgroundResource(R.drawable.shape_of_sent_message);
+
+
         }
         holder.messageText.setText(messages.getmessage());
         holder.timeOfMessage.setText(messages.getmsgtime());
@@ -58,7 +61,9 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
 
 
+
     }
+
 
     @Override
     public int getItemCount() {

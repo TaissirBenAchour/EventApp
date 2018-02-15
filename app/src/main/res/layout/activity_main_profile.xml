@@ -1,104 +1,241 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/white"
-    android:orientation="vertical"
-    tools:context="com.example.cassio.Graduation_Project.friendsProfileActivity">>
-<LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/shape2profile"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" android:background="@color/white"
+    android:orientation="vertical">
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/NestedScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <FrameLayout
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_alignBottom="@+id/frameLayout"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/frameLayout"
+            android:background="@color/white">
+            <LinearLayout
+                android:id="@+id/linearheader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+               >
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="130dp"
+                android:layout_marginTop="35dp"
                 android:orientation="vertical">
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/grad1"
-                    android:orientation="horizontal">
-
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/circleImageView"
-                        android:layout_width="90dp"
-                        android:layout_height="90dp"
-                        android:layout_marginBottom="20dp"
-                        android:layout_marginLeft="25dp"
-                        android:layout_marginTop="25dp"
-                        android:src="@drawable/profile_pic" />
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="20dp"
-                        android:layout_marginTop="45dp"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="20dp">
-
-                        <ImageButton
-                            android:id="@+id/add_request"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:background="@drawable/interested"
-                            android:tint="@color/background1"
-                            android:layout_marginBottom="10dp"
-                            android:src="@drawable/ic_check_black_24dp"
-                           />
-
-                        <ImageButton
-
-                            android:id="@+id/clear_request"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:background="@drawable/interested"
-                            android:tint="@color/background1"
-                            android:src="@drawable/ic_clear_black_24dp" />
-                    </LinearLayout>
-
-
-                    <TextView
-                        android:id="@+id/username_id"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="cursive"
-                        android:text="username"
-                        android:textColor="#FFF3E0"
-                        android:textSize="35dp"
-                        android:layout_marginTop="45dp"
-                        android:layout_marginLeft="15dp"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_marginLeft="10dp"
+                    android:fontFamily="serif-monospace"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingTop="10dp"
+                    android:text="Planned Events"
+                    android:textStyle="bold"
+                    />
 
                 <TextView
-                    android:id="@+id/userstatus_id"
+                    android:id="@+id/numevents"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="20dp"
-                    android:fontFamily="cursive"
-                    android:text="here is a brief description of the user"
-                    android:textColor="#be5406"
-                    android:textSize="20dp" />
+                    android:layout_marginBottom="9dp"
+                    android:fontFamily="serif-monospace"
+                    android:text="0"
+                    android:textSize="25dp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+                <View
 
-                </LinearLayout>
-
-
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/posts_id"
                     android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="200dp"
+                    android:alpha=".1"
+                    android:background="@android:color/black" />
+
+                <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="130dp"
+                android:layout_marginTop="5dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                   android:layout_margin="9dp">
+                    android:layout_marginLeft="40dp"
+                    android:fontFamily="serif-monospace"
+                    android:gravity="center"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingTop="10dp"
+                    android:text="Rated"
+                    android:textStyle="bold"/>
 
-                </android.support.v7.widget.RecyclerView>
+                    <TextView
+                        android:id="@+id/rated_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:text="nothing has been rated yet"
+                        android:textColor="@color/black"
+                        android:textSize="10dp"/>
+                    <RatingBar
+                        android:id="@+id/ratebar"
+                        style="@style/Base.Widget.AppCompat.RatingBar.Small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="60dp"
+                        android:numStars="5"
+                        android:stepSize="10" />
+            </LinearLayout>
+            </LinearLayout>
+
+
+
+
+
+        </FrameLayout>
+        <FrameLayout
+            android:id="@+id/frameLayout"
+            android:layout_width="70dp"
+            android:layout_height="200dp"
+            android:background="@drawable/frame1">
+
+
+        </FrameLayout>
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/circleImageView"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="28dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="32dp"
+        android:src="@drawable/profile_pic" />
+        <TextView
+            android:id="@+id/username_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/circleImageView"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="17dp"
+            android:background="#7affffff"
+            android:elevation="50dp"
+            android:fontFamily="cursive"
+            android:text="User Name"
+            android:textSize="35dp"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/userstatus_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/circleImageView"
+            android:layout_alignStart="@+id/circleImageView"
+            android:layout_below="@+id/username_id"
+            android:layout_marginLeft="-5dp"
+            android:layout_marginStart="-12dp"
+            android:background="#7affffff"
+            android:fontFamily="sans-serif-smallcaps"
+            android:text="User Status"
+            android:textSize="15dp"
+            android:textStyle="bold" />
+
+
+    </RelativeLayout>
+
+
+    </android.support.v4.widget.NestedScrollView>
+    <LinearLayout
+        android:id="@+id/btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/NestedScrollView"
+        android:gravity="center"
+        android:orientation="horizontal"
+        >
+        <ImageButton
+            android:id="@+id/add_request"
+        android:layout_width="70dp"
+        android:layout_height="30dp"
+        android:src="@drawable/ic_add_black_24dp" />
+        <ImageButton
+            android:id="@+id/clear_request"
+            android:layout_width="70dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_cancel_black_24dp"/></LinearLayout>
+
+
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/btn"
+    android:orientation="vertical">
+        <android.support.v4.view.ViewPager
+
+            android:id="@+id/viewpager_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/appbar_profile"
+
+
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            />
+
+
 
 </LinearLayout>
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
 
-</LinearLayout>
+        <android.support.design.widget.TabLayout
+            android:id="@+id/main_tab_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="2dp"
+            android:background="@color/Transparent"
+            android:dividerPadding="0dp"
+            android:fillViewport="true"
+            app:tabBackground="@drawable/tab_color_selector"
+            app:tabIndicatorColor="@color/jaune"
+            app:tabMode="fixed"
+            >
+
+        </android.support.design.widget.TabLayout>
+    </android.support.design.widget.AppBarLayout>
+    </RelativeLayout>
+
+
+
+
+
+
+
+
+
+
+

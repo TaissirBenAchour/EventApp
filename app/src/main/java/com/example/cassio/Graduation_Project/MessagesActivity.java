@@ -2,9 +2,9 @@ package com.example.cassio.Graduation_Project;
 
 import android.content.Context;
 import android.icu.text.SimpleDateFormat;
+import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -40,6 +40,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class MessagesActivity extends AppCompatActivity {
 
 
+    private final List<Messages>  messagesList = new ArrayList<>();
     private String messageRecieverId;
     private String messageRecieverName;
     private Toolbar mtool;
@@ -52,15 +53,13 @@ public class MessagesActivity extends AppCompatActivity {
     private String sender_id;
     private RecyclerView sentMessages;
     private SwipeRefreshLayout swipeIt;
-
-
-    private final List<Messages>  messagesList = new ArrayList<>();
     private LinearLayoutManager linearLayoutManager ;
     private MessageAdapter messageAdapter;
     private int num_page=1;
     private int itemPos = 0;
     private String firstKey="";
     private  String secondKey ="";
+
 
 
 
@@ -211,6 +210,8 @@ public class MessagesActivity extends AppCompatActivity {
         }
         else
         {
+
+
             String senderRef = "Messages/" +sender_id + "/"+ messageRecieverId;
             String recieverRef = "Messages/" +messageRecieverId + "/" + sender_id;
             DatabaseReference keyRef = globalRef.child("Messages").child(sender_id).child(messageRecieverId).push();

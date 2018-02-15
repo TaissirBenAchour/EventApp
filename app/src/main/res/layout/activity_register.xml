@@ -1,5 +1,5 @@
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,9 +7,6 @@
     tools:context="com.example.cassio.Graduation_Project.RegisterActivity">
 
 
-    <include
-    android:id="@+id/toolbar_id"
-    layout="@layout/app_bar_layout"></include>
 
 
 <LinearLayout
@@ -21,34 +18,33 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="100dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginBottom="60dp"
+        android:layout_marginTop="40dp"
         android:background="@drawable/grad1"
         android:fontFamily="cursive"
-        android:padding="55dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="35dp"
+        android:paddingRight="35dp"
+        android:paddingTop="10dp"
         android:text="@string/register_title"
         android:textColor="@color/white"
         android:textSize="30sp"
         android:textStyle="bold"/>
 
 
-
-        <EditText
-            android:id="@+id/user_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/input_outline"
-            android:drawableLeft="@drawable/ic_person_black_24dp"
-            android:drawablePadding="10dp"
-            android:drawableTint="#E65100"
-            android:hint="Name .."
-            android:imeOptions="actionNext"
-            android:inputType="text"
-            android:padding="10dp"
-            android:singleLine="true"/>
-
-
-
+    <EditText
+        android:id="@+id/user_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/input_outline"
+        android:drawableLeft="@drawable/ic_person_black_24dp"
+        android:drawablePadding="10dp"
+        android:drawableTint="#E65100"
+        android:hint="Full Name .."
+        android:imeOptions="actionNext"
+        android:inputType="textPersonName"
+        android:padding="10dp"
+        android:singleLine="true" />
     <EditText
         android:id="@+id/user_email"
         android:layout_width="match_parent"
@@ -59,11 +55,99 @@
         android:drawableTint="#E65100"
         android:hint="Email .."
         android:imeOptions="actionNext"
-        android:inputType="text"
+        android:inputType="textWebEmailAddress"
         android:padding="10dp"
-        android:singleLine="true"/>
+        android:singleLine="true" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/input_outline"
+            android:padding="10dp"
+            android:text=" I am "
+            android:textColor="@color/black"
+            />
+    <RadioGroup
+        android:id="@+id/user_gender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/gender_textview"
+        android:orientation="horizontal"
+        >
+        <RadioButton
+            android:id="@+id/male_radio_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="male"
+            app:buttonTint="#E65100"
+            />
+        <RadioButton
+            android:id="@+id/female_radio_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text = "female"
+            app:buttonTint="#E65100"
+            />
+    </RadioGroup>
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/user_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/input_outline"
+        android:drawableLeft="@drawable/ic_phone_android_black_24dp"
+        android:drawablePadding="10dp"
+        android:drawableTint="#E65100"
+        android:hint="phone .."
+        android:imeOptions="actionNext"
+        android:inputType="textPersonName"
+        android:padding="10dp"
+        android:singleLine="true" />
 
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/input_outline"
+            android:padding="10dp"
+            android:text=" I am "
+            android:textColor="@color/black"
+            />
+        <RadioGroup
+            android:id="@+id/user_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/gender_textview"
+            android:orientation="horizontal"
+            >
+            <RadioButton
+                android:id="@+id/event_planner_radio_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="Event Planner"
+                app:buttonTint="#E65100"
+                />
+            <RadioButton
+                android:id="@+id/event_seeker_radio_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text = "event seeker"
+                app:buttonTint="#E65100"
+                />
+        </RadioGroup>
+    </LinearLayout>
 
 
     <EditText
@@ -76,9 +160,9 @@
         android:drawableTint="#E65100"
         android:hint="Password .."
         android:imeOptions="actionNext"
-        android:inputType="text"
+        android:inputType="textPassword"
         android:padding="10dp"
-        android:singleLine="true"/>
+        android:singleLine="true" />
 
 
 
@@ -101,6 +185,8 @@
         android:visibility="invisible"
         />
 </LinearLayout>
+
+
 
 
 </LinearLayout>

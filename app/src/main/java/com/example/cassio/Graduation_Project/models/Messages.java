@@ -11,16 +11,26 @@ public class Messages {
     public String msgtime;
     public String from;
     public String date;
+    public String image;
 
     public Messages() {
     }
 
-    public Messages(String message, String type, String msgtime, String from, String date) {
+    public Messages(String message, String type, String msgtime, String from, String date,String image) {
         this.message = message;
         this.type = type;
         this.msgtime = msgtime;
         this.from = from;
         this.date = date;
+        this.image=image;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getDate() {

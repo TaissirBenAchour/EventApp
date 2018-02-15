@@ -15,9 +15,6 @@
     <string name="logout">Log out</string>
 
 
-
-
-
     <string name="user_exists">User already logged in</string>
     <string name="sign_in_facebook">Sign in with Facebook</string>
     <string name="sign_in_google">Sign in with Google</string>
@@ -28,5 +25,31 @@
     <string name="google_maps_api_key">AIzaSyDTZJo0xOQcDWp-mSWL_t0UR447L4JvOY8</string>
     <string name="stringchoice1">Would you tell me, please, which way I ought to go from here?</string>
     <string name="stringchoice2">That depends a good deal on where you want to get to</string>
+
+
+    <string name="next">NEXT</string>
+    <string name="skip">SKIP</string>
+    <string name="start">GOT IT</string>
+
+
+    <string name="slide_1_desc">Read others feedback and express yours </string>
+
+    <string name="slide_2_title">Communicate</string>
+    <string name="slide_2_desc">Message your contacts to discuss with them new adventures to live </string>
+
+    <string name="slide_3_title">Build Communities</string>
+    <string name="slide_3_desc">Communities of creative , productive and life livers </string>
+
+
+    <string name="play_again_desc">To see the welcome slider again, goto Settings -> apps -> welcome slider -> clear data</string>
+    <string name="play_again">Play Again</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_appeals_list">AppealsList</string>
+    <string name="quest1">do you find our Event App useful ?</string>
+    <string name="quest2">woud you suggest other features to improve our app , to costum your needs ?</string>
+    <string name="quest3">On a scale of five , hwo can you rate our app ?</string>
+    <string name="sponsoring"> Welcome to Event App , If you are a business owner , open to creative marketing strategies , you believe in win win opportunities , you can sponsor others events that may put you in direct contact with a potential target market ! </string>
 
 </resources>

@@ -1,37 +1,42 @@
 package com.example.cassio.Graduation_Project;
 
 import android.content.Intent;
-import android.icu.text.SimpleDateFormat;
-import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageButton;
+import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cassio.Graduation_Project.models.EventClass;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.example.cassio.Graduation_Project.models.ParentList;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.thoughtbot.expandablerecyclerview.ExpandableRecyclerViewAdapter;
+import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup;
+import com.thoughtbot.expandablerecyclerview.viewholders.ChildViewHolder;
+import com.thoughtbot.expandablerecyclerview.viewholders.GroupViewHolder;
 
-public class AvailableEventActivity extends AppCompatActivity{
+import java.util.ArrayList;
+import java.util.List;
 
-    private RecyclerView list_events;
-    private DatabaseReference EventDBReference, savedEventsDBRefrence;
-    private ImageButton searchEventButton;
-    private EditText searchField;
-    private boolean saveProcess =false ;
+/**
+ * Created by cassio on 21/01/18.
+ */
+
+public class AvailableEventActivity extends AppCompatActivity {
+    DatabaseReference parentReference;
     private FirebaseAuth mAuth;
     private String my_id;
+    private  Bundle bundle = new Bundle();
+    private RecyclerView recycler_view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,220 +44,311 @@ public class AvailableEventActivity extends AppCompatActivity{
         setContentView(R.layout.activity_available_event);
 
 
-        searchEventButton = (ImageButton) findViewById(R.id.search_event_button);
-        searchField = (EditText) findViewById(R.id.search_id);
-        list_events = (RecyclerView) findViewById(R.id.list_events_id);
-        list_events.setHasFixedSize(true);
-        list_events.setLayoutManager(new LinearLayoutManager(this));
+        //Define recycleview
+        recycler_view = (RecyclerView) findViewById(R.id.list_events_id);
+        recycler_view.setLayoutManager(new LinearLayoutManager(this));
 
-        mAuth = FirebaseAuth.getInstance();
-        my_id= mAuth.getCurrentUser().getUid();
-        EventDBReference = FirebaseDatabase.getInstance().getReference().child("Events");
-        savedEventsDBRefrence = FirebaseDatabase.getInstance().getReference().child("SavedEvents");
+        //Initialize your Firebase app
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        mAuth=FirebaseAuth.getInstance();
+        my_id=mAuth.getCurrentUser().getUid();
 
-        EventDBReference.keepSynced(true);
-        savedEventsDBRefrence.keepSynced(true);
+        // Reference to your entire Firebase database
+        parentReference = database.getReference().child("Events");
+        final DatabaseReference parentReferenceusers = database.getReference().child("Users");
 
+        //reading data from firebase
+        parentReference.addValueEventListener(new ValueEventListener() {
 
-        searchEventButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                String search = searchField.getText().toString();
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                final List<ParentList> Parent = new ArrayList<>();
+                for (final DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    final String parents =snapshot.getKey();
 
-                searchEvent(search);
+                    parentReference.child(parents).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            final List<EventClass> Child = new ArrayList<>();
+                            for (final DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                parentReference.child(parents).child(snapshot.getKey()).addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(final DataSnapshot dataSnapshot) {
+                                        final String ChildValue =  dataSnapshot.getValue().toString();
+
+
+
+                                        //  Child.add(new EventClass(ChildValue));
+                                        String desc = dataSnapshot.child("description").getValue().toString();
+                                        String date = dataSnapshot.child("date").getValue().toString();
+                                        String eventId = dataSnapshot.child("eventId").getValue().toString();
+                                        String pushId = dataSnapshot.child("pushId").getValue().toString();
+                                        String month =  dataSnapshot.child("month").getValue().toString();
+
+
+
+                                        bundle.putString("push_id",snapshot.getKey());
+                                        bundle.putString("event_id",parents);
+                                        bundle.putString("month",month);
+                                        bundle.putString("month",dataSnapshot.child("title").getValue().toString());
+
+
+
+
+
+
+
+
+//                                            Toast.makeText(testlistevents.this, desc+"desc", Toast.LENGTH_SHORT).show();
+//
+                                        Child.add(new EventClass(dataSnapshot.child("title").getValue().toString(),desc,date,eventId,pushId,month));
+
+
+
+
+
+
+
+
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+
+                                    }
+                                });
+
+
+                            }
+
+
+                            parentReferenceusers.child(parents).addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    String name = dataSnapshot.child("userName").getValue().toString();
+
+                                    //   Toast.makeText(testlistevents.this, name, Toast.LENGTH_SHORT).show();
+                                    if (!parents.equals(my_id)){
+                                        Parent.add(new ParentList(name, Child));
+                                        DocExpandableRecyclerAdapter adapter = new DocExpandableRecyclerAdapter(Parent);
+
+                                        Toast.makeText(AvailableEventActivity.this,dataSnapshot.getChildren().toString() , Toast.LENGTH_SHORT).show();
+
+
+
+
+                                        recycler_view.setAdapter(adapter);
+
+
+
+                                    }
+
+
+
+
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
+
+
+
+
+
+
+
+
+
+
+                        }
+
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
+
+
+                }
+
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
             }
         });
 
 
     }
 
-    private void searchEvent(String search) {
-        Query query = EventDBReference.orderByChild("title").startAt(search).endAt(search + "\uf8ff");
-
-        FirebaseRecyclerAdapter<EventClass,AvailableEventActivity.EventViewHolder> firebaseRecyclerAdapter
-                = new FirebaseRecyclerAdapter<EventClass, AvailableEventActivity.EventViewHolder>
-                (
-                        EventClass.class,
-                        R.layout.simple_event_layout,
-                        AvailableEventActivity.EventViewHolder.class,
-                        query
-                )
-        {
-            @Override
-            protected void populateViewHolder(EventViewHolder viewHolder, EventClass model, final int position) {
-
-                viewHolder.setEvent_title(model.getTitle());
-                viewHolder.setEvent_description(model.getDescription());
-                // viewHolder.setEvent_Image(getApplicationContext(),model.getImage());
 
 
-
-            }
-
-
-        };
-        list_events.setAdapter(firebaseRecyclerAdapter);
-
-    }
-
-    protected void onStart() {
-        super.onStart();
-        FirebaseRecyclerAdapter<EventClass,AvailableEventActivity.EventViewHolder> firebaseRecyclerAdapter
-                = new FirebaseRecyclerAdapter<EventClass, AvailableEventActivity.EventViewHolder>
-                (
-                        EventClass.class,
-                        R.layout.simple_event_layout,
-                        AvailableEventActivity.EventViewHolder.class,
-                        EventDBReference
-                )
-        {
-            @Override
-            protected void populateViewHolder(final EventViewHolder viewHolder, EventClass model, final int position) {
-                final String event_id= getRef(position).getKey();
-
-                viewHolder.setEvent_title(model.getTitle());
-                viewHolder.setEvent_description(model.getDescription());
-                //   viewHolder.setEvent_Image(getApplicationContext(),model.getImage());
-                viewHolder.setSaveBtn(event_id);
-                viewHolder.mView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        String id_key = getRef(position).getKey();
-
-                        Intent intent = new Intent(AvailableEventActivity.this,SingleEventPostView.class);
-                        intent.putExtra("id_event",id_key);
-                        startActivity(intent);
-                    }
-                });
-
-                viewHolder.saveEvent.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        saveProcess = true;
-
-                        savedEventsDBRefrence.addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                if (saveProcess)
-                                {
-                                    if (dataSnapshot.child(event_id).hasChild(my_id))
-                                    {
-                                        savedEventsDBRefrence.child(event_id).child(my_id).removeValue();
-                                        saveProcess=false;
-                                    }
-                                    else
-                                    {
-                                        Calendar date = Calendar.getInstance();
-                                        final SimpleDateFormat currentDate = new SimpleDateFormat("dd-MMM-yyyy");
-                                        final String saveCurrentDate = currentDate.format(date.getTime());
-                                        Toast.makeText(AvailableEventActivity.this, my_id, Toast.LENGTH_SHORT).show();
-                                        savedEventsDBRefrence.child(event_id).child(my_id).child("savedfrom").setValue(saveCurrentDate);
+    public class DocExpandableRecyclerAdapter extends ExpandableRecyclerViewAdapter<MyParentViewHolder,MyChildViewHolder> {
 
 
-                                        saveProcess=false;
-                                    }
+        public DocExpandableRecyclerAdapter(List<ParentList> groups) {
+            super(groups);
+        }
 
-                                }}
+        @Override
+        public MyParentViewHolder onCreateGroupViewHolder(ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_parent, parent, false);
+            return new MyParentViewHolder(view);
+        }
 
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
+        @Override
+        public MyChildViewHolder onCreateChildViewHolder(ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.simple_event_layout, parent, false);
+
+            return new MyChildViewHolder(view);
+        }
+
+        @Override
+        public void onBindChildViewHolder(final MyChildViewHolder holder, final int flatPosition, final ExpandableGroup group, final int childIndex) {
+
+            final EventClass childItem = ((ParentList) group).getItems().get(childIndex);
+
+            holder.onBind(childItem.getTitle(),childItem.getDescription(),childItem.getDate(),childItem.getMonth());
+            Toast.makeText(AvailableEventActivity.this, childItem.getTitle(), Toast.LENGTH_SHORT).show();
+
+
+
+
+            final String pushId = childItem.getEventId();
+            final String eventId = childItem.getPushId();
+            final String month = childItem.getMonth();
+            final  String title = childItem.getTitle();
+            holder.listChild.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View view) {
+                    parentReference.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                                //Toast.makeText(testlistevents.this, pushId, Toast.LENGTH_SHORT).show();
+                                // Toast.makeText(testlistevents.this, month, Toast.LENGTH_SHORT).show();
+                                bundle.putString("push_id",pushId);
+                                bundle.putString("event_id",eventId);
+                                bundle.putString("month",month);
+                                bundle.putString("title",title);
+
+
+                                Intent intent = new Intent(AvailableEventActivity.this, SingleEventPostView.class);
+                                intent.putExtras(bundle);
+                                startActivity(intent);
+
+
+
 
                             }
-                        });
 
+
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
+
+
+
+
+//                                Toast toast = Toast.makeText(getApplicationContext(), , Toast.LENGTH_SHORT);
+//                                toast.show();
+
+
+
+
+                    // Toast.makeText(testlistevents.this, bundle.toString(), Toast.LENGTH_SHORT).show();
+
+
+
+                }
+
+            });
+
+        }
+
+        @Override
+        public void onBindGroupViewHolder(MyParentViewHolder holder, int flatPosition, final ExpandableGroup group) {
+            holder.setParentTitle(group);
+
+            if(group.getItems()==null)
+            {
+                holder.listGroup.setOnClickListener(  new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        //  Toast toast = Toast.makeText(getApplicationContext(), group.toString(), Toast.LENGTH_SHORT);
+                        // toast.show();
                     }
                 });
 
             }
+        }
 
-        };
-        list_events.setAdapter(firebaseRecyclerAdapter);
+
     }
 
 
 
-    public static class EventViewHolder extends RecyclerView.ViewHolder
-    {
+    public class MyChildViewHolder extends ChildViewHolder {
 
+        public TextView listChild,desc,date,_month;
 
-        View mView;
-        ImageButton saveEvent;
-        ImageButton joinEvent;
-        DatabaseReference savedEventsDBRefrence;
-        FirebaseAuth mAuth;
-
-        public EventViewHolder(View itemView) {
+        public MyChildViewHolder(View itemView) {
             super(itemView);
-            mView = itemView;
-            saveEvent = (ImageButton) mView.findViewById(R.id.saveEventbtn_id);
-            joinEvent = (ImageButton) mView.findViewById(R.id.joinEventbtn_id);
-            savedEventsDBRefrence = FirebaseDatabase.getInstance().getReference().child("SavedEvents");
-            mAuth = FirebaseAuth.getInstance();
-
-        }
-        public void setSaveBtn (final String event_id){
-            savedEventsDBRefrence.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    if(dataSnapshot.child(event_id).hasChild(mAuth.getCurrentUser().getUid()))
-                    {
-                        saveEvent.setImageResource(R.drawable.ic_bookmark_black_24dp);
-
-
-
-                    }
-                    else
-                    {
-
-                        saveEvent.setImageResource(R.drawable.ic_check_black_24dp);
-
-                    }
-
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
+            listChild = (TextView) itemView.findViewById(R.id.listChild);
+            desc = (TextView) itemView.findViewById(R.id.desc_field_id);
+            date = (TextView) itemView.findViewById(R.id.time_field_id);
+            _month = (TextView) itemView.findViewById(R.id.month_field_id);
 
 
 
         }
 
-        public void setEvent_title (String event_title){
-            TextView title =(TextView) mView.findViewById(R.id.title_field_id);
-            title.setText(event_title);
+        public void onBind(String Sousdoc,String _desc,String _date,String eventId) {
+            listChild.setText(Sousdoc);
+            desc.setText(_desc);
+            date.setText(_date);
+            _month.setText(eventId);
+
+
         }
-        public void setEvent_description (String event_description){
-            TextView status =(TextView) mView.findViewById(R.id.desc_field_id);
-            status.setText(event_description);
+
+
+
+    }
+    public class MyParentViewHolder extends GroupViewHolder {
+
+        public TextView listGroup;
+
+        public MyParentViewHolder(View itemView) {
+            super(itemView);
+            listGroup = (TextView) itemView.findViewById(R.id.listParent);
         }
 
-//        public void setEvent_Image (final Context context, final String imageEvent){
-//
-//                    final ImageView image_event =(ImageView) mView.findViewById(R.id.event_image_holder);
-//
-//
-//                    if (!imageEvent.equals("imageplaceholder")){
-//// OFF LINE CASE  !!!!
-//                        // I SHOULD O BACK TO USERS PROFILE IN CASE I WILL CREATE ONES , TO VERIFY THE OFFLINE MODE ,
-//                        // DONT FORGET !
-//                        Picasso.with(context).load(imageEvent).networkPolicy(NetworkPolicy.OFFLINE)
-//                                .placeholder(R.drawable.imageplaceholder).into(image_event, new Callback() {
-//                            @Override
-//                            public void onSuccess() {
-//
-//                            }
-//
-//                            @Override
-//                            public void onError() {
-//                                Picasso.with(context).load(imageEvent).placeholder(R.drawable.ic_account_circle_black_24dp).into(image_event);
-//                            }
-//                        });
-//
-//                    }
-//                }
+        public void setParentTitle(ExpandableGroup group) {
+            listGroup.setText(group.getTitle());
+        }
 
 
-    }}
+    }
+
+
+
+
+}
