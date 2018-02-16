@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.cassio.Graduation_Project.R;
@@ -28,11 +29,13 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView title, name;
         public CircleImageView image;
+        private LinearLayout linear;
 
         public MyViewHolder(View view) {
             super(view);
             title = (TextView) view.findViewById(R.id.post_id);
             name = (TextView) view.findViewById(R.id.name_id);
+            linear = (LinearLayout) view.findViewById(R.id.linear_homelist_id);
             image = (CircleImageView) view.findViewById(R.id.image_id);
 
         }
@@ -62,6 +65,10 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
         Picasso.with(context).load(homeListPost.getuserImage())
                 .placeholder(R.drawable.profile_pic).
                 into(holder.image);
+        if (position % 2 == 0) holder.linear.setBackgroundResource(R.color.dot_light_screen1);
+        if (position % 3 == 0) holder.linear.setBackgroundResource(R.color.dot_light_screen2);
+        if (position % 5 == 0) holder.linear.setBackgroundResource(R.color.dot_light_screen3);
+        if (position % 7 == 0) holder.linear.setBackgroundResource(R.color.dot_light_screen4);
 
 
     }

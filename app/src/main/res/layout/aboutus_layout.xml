@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/aboutus"
+    android:gravity="center">
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/aboutus"
+        android:gravity="center">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="35dp"
+        android:text="About the App"
+        android:layout_marginLeft="5dp"
+        android:layout_gravity="center"
+        android:fontFamily="@font/grandhotelregular"
+        android:textStyle="bold"
+        android:textColor="#705b67"
+        android:elevation="150dp"
+        />
+<View
+    android:layout_width="70dp"
+    android:layout_height="1dp"
+    android:layout_gravity="left"
+    android:alpha="0.3"
+    android:elevation="45dp"
+    android:background="@color/medium_grey"
+    android:layout_marginBottom="15dp"
+/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/welcomeTexte"
+        android:fontFamily="@font/kellyslabregular"
+        android:textSize="15dp"
+        android:textColor="@color/medium_grey"
+        android:padding="5dp"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true">
+        <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Follow us On"
+            android:fontFamily="@font/grandhotelregular"
+        android:gravity="center"
+            android:textColor="@color/medium_grey"/>
+        <LinearLayout
+            android:id="@+id/layout12"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="5dp"
+
+
+            >
+
+            <ImageView
+                android:id="@+id/btnigs_id"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/appicon"
+                />
+
+            <ImageView
+                android:id="@+id/btngit_id"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="25dp"
+                android:src="@drawable/git" />
+        </LinearLayout></LinearLayout>
+
+
+</RelativeLayout>

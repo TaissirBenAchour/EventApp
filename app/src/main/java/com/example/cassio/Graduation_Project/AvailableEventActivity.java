@@ -1,6 +1,7 @@
 package com.example.cassio.Graduation_Project;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -29,6 +30,7 @@ import com.thoughtbot.expandablerecyclerview.viewholders.GroupViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by cassio on 21/01/18.
@@ -48,16 +50,13 @@ public class AvailableEventActivity extends Fragment {
     {
         mView = inflater.inflate(R.layout.activity_available_event, container, false);
 
-        //Define recycleview
         recycler_view = (RecyclerView) mView.findViewById(R.id.list_events_id);
         recycler_view.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        //Initialize your Firebase app
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         mAuth=FirebaseAuth.getInstance();
         my_id=mAuth.getCurrentUser().getUid();
 
-        // Reference to your entire Firebase database
         parentReference = database.getReference().child("Events");
         final DatabaseReference parentReferenceusers = database.getReference().child("Users");
         parentReference.addValueEventListener(new ValueEventListener() {
@@ -204,8 +203,14 @@ public class AvailableEventActivity extends Fragment {
         }
 
         @Override
-        public MyParentViewHolder onCreateGroupViewHolder(ViewGroup parent, int viewType) {
+        public MyParentViewHolder onCreateGroupViewHolder(ViewGroup parent, int i) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_parent, parent, false);
+
+
+
+
+
+
             return new MyParentViewHolder(view);
         }
 
@@ -289,6 +294,10 @@ public class AvailableEventActivity extends Fragment {
         @Override
         public void onBindGroupViewHolder(MyParentViewHolder holder, int flatPosition, final ExpandableGroup group) {
             holder.setParentTitle(group);
+
+
+
+
 
             if(group.getItems()==null)
             {

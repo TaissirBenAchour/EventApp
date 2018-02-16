@@ -1,14 +1,54 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.cassio.Graduation_Project.HomeFragment">
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/userslistcard_id">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="5dp">
+            <TextView
+                android:id="@+id/txt1_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Add more freinds to your list"
+                android:layout_margin="5dp"
+                android:fontFamily="@font/orbitronregular"
+                />
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/userslist_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txt1_id"
+                android:paddingRight="10dip"
+                android:scrollbarStyle="outsideInset">
+
+
+            </android.support.v7.widget.RecyclerView>
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/homelist_id"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@id/userslistcard_id">
 
     </android.support.v7.widget.RecyclerView>
 
-</FrameLayout>
+    <TextView
+
+        android:id="@+id/noevent_id"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="No Events Posted Yet"
+        android:gravity="center"/>
+
+</RelativeLayout>

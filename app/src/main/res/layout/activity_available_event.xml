@@ -7,10 +7,6 @@
     android:background="@color/white"
     android:orientation="vertical"
     tools:context="com.example.cassio.Graduation_Project.AvailableEventActivity">
-<include android:id="@+id/toolbar_list_events"
-    layout="@layout/app_bar_layout"
-  ></include>
-
     <LinearLayout
         android:id="@+id/linear_search_id"
         android:layout_width="match_parent"
@@ -31,7 +27,7 @@
             android:hint="search for event"
             android:inputType="textPersonName"
             android:padding="10dp"
-
+            android:textColor="@color/white"
             android:textColorHint="@color/medium_grey" />
 
         <ImageButton
@@ -51,6 +47,7 @@
         android:id="@+id/list_events_id"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/linear_search_id" >
+        android:layout_below="@+id/linear_search_id"
+       >
     </android.support.v7.widget.RecyclerView>
 </RelativeLayout>

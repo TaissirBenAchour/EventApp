@@ -1,29 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
-    <LinearLayout
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_marginBottom="5dp"
+        app:cardCornerRadius="5dp"
+        android:layout_weight="0.3">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+        <LinearLayout
+            android:id="@+id/linear_homelist_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+            android:background="#4173baa9">
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/image_id"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:layout_margin="5dp"
             android:src="@drawable/profile_pic"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="name"
-            android:id="@+id/name_id"/>
+
+            <TextView
+                android:id="@+id/name_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:fontFamily="@font/kellyslabregular"
+                android:text="name" />
     </LinearLayout>
-    <TextView
-        android:id="@+id/post_id"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="the post is"
-        />
+        <TextView
+            android:id="@+id/post_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="the post is"
+            android:background="@color/light_grey"
+            android:padding="10dp"/>
+        </LinearLayout>
+            </android.support.v7.widget.CardView>
+
 
 </LinearLayout>

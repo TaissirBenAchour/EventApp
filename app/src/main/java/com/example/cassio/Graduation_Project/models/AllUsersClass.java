@@ -11,14 +11,34 @@ public class AllUsersClass {
     public String userName;
     public String userStatus;
     public String userImage;
+    public String userId;
 
-    public AllUsersClass(String userName, String userStatus, String userImage) {
+    public AllUsersClass(String userName, String userStatus, String userImage, String userId) {
         this.userName = userName;
         this.userStatus = userStatus;
         this.userImage = userImage;
+        this.userId =userId;
     }
 
     public AllUsersClass() {
+    }
+
+    public AllUsersClass(String userId) {
+        this.userId = userId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public AllUsersClass(String userName, String userImage,String userId) {
+        this.userImage=userImage;
+        this.userName=userName;
+        this.userId=userId;
     }
 
     public String getUserName() {

@@ -3,13 +3,16 @@ package com.example.cassio.Graduation_Project;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -25,7 +28,7 @@ import com.google.firebase.iid.FirebaseInstanceId;
 
 
 public class loginActivity extends AppCompatActivity {
-    private Button loginBtn;
+    private Button loginBtn , aboutus;
     private Button registerBtn;
     private EditText userEmail;
     private EditText userPassword;
@@ -43,6 +46,7 @@ public class loginActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         loginBtn = (Button) findViewById(R.id.btn_login);
+        aboutus =(Button) findViewById(R.id.about_us_id);
         registerBtn = (Button) findViewById(R.id.btn_register);
 
         userEmail = (EditText) findViewById(R.id.user_email);
@@ -55,7 +59,6 @@ public class loginActivity extends AppCompatActivity {
                                            public void onClick(View view) {
                                                Intent goToRegisterActivityIntent = new Intent(loginActivity.this, RegisterActivity.class);
                                                startActivity(goToRegisterActivityIntent);
-                                               finish();
                                            }
                                        }
 
@@ -67,6 +70,13 @@ public class loginActivity extends AppCompatActivity {
                 String password = userPassword.getText().toString();
 
                 loginUserAccount(email, password);
+            }
+        });
+        aboutus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent goToAboutusActivity = new Intent(loginActivity.this, AboutUs.class);
+                startActivity(goToAboutusActivity);
             }
         });
 
@@ -137,6 +147,7 @@ public class loginActivity extends AppCompatActivity {
             //returns to login
         }
     }
+
 
 
 }

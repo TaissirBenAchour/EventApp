@@ -138,6 +138,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 DefaultReference.child("userImage").setValue("profile_pic");
                                 DefaultReference.child("deviceToken").setValue(dviceToken);
                                 DefaultReference.child("usergender").setValue(gender);
+                                DefaultReference.child("userId").setValue(currentUserID);
                                 DefaultReference.child("userPhone").setValue(phone)
                                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override

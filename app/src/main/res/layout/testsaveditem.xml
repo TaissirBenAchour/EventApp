@@ -23,7 +23,6 @@
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:layout_below="@id/id1"
             card_view:cardCornerRadius="4dp">
             <LinearLayout
                 android:layout_width="match_parent"

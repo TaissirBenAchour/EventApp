@@ -19,6 +19,7 @@ public class HomeListPost {
     public HomeListPost() {
     }
 
+
     public String getName() {
         return name;
     }
