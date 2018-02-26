@@ -93,9 +93,6 @@ public class loginActivity extends AppCompatActivity {
         });
         loginButton = (LoginButton) findViewById(R.id.login_button);
         loginButton.setReadPermissions("email");
-        // If using in a fragment
-
-        // Callback registration
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
@@ -107,7 +104,6 @@ public class loginActivity extends AppCompatActivity {
 
             @Override
             public void onCancel() {
-                // App code
             }
 
             @Override
