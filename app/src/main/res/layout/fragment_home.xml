@@ -2,24 +2,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.cassio.Graduation_Project.HomeFragment">
+    android:layout_marginBottom="30dp"
+    tools:context="com.example.cassio.Graduation_Project.AccountFragments.HomeFragment">
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/userslistcard_id">
+        android:id="@+id/userslistcard_id"
+        android:layout_marginTop="5dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="5dp">
+
+           >
             <TextView
                 android:id="@+id/txt1_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="3dp"
+                android:textColor="@color/medium_grey"
                 android:text="Add more freinds to your list"
                 android:layout_margin="5dp"
                 android:fontFamily="@font/orbitronregular"
-                />
+                android:elevation="25dp"/>
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/userslist_id"
                 android:layout_width="match_parent"
@@ -33,15 +38,20 @@
         </LinearLayout>
 
     </android.support.v7.widget.CardView>
+<android.support.v7.widget.CardView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/userslistcard_id"
+    android:layout_marginTop="10dp"> <android.support.v7.widget.RecyclerView
+    android:id="@+id/homelist_id"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="40dp"
+    >
+
+</android.support.v7.widget.RecyclerView></android.support.v7.widget.CardView>
 
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/homelist_id"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/userslistcard_id">
-
-    </android.support.v7.widget.RecyclerView>
 
     <TextView
 
@@ -49,6 +59,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="No Events Posted Yet"
-        android:gravity="center"/>
+        android:gravity="center"
+        android:textStyle="bold"
+        android:layout_marginBottom="25dp"
+
+        />
 
 </RelativeLayout>

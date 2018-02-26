@@ -7,6 +7,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 
+import com.example.cassio.Graduation_Project.StartApp.loginActivity;
+
 public class SplashWelcomingActivity extends AppCompatActivity {
 
     LinearLayout l1;

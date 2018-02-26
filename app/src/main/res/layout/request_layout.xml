@@ -4,86 +4,109 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-
-    <LinearLayout
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="18dp"
-        android:background="#E0F7FA"
-        android:orientation="horizontal">
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/photo_request_id"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="5dp"
-            android:padding="5dp"
-            android:src="@drawable/profile_pic" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
+        android:layout_margin="5dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/name_request_id"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:id="@+id/linear_message_id"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginTop="7dp"
-                android:fontFamily="cursive"
-                android:text="User Name"
-                android:textSize="20dp"
-                android:textStyle="bold" />
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="18dp"
+                android:layout_marginRight="18dp"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/photo_request_id"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="5dp"
+                    android:padding="5dp"
+                    android:src="@drawable/profile_pic"
+                    />
+                <LinearLayout
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:orientation="vertical"
+                    >
+                    <TextView
+                        android:id="@+id/name_request_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="7dp"
+                        android:fontFamily="@font/indiellower"
+                        android:text="User Name"
+                        android:gravity="center"                android:textSize="20dp"
+                        android:textStyle="bold"
+                        />
 
-            <TextView
-                android:id="@+id/status_request_id"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="User Status"
-                android:textSize="10dp" />
-        </LinearLayout>
+                    <TextView
+                        android:id="@+id/status_request_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="User Status"
+                        android:textSize="10dp"
+                        android:ems="25"
+                        android:ellipsize="end"
+                        android:maxLines="1"/>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        >
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+
+
+            </LinearLayout>
+            <View
+                android:layout_width="70dp"
+                android:layout_height="30dp"
+                android:background="#FF81636A"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_marginLeft="-50dp">
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                <ImageButton
+                    android:id="@+id/acceptbtn_id"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="5dp"
+                    android:padding="10dp"
+                    android:background="@color/Transparent"
+                    android:tint="@color/white"
+                    android:src="@drawable/ic_check_black_24dp"/>
 
-                    <ImageButton
-                        android:id="@+id/acceptbtn_id"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="70dp"
-                        android:layout_marginTop="3dp"
-                        android:background="@drawable/acceptbtn"
-                        android:padding="10dp"
-                        android:src="@drawable/ic_check_black_24dp"/>
-
-                    <ImageButton
-                        android:id="@+id/declinebtn_id"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="3dp"
-                        android:background="@drawable/declinebtn"
-                        android:padding="10dp"
-                        android:src="@drawable/ic_clear_black_24dp"/>
-
-                </LinearLayout>
+                <ImageButton
+                    android:id="@+id/declinebtn_id"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@color/Transparent"
+                    android:padding="10dp"
+                    android:tint="#c44d42"
+                    android:src="@drawable/ic_clear_black_24dp"/>
 
             </LinearLayout>
 
         </LinearLayout>
 
-    </LinearLayout>
+
+
+    </android.support.v7.widget.CardView>
 
 
 </LinearLayout>

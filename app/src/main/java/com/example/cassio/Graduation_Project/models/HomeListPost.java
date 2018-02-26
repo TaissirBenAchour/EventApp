@@ -9,15 +9,41 @@ public class HomeListPost {
     String name;
     String userImage;
     String title;
+    String eventImage;
+    String time;
 
-    public HomeListPost(String name, String userImage, String title) {
+    public HomeListPost(String name, String userImage, String title,String eventImage,String time) {
         this.name = name;
         this.userImage = userImage;
+        this.title = title;
+        this.eventImage=eventImage;
+        this.time=time;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public String getEventImage() {
+        return eventImage;
+    }
+
+    public void setEventImage(String eventImage) {
+        this.eventImage = eventImage;
+    }
+
+    public HomeListPost(String title) {
         this.title = title;
     }
 
     public HomeListPost() {
     }
+
+
 
 
     public String getName() {

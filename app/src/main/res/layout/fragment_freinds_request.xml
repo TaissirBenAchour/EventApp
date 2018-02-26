@@ -2,7 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.cassio.Graduation_Project._profileFragments.FreindsRequestFragment">
+    android:background="#f5f5f5"
+    tools:context="com.example.cassio.Graduation_Project.AccountFragments.FreindsRequestFragment">
 
    <android.support.v7.widget.RecyclerView
        android:id="@+id/myListRequestView_id"

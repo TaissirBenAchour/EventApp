@@ -16,7 +16,7 @@ public class SponsoringActivity extends AppCompatActivity {
 
     FirebaseAuth mAuth ;
     String my_id;
-    DatabaseReference sponsorRef ;
+    DatabaseReference sponsorRef,userRef ;
 
 
 
@@ -27,9 +27,18 @@ public class SponsoringActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sponsoring);
         sponsorRef = FirebaseDatabase.getInstance().getReference().child("Sponsors");
+        userRef = FirebaseDatabase.getInstance().getReference().child("Users");
         mAuth =FirebaseAuth.getInstance();
         my_id=mAuth.getCurrentUser().getUid();
 
+
+
+    }
+
+    public void noforsponsoring(View view){
+        userRef.child(my_id).child("plus").setValue("not sponsor");
+        Intent gotoprofile = new Intent(SponsoringActivity.this,FragmentsUnionActivity.class);
+        startActivity(gotoprofile);
 
 
     }
@@ -54,8 +63,11 @@ public class SponsoringActivity extends AppCompatActivity {
                  String txt = options[i].toString();
                     Toast.makeText(SponsoringActivity.this, "Congrats ! ", Toast.LENGTH_SHORT).show();
                     sponsorRef.child(my_id).child("typeBusiness").setValue(options[i]);
+                    userRef.child(my_id).child("plus").setValue("sponsor");
                     Intent gotoprofile = new Intent(SponsoringActivity.this,FragmentsUnionActivity.class);
                     startActivity(gotoprofile);
+
+
 
 
 

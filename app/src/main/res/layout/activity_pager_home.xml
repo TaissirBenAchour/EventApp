@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/graylight"
+    android:orientation="vertical"
+    tools:context="com.example.cassio.Graduation_Project.FragmentsUnionActivity">
+
+
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+       />
+    <com.nightonke.boommenu.BoomMenuButton
+        android:id="@+id/bmb4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+       android:layout_above="@id/appBarLayout"
+        app:bmb_normalColor="@android:color/white"
+        android:layout_alignParentRight="true"
+        app:bmb_highlightedColor="@android:color/darker_gray"
+        app:bmb_buttonEnum="ham"
+        app:bmb_piecePlaceEnum="piecePlace_ham_5"
+        app:bmb_buttonPlaceEnum="buttonPlace_ham_5"
+        app:bmb_pieceCornerRadius="2dp"
+        />
+
+
+  <android.support.design.widget.AppBarLayout
+      android:id="@+id/appBarLayout"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_alignParentBottom="true"
+
+      >
+
+      <android.support.design.widget.TabLayout
+          android:id="@+id/main_tab_id"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_alignParentBottom="true"
+          android:layout_gravity="bottom"
+          android:layout_marginBottom="2dp"
+          android:background="@color/Transparent"
+          android:dividerPadding="0dp"
+          android:fillViewport="true"
+
+          app:tabMode="fixed"
+          >
+
+      </android.support.design.widget.TabLayout>
+  </android.support.design.widget.AppBarLayout>
+    </RelativeLayout>
+
+
+
+
+
+
+
+
+

@@ -12,12 +12,23 @@ public class AllUsersClass {
     public String userStatus;
     public String userImage;
     public String userId;
+    public String txt;
 
-    public AllUsersClass(String userName, String userStatus, String userImage, String userId) {
+    public AllUsersClass(String userName, String userStatus, String userImage, String userId , String txt) {
         this.userName = userName;
         this.userStatus = userStatus;
         this.userImage = userImage;
+        this.txt=txt;
         this.userId =userId;
+
+    }
+
+    public String getTxt() {
+        return txt;
+    }
+
+    public void setTxt(String txt) {
+        this.txt = txt;
     }
 
     public AllUsersClass() {

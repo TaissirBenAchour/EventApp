@@ -53,6 +53,13 @@
     <string name="sponsoring"> Welcome to Event App , If you are a business owner , open to creative marketing strategies , you believe in win win opportunities , you can sponsor others events that may put you in direct contact with a potential target market ! </string>
     <string name="Setting">Settings</string>
     <string name="AnsweraSurvey">Answer a servey</string>
+    <string name="insight">insights</string>
     <string name="ignore">Ignore</string>
+    <string name="facebook_app_id">167162724005737</string>
+    <string name="fb_login_protocol_scheme">fb167162724005737</string>
+    <string name="appeal">make an appeal</string>
+    <string name="introductionAppeals">Here you will find people interested in creating events for you , make an appeal to let them hear your voice.</string>
+<string name="introductionCommittee">"You have an event budget, idea, plan ?  but you still need more engaged devoted committee with you to bring the event to life !\n Make an appeal "</string>
+    <string name="agreement">This is not an official agreement and this application does not to be considered as a legal proof to garantee any side right\'s</string>
 
 </resources>

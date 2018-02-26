@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.cassio.Graduation_Project.StartApp.Afterloggingwithfacebook">
+    <EditText
+        android:id="@+id/user_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/input_outline"
+        android:drawableLeft="@drawable/ic_person_black_24dp"
+        android:drawablePadding="10dp"
+        android:drawableTint="#E65100"
+        android:hint="Full Name .."
+        android:imeOptions="actionNext"
+        android:inputType="textPersonName"
+        android:padding="10dp"
+        android:singleLine="true" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/input_outline"
+            android:padding="10dp"
+            android:text=" I am "
+            android:textColor="@color/black"
+            />
+        <RadioGroup
+            android:id="@+id/user_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/gender_textview"
+            android:orientation="horizontal"
+            >
+            <RadioButton
+                android:id="@+id/event_planner_radio_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="Event Planner"
+                app:buttonTint="#E65100"
+                />
+            <RadioButton
+                android:id="@+id/event_seeker_radio_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text = "event seeker"
+                app:buttonTint="#E65100"
+                />
+        </RadioGroup>
+    </LinearLayout>
+    <Button
+        android:id="@+id/btn_createAccount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/register"
+        android:text="Sign up"
+        android:textColor="@color/white"/>
+</LinearLayout>

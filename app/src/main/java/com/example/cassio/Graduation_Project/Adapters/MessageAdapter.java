@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.cassio.Graduation_Project.R;
-import com.example.cassio.Graduation_Project.models.Messages;
+import com.example.cassio.Graduation_Project.models.messagesClass;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
@@ -19,12 +19,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageViewHolder> {
-    private List<Messages> messages_List;
+    private List<messagesClass> messages_Class_List;
     private FirebaseAuth mAuth;
 
-    public MessageAdapter(List<Messages> messages_List)
-    {
-        this.messages_List = messages_List;
+    public MessageAdapter(List<messagesClass> messages_Class_List) {
+        this.messages_Class_List = messages_Class_List;
     }
 
     @Override
@@ -32,18 +31,16 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.message_sent, parent, false);
         mAuth = FirebaseAuth.getInstance();
-
         return new MessageViewHolder(v);
     }
-
 
 
     @Override
     public void onBindViewHolder(MessageViewHolder holder, int position) {
 
         String sender_id = mAuth.getCurrentUser().getUid();
-        Messages messages = messages_List.get(position);
-        String messagefrom_id = messages.getFrom();
+        messagesClass messagesClass = messages_Class_List.get(position);
+        String messagefrom_id = messagesClass.getFrom();
 
 
         if (sender_id.equals(messagefrom_id)) {
@@ -55,11 +52,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
 
         }
-        holder.messageText.setText(messages.getmessage());
-        holder.timeOfMessage.setText(messages.getmsgtime());
-
-
-
+        holder.messageText.setText(messagesClass.getmessage());
+        holder.timeOfMessage.setText(messagesClass.getmsgtime());
 
 
     }
@@ -67,7 +61,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
     @Override
     public int getItemCount() {
-        return messages_List.size();
+        return messages_Class_List.size();
     }
 
     public class MessageViewHolder extends RecyclerView.ViewHolder {
@@ -79,7 +73,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             super(view);
             messageText = (TextView) view.findViewById(R.id.custom_message_id);
             timeOfMessage = (TextView) view.findViewById(R.id.timeOfSendingTheMessage_id);
-            profileImage=(CircleImageView) view.findViewById(R.id.messageOfSender_id);
+            profileImage = (CircleImageView) view.findViewById(R.id.messageOfSender_id);
         }
     }
 }

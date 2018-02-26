@@ -42,7 +42,8 @@
             app:tabIndicatorColor="@color/jaune"
             app:tabMode="fixed"
             app:tabBackground="@drawable/tab_color_selector"
-            >
+app:tabSelectedTextColor="@color/white"
+           >
 
         </android.support.design.widget.TabLayout>
     </android.support.design.widget.AppBarLayout>

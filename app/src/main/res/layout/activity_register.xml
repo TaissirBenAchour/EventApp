@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.cassio.Graduation_Project.RegisterActivity">
+    tools:context="com.example.cassio.Graduation_Project.StartApp.RegisterActivity">
 
 
 
@@ -54,6 +54,18 @@
         android:drawablePadding="10dp"
         android:drawableTint="#E65100"
         android:hint="Email .."
+        android:imeOptions="actionNext"
+        android:inputType="textWebEmailAddress"
+        android:padding="10dp"
+        android:singleLine="true" />
+    <EditText
+        android:id="@+id/age_user"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/input_outline"
+        android:drawablePadding="10dp"
+        android:drawableTint="#E65100"
+        android:hint="age .."
         android:imeOptions="actionNext"
         android:inputType="textWebEmailAddress"
         android:padding="10dp"

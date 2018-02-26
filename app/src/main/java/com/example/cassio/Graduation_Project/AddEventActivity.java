@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.icu.text.SimpleDateFormat;
 import android.icu.util.Calendar;
 import android.net.Uri;
 import android.os.Bundle;
@@ -45,6 +46,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
@@ -248,55 +250,59 @@ public class AddEventActivity extends AppCompatActivity implements
           filePath.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {               @Override
               public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     Uri downloadUri = taskSnapshot.getDownloadUrl();
-
-            DatabaseReference keyRef = mStoreEvent_dataReference.child(my_id).push();
-            final DatabaseReference newEvent = keyRef;
-            final String pushRef= keyRef.getKey();
-
-
-            // push() for unique random  ID
-            newEvent.child("title").setValue(title);
-            newEvent.child("description").setValue(description);
-            newEvent.child("price").setValue(price);
-            newEvent.child("imageEvent").setValue("imageplaceholder");
-            newEvent.child("date").setValue(date);
-            newEvent.child("time").setValue(time);
-            newEvent.child("address").setValue(address);
-            newEvent.child("month").setValue(_Month);
-            newEvent.child("pushId").setValue(pushRef);
-            newEvent.child("eventId").setValue(my_id);
-
-             newEvent.child("imageEvent").setValue(downloadUri.toString());
-            progressing.dismiss();
+             if (!downloadUri.equals(null)) {
+                 DatabaseReference keyRef = mStoreEvent_dataReference.child(my_id).push();
+                 final DatabaseReference newEvent = keyRef;
+                 final String pushRef = keyRef.getKey();
 
 
-            final AlertDialog.Builder builder = new AlertDialog.Builder(AddEventActivity.this);
+                 newEvent.child("title").setValue(title);
+                 newEvent.child("description").setValue(description);
+                 newEvent.child("price").setValue(price);
+                 newEvent.child("date").setValue(date);
+                 newEvent.child("time").setValue(time);
+                 newEvent.child("address").setValue(address);
+                 newEvent.child("month").setValue(_Month);
+                 newEvent.child("pushId").setValue(pushRef);
+                 newEvent.child("eventId").setValue(my_id);
+                 newEvent.child("imageEvent").setValue(downloadUri.toString());
+                 progressing.dismiss();
 
 
-            builder.setTitle("You HAVE A NEW EVENT !")
-                    .setMessage("do you want to add a post about how great your new event is going to be?")
-                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            String new_Event = "I am sharing a new Event called " + title + ", Come and check ! ";
-                            DatabaseReference keyRef = postsRef.child(my_id).push();
-                            final DatabaseReference newEvent = keyRef;
-                            final String pushRef= keyRef.getKey();
-                            newEvent.child("eventId").setValue(new_Event);
-                            Intent goBackToEventList = new Intent(AddEventActivity.this, FragmentsUnionActivity.class);
-                            startActivity(goBackToEventList);
+                 final AlertDialog.Builder builder = new AlertDialog.Builder(AddEventActivity.this);
+                 SimpleDateFormat formatter = new SimpleDateFormat("hh:mm");
+                 final String dateString = formatter.format(new Date());
 
-                        }
-                    })
-                    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            Intent goBackToEventList = new Intent(AddEventActivity.this, FragmentsUnionActivity.class);
-                            goBackToEventList.putExtra("keyRef",pushRef);
-                            startActivity(goBackToEventList);                        }
-                    });builder.show();
+                 builder.setTitle("You HAVE A NEW EVENT !")
+                         .setMessage("do you want to add a post about how great your new event is going to be?")
+                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                             public void onClick(DialogInterface dialog, int which) {
+                                 String new_Event = "I am sharing a new Event called " + title + ", Come and check ! ";
+
+                                 DatabaseReference keyRef = postsRef.child(my_id).child(pushRef);
+                                 final DatabaseReference newEvent = keyRef;
+                                 newEvent.child("post").setValue(new_Event);
+                                 newEvent.child("time").setValue(dateString);
+                                 Intent goBackToEventList = new Intent(AddEventActivity.this, FragmentsUnionActivity.class);
+                                 startActivity(goBackToEventList);
+
+                             }
+                         })
+                         .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                             public void onClick(DialogInterface dialog, int which) {
+                                 Intent goBackToEventList = new Intent(AddEventActivity.this, FragmentsUnionActivity.class);
+                                 goBackToEventList.putExtra("keyRef", pushRef);
+                                 startActivity(goBackToEventList);
+                             }
+                         });
+                 builder.show();
 
 
-
-                }
+             }
+          else {
+                 Toast.makeText(AddEventActivity.this, "pick a photo for the event please", Toast.LENGTH_SHORT).show();
+             }
+          }
             });
 
 

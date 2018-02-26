@@ -5,10 +5,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.example.cassio.Graduation_Project._profileFragments.CommunityContentFragment;
-import com.example.cassio.Graduation_Project._profileFragments.HomeContentFragment;
-import com.example.cassio.Graduation_Project._profileFragments.MainProfileContentFragment;
-import com.example.cassio.Graduation_Project._profileFragments.MessagesListContentFragment;
+import com.example.cassio.Graduation_Project.AccountFragments.CommunityContentFragment;
+import com.example.cassio.Graduation_Project.AccountFragments.HomeContentFragment;
+import com.example.cassio.Graduation_Project.AccountFragments.MainProfileContentFragment;
+import com.example.cassio.Graduation_Project.AccountFragments.MessagesListContentFragment;
 
 /**
  * Created by cassio on 28/12/17.
@@ -36,13 +36,13 @@ class TabPagerAdapter extends FragmentStatePagerAdapter {
 
 
             case 2:
-                CommunityContentFragment communityContentFragment = new CommunityContentFragment();
-                return communityContentFragment;
 
+            MessagesListContentFragment messagesListContentFragment =new MessagesListContentFragment();
+            return messagesListContentFragment;
 
             case 3:
-                MessagesListContentFragment messagesListContentFragment =new MessagesListContentFragment();
-                return messagesListContentFragment;
+                CommunityContentFragment communityContentFragment = new CommunityContentFragment();
+                return communityContentFragment;
 
 
 

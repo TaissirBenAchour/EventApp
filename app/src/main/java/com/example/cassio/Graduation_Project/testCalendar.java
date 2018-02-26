@@ -3,18 +3,15 @@ package com.example.cassio.Graduation_Project;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.cassio.Graduation_Project.models.EventClass;
 import com.google.firebase.auth.FirebaseAuth;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,156 +25,137 @@ import java.util.List;
 
 
 public class testCalendar extends AppCompatActivity {
+    DatabaseReference parentReference, parentReferenc_events;
+    AdapterSectionRecycler adapterRecycler;
     private FirebaseAuth mAuth;
     private String my_id;
     private Bundle bundle = new Bundle();
-    DatabaseReference parentReference,parentReferenc_events;
     private RecyclerView recyclerView;
-    AdapterSectionRecycler adapterRecycler;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.calendar_layout);
-        //initialize RecyclerView
+        setContentView(R.layout.agenda_layout);
         recyclerView = (RecyclerView) findViewById(R.id.listofsavedevents);
 
 
         parentReference = FirebaseDatabase.getInstance().getReference().child("SavedEvents");
         parentReferenc_events = FirebaseDatabase.getInstance().getReference().child("Events");
-        mAuth=FirebaseAuth.getInstance();
-        my_id=mAuth.getCurrentUser().getUid();
-
-        //setLayout Manager
+        mAuth = FirebaseAuth.getInstance();
+        my_id = mAuth.getCurrentUser().getUid();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
-
-        //Create a List of EventClass DataModel
-
-
         parentReference.addValueEventListener(new ValueEventListener() {
             List<SectionHeader> sections = new ArrayList<>();
 
 
             @Override
-         public void onDataChange(DataSnapshot dataSnapshot) {
-             if (dataSnapshot.child(my_id).exists()) {
-                 final List<EventClass>[] childList = new List[]{new ArrayList<>()};
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.child(my_id).exists()) {
+                    final List<EventClass>[] childList = new List[]{new ArrayList<>()};
 
 
-                 if (dataSnapshot.child(my_id).child("January").exists()) {
-                     parentReference.child(my_id).child("January").addValueEventListener(new ValueEventListener() {
-                         @Override
-                         public void onDataChange(DataSnapshot dataSnapshot) {
-                             for (final DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    if (dataSnapshot.child(my_id).child("January").exists()) {
+                        parentReference.child(my_id).child("January").addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                for (final DataSnapshot snapshot : dataSnapshot.getChildren()) {
 
-                                String  string = snapshot.child("title").getValue().toString();
+                                    String string = snapshot.child("title").getValue().toString();
 
-                                                             childList[0].add(new EventClass(string));
-
-
-                                                     }
-
-                                                     sections.add(new SectionHeader(childList[0], "January"));
-                                                     adapterRecycler = new AdapterSectionRecycler(testCalendar.this, sections);
-                                                     recyclerView.setAdapter(adapterRecycler);
-
-                                                 }
+                                    childList[0].add(new EventClass(string));
 
 
+                                }
+
+                                sections.add(new SectionHeader(childList[0], "January"));
+                                adapterRecycler = new AdapterSectionRecycler(testCalendar.this, sections);
+                                recyclerView.setAdapter(adapterRecycler);
+
+                            }
 
 
-                         @Override
-                         public void onCancelled(DatabaseError databaseError) {
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
 
-                         }
+                            }
 
-                     });
-                 }
-                 if (dataSnapshot.child(my_id).child("March").exists()) {
-                 parentReference.child(my_id).child("March").addValueEventListener(new ValueEventListener() {
+                        });
+                    }
+                    if (dataSnapshot.child(my_id).child("March").exists()) {
+                        parentReference.child(my_id).child("March").addValueEventListener(new ValueEventListener() {
 
-                     @Override
-                     public void onDataChange(DataSnapshot dataSnapshot) {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
 
-                         for (DataSnapshot snapshot : dataSnapshot.getChildren()){
-                             childList[0] = new ArrayList<>();
-                             String string = snapshot.child("title").getValue().toString();
+                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                    childList[0] = new ArrayList<>();
+                                    String string = snapshot.child("title").getValue().toString();
 
-                             childList[0].add(new EventClass(string));
+                                    childList[0].add(new EventClass(string));
 
-                         }
+                                }
 
-                         sections.add(new SectionHeader(childList[0], "March"));
+                                sections.add(new SectionHeader(childList[0], "March"));
 
-                         adapterRecycler = new AdapterSectionRecycler(testCalendar.this, sections);
-                         recyclerView.setAdapter(adapterRecycler);
+                                adapterRecycler = new AdapterSectionRecycler(testCalendar.this, sections);
+                                recyclerView.setAdapter(adapterRecycler);
 
-                     }
-
-
-                     @Override
-                     public void onCancelled(DatabaseError databaseError) {
-
-                     }
-
-                 });
-
-             }
-                 if (dataSnapshot.child(my_id).child("February").exists()) {
-                     parentReference.child(my_id).child("February").addValueEventListener(new ValueEventListener() {
-
-                         @Override
-                         public void onDataChange(DataSnapshot dataSnapshot) {
-
-                             for (DataSnapshot snapshot : dataSnapshot.getChildren()){
-                                 childList[0] = new ArrayList<>();
-
-                                 String string = snapshot.getKey();
-                                 childList[0].add(new EventClass(string));
-
-                             }
-
-                             sections.add(new SectionHeader(childList[0], "C"));
-
-                             adapterRecycler = new AdapterSectionRecycler(testCalendar.this, sections);
-                             recyclerView.setAdapter(adapterRecycler);
-
-                         }
+                            }
 
 
-                         @Override
-                         public void onCancelled(DatabaseError databaseError) {
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
 
-                         }
+                            }
 
-                     });
+                        });
 
-                 }
+                    }
+                    if (dataSnapshot.child(my_id).child("February").exists()) {
+                        parentReference.child(my_id).child("February").addValueEventListener(new ValueEventListener() {
 
-             }
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                    childList[0] = new ArrayList<>();
+
+                                    String string = snapshot.getKey();
+                                    childList[0].add(new EventClass(string));
+
+                                }
+
+                                sections.add(new SectionHeader(childList[0], "C"));
+
+                                adapterRecycler = new AdapterSectionRecycler(testCalendar.this, sections);
+                                recyclerView.setAdapter(adapterRecycler);
+
+                            }
 
 
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
 
-         }
+                            }
 
-         @Override
-         public void onCancelled(DatabaseError databaseError) {
+                        });
 
-         }
+                    }
 
-
-     });
-
-
+                }
 
 
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
 
 
-
-
+        });
 
 
     }
@@ -234,17 +212,21 @@ public class testCalendar extends AppCompatActivity {
             return sectionText;
         }
     }
+
     public class SectionViewHolder extends RecyclerView.ViewHolder {
 
         TextView name;
+
         public SectionViewHolder(View itemView) {
             super(itemView);
             name = (TextView) itemView.findViewById(R.id.listparent_id);
         }
     }
+
     public class ChildViewHolder extends RecyclerView.ViewHolder {
 
         TextView name;
+
         public ChildViewHolder(View itemView) {
             super(itemView);
             name = (TextView) itemView.findViewById(R.id.title_event_id);

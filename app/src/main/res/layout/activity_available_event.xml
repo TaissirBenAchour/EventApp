@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/white"
     android:orientation="vertical"
-    tools:context="com.example.cassio.Graduation_Project.AvailableEventActivity">
+    tools:context="com.example.cassio.Graduation_Project.AccountFragments.AvailableEventFragment">
     <LinearLayout
         android:id="@+id/linear_search_id"
         android:layout_width="match_parent"
@@ -27,6 +27,8 @@
             android:hint="search for event"
             android:inputType="textPersonName"
             android:padding="10dp"
+            android:gravity="center"
+            android:layout_gravity="center"
             android:textColor="@color/white"
             android:textColorHint="@color/medium_grey" />
 
@@ -35,8 +37,8 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginLeft="5dp"
-            android:background="@drawable/background_seach_btn"
-            android:tint="@color/white"
+            android:background="@color/Transparent"
+            android:tint="#FF926973"
             app:srcCompat="@drawable/ic_search_black_24dp"/>
 
 
@@ -46,8 +48,13 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/list_events_id"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/linear_search_id"
-       >
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="55dp"
+
+
+
+        >
     </android.support.v7.widget.RecyclerView>
 </RelativeLayout>

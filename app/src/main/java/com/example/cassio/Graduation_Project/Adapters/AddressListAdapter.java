@@ -28,14 +28,11 @@ public class AddressListAdapter extends ArrayAdapter<AddressListAdapter.PlaceAut
     private CharacterStyle characterStyle;
 
 
-
-    public AddressListAdapter(AddEventActivity context, int resource, LatLngBounds bounds, AutocompleteFilter filter)
-    {
+    public AddressListAdapter(AddEventActivity context, int resource, LatLngBounds bounds, AutocompleteFilter filter) {
         super(context, resource);
         mBounds = bounds;
         mPlaceFilter = filter;
     }
-
 
 
     public AddressListAdapter(Context context, int simple_list_item_1, LatLngBounds boundsMountainView, AutocompleteFilter o) {
@@ -45,8 +42,7 @@ public class AddressListAdapter extends ArrayAdapter<AddressListAdapter.PlaceAut
     }
 
 
-    public void setGoogleApiClient(GoogleApiClient googleApiClient)
-    {
+    public void setGoogleApiClient(GoogleApiClient googleApiClient) {
         if (googleApiClient == null || !googleApiClient.isConnected()) {
             mGoogleApiClient = null;
         } else {
@@ -60,15 +56,12 @@ public class AddressListAdapter extends ArrayAdapter<AddressListAdapter.PlaceAut
     }
 
     @Override
-    public PlaceAutocomplete getItem(int position)
-    {
+    public PlaceAutocomplete getItem(int position) {
         return mResultList.get(position);
     }
 
-    private ArrayList<PlaceAutocomplete> getPredictions(CharSequence constraint)
-    {
-        if (mGoogleApiClient != null)
-        {
+    private ArrayList<PlaceAutocomplete> getPredictions(CharSequence constraint) {
+        if (mGoogleApiClient != null) {
             PendingResult<AutocompletePredictionBuffer> results = Places.GeoDataApi.getAutocompletePredictions(mGoogleApiClient, constraint.toString(), mBounds, mPlaceFilter);
             AutocompletePredictionBuffer autocompletePredictions = results.await(30, TimeUnit.SECONDS);
             final Status status = autocompletePredictions.getStatus();
@@ -121,7 +114,6 @@ public class AddressListAdapter extends ArrayAdapter<AddressListAdapter.PlaceAut
     }
 
 
-    //Model
     public class PlaceAutocomplete {
 
 

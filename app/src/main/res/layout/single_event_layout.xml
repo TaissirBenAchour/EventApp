@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="5dp"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="15dp"
+    android:layout_marginTop="5dp"
+    android:background="#f1f1f1"
+    android:layout_gravity="center_horizontal"
+    android:gravity="center"
+    android:orientation="horizontal">
+<android.support.v7.widget.CardView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/graylight">
+        <ImageView
+            android:id="@+id/event_image_holder"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="top"
+            android:scaleType="centerCrop"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/imageplaceholder"/>
+        <TextView
+            android:id="@+id/listChild"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="120dp"
+            android:layout_marginTop="25dp"
+            android:background="@color/jaune"
+            android:fontFamily="cursive"
+            android:singleLine="true"
+            android:text="This is the event title"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textStyle="bold"
+            />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="5dp"
+            android:gravity="right"
+            >
+
+            <TextView
+                android:id="@+id/desc_field_id"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="17dp"
+                android:layout_marginTop="40dp"
+                android:background="@color/white"
+                android:lines="3"
+                android:ems="4"
+                android:padding="5dp"
+                android:textSize="12dp"
+                android:gravity="left"
+                android:text="this is the event description" />
+            <TextView
+                android:id="@+id/time_field_id"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="17dp"
+                android:background="@color/white"
+                android:padding="5dp"
+                android:textColor="@color/medium_grey"
+                android:textSize="10dp"
+                android:text="this is the event date" />
+
+
+            <LinearLayout
+                android:id="@+id/linear2_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/linear1_id"
+                android:layout_marginLeft="250dp"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+
+
+                <ImageButton
+                    android:id="@+id/joinEventbtn_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="33dp"
+                    android:background="@drawable/interested"
+                    android:padding="5dp"
+                    android:tint="@color/jaune"
+                    app:srcCompat="@drawable/ic_bookmark_black_24dp"/>
+
+
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+
+
+
+</android.support.v7.widget.CardView>
+
+
+
+
+</LinearLayout>

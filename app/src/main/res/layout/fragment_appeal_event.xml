@@ -3,11 +3,54 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/shape1524"
-    android:orientation="vertical">
+    android:background="@drawable/aboutus"
+    android:orientation="vertical"
+
+    >
+    <android.support.v7.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|top"
+        app:cardCornerRadius="5dp"
+        >
+
+        <TextView
+            android:id="@+id/btn_add"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:background="@color/Transparent"
+            android:elevation="10dp"
+            android:text="save my appeal"
+            android:gravity="center"
+            android:paddingRight="5dp"
+            android:paddingLeft="5dp"
+            android:drawableRight="@drawable/ic_add_black_24dp"
+            />
+
+    </android.support.v7.widget.CardView>
 
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Shout Out"
+        android:fontFamily="@font/respective"
+        android:textSize="25dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="35dp"
+        android:textColor="@color/dot_dark_screen2"/>
 
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="@string/introductionAppeals"
+    android:gravity="center"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:fontFamily="@font/indiellower"
+    android:layout_marginTop="10dp"
+    />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -47,7 +90,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
 
-                    android:background="@drawable/input_outline"
+                    android:background="@drawable/edittext"
                     android:lines="3" />
                 <TextView
                     android:id="@+id/vision_id"
@@ -107,7 +150,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
 
-                    android:background="@drawable/input_outline"
+                    android:background="@drawable/edittext"
                     android:lines="3" />
                 <TextView
                     android:id="@+id/content_id"
@@ -165,53 +208,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
 
-                    android:background="@drawable/input_outline"
-                    android:lines="3" />
-
-            </LinearLayout>
-
-
-        </android.support.v7.widget.CardView>
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="15dp">
-        <View
-
-            android:layout_width="4dp"
-            android:layout_height="70dp"
-            android:layout_marginLeft="10dp"
-            android:alpha=".9"
-            android:background="@android:color/holo_orange_light" />
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="15dp"
-            >
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:orientation="vertical"
-
-                android:layout_marginLeft="5dp">
-
-                <TextView
-                    android:id="@+id/sugges_id"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="other suggestions"
-                    android:padding="5dp"/>
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-
-                    android:background="@drawable/input_outline"
+                    android:background="@drawable/edittext"
                     android:lines="3" />
 
             </LinearLayout>
@@ -222,24 +219,6 @@
     </LinearLayout>
 
 
-
-    <android.support.v7.widget.CardView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="25dp"
-        android:layout_gravity="center"
-        app:cardCornerRadius="20dp">
-        <ImageButton
-            android:id="@+id/btn_add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_add_black_24dp"
-            android:background="@color/Transparent"
-            android:layout_gravity="center"
-            android:tint="@color/background"
-            android:elevation="10dp"/>
-
-    </android.support.v7.widget.CardView>
 
 
 

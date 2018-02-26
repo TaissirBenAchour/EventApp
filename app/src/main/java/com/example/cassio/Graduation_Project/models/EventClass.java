@@ -41,13 +41,14 @@ public class EventClass implements Parcelable {
         this.title=title;
     }
 
-    public EventClass(String title, String desc, String date, String pushId , String eventId,String month) {
+    public EventClass(String title, String desc, String date, String pushId , String eventId,String month,String imageEvent) {
         this.title = title;
         this.description=desc;
         this.date=date;
         this.pushId=pushId;
         this.eventId=eventId;
         this.month=month;
+        this.imageEvent=imageEvent;
 
     }
 

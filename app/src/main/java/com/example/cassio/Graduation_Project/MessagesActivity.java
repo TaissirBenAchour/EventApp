@@ -18,7 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cassio.Graduation_Project.Adapters.MessageAdapter;
-import com.example.cassio.Graduation_Project.models.Messages;
+import com.example.cassio.Graduation_Project.models.messagesClass;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -40,7 +40,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class MessagesActivity extends AppCompatActivity {
 
 
-    private final List<Messages>  messagesList = new ArrayList<>();
+    private final List<messagesClass> messagesClassList = new ArrayList<>();
     private String messageRecieverId;
     private String messageRecieverName;
     private Toolbar mtool;
@@ -66,7 +66,7 @@ public class MessagesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chat);
+        setContentView(R.layout.messages_list_layout);
         messageRecieverId = getIntent().getExtras().get("targed_person_id").toString();
         messageRecieverName =getIntent().getExtras().get("user_name").toString();
 
@@ -76,16 +76,12 @@ public class MessagesActivity extends AppCompatActivity {
         sender_id = mAuth.getCurrentUser().getUid();
 
 
-
-       // Toast.makeText(MessagesActivity.this,messageRecieverName,Toast.LENGTH_SHORT).show();
-
-
         mtool = (Toolbar) findViewById(R.id.toolbar_chat_id);
         setSupportActionBar(mtool);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         LayoutInflater layoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View actionBarView = layoutInflater.inflate(R.layout.chat_room_header,null);
+        View actionBarView = layoutInflater.inflate(R.layout.messages_room_header,null);
         getSupportActionBar().setCustomView(actionBarView);
 
         recieverImage =(CircleImageView)findViewById(R.id.recieverImage_id);
@@ -95,7 +91,7 @@ public class MessagesActivity extends AppCompatActivity {
 
 
 
-        messageAdapter = new MessageAdapter(messagesList);
+        messageAdapter = new MessageAdapter(messagesClassList);
         sentMessages =(RecyclerView)findViewById(R.id.message_list_id);
         swipeIt =  (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout_id) ;
         linearLayoutManager = new LinearLayoutManager(this);
@@ -156,13 +152,13 @@ public class MessagesActivity extends AppCompatActivity {
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
 
-                Messages msg = dataSnapshot.getValue(Messages.class);
+                messagesClass msg = dataSnapshot.getValue(messagesClass.class);
 
                 String key = dataSnapshot.getKey();
 
                 if(!secondKey.equals(key)){
 
-                    messagesList.add(itemPos++ ,msg);
+                    messagesClassList.add(itemPos++ ,msg);
 
                 } else {
 
@@ -216,13 +212,15 @@ public class MessagesActivity extends AppCompatActivity {
             String recieverRef = "Messages/" +messageRecieverId + "/" + sender_id;
             DatabaseReference keyRef = globalRef.child("Messages").child(sender_id).child(messageRecieverId).push();
             String pushRef=keyRef.getKey();
-            SimpleDateFormat formatter = new SimpleDateFormat("hh:mm:ss");
+            SimpleDateFormat formatter = new SimpleDateFormat("hh:mm");
             String dateString = formatter.format(new Date());
             Map message = new HashMap();
             message.put("message",message_text);
             message.put("type","text");
             message.put("msgtime", dateString);
             message.put("from",sender_id);
+            message.put("idReciever",messageRecieverId);
+            message.put("recieverName",messageRecieverName);
             Map details = new HashMap();
             details.put(senderRef+ "/" +pushRef,message);
             details.put(recieverRef+ "/" +pushRef,message);
@@ -253,15 +251,15 @@ public class MessagesActivity extends AppCompatActivity {
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
 
-                Messages msg = dataSnapshot.getValue(Messages.class);
+                messagesClass msg = dataSnapshot.getValue(messagesClass.class);
                 itemPos ++;
                 if (itemPos == 1){
                     String key = dataSnapshot.getKey();
                     firstKey = key;
                     secondKey = key;
                 }
-                messagesList.add(msg);
-                sentMessages.scrollToPosition(messagesList.size()-1);
+                messagesClassList.add(msg);
+                sentMessages.scrollToPosition(messagesClassList.size()-1);
                 messageAdapter.notifyDataSetChanged();
                 swipeIt.setRefreshing(false);
             }

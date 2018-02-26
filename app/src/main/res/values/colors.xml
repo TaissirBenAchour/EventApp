@@ -2,8 +2,8 @@
 <resources>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
-    <color name="pink">#D81B60</color>
+    <color name="colorAccent">#818081</color>
+    <color name="pink">#979495</color>
     <color name="white">#FFFFFF</color>
     <color name="dark_grey">#a94848</color>
     <color name="medium_grey">#9E9E9E</color>
@@ -25,6 +25,23 @@
     <color name="addeventfieldscolor">#FFFDE7</color>
     <color name="jaune">#FBC02D</color>
     <color name="tab">#aac46b79</color>
+
+
+    <color name="layout1">#c4866b</color>
+    <color name="layout2">#436bc4bb</color>
+    <color name="layout3">#41abc46b</color>
+    <color name="layout4">#4ca38e92</color>
+    <color name="layout5">#4ec4a06b</color>
+    <color name="layout6">#494b8b81</color>
+    <color name="layout7">#87770f</color>
+
+
+    <color name="btn1">#FF76CEE0</color>
+    <color name="btn2">#FF73A7B3</color>
+    <color name="btn3">#FF8B676F</color>
+    <color name="btn4">#FFBC7887</color>
+    <color name="btn5">#FFEA899E</color>
+
 
 
 
@@ -62,4 +79,5 @@
         <item>@color/dot_dark_screen3</item>
         <item>@color/dot_dark_screen4</item>
     </array>
+    <color name="indicator">#59c9bf</color>
 </resources>

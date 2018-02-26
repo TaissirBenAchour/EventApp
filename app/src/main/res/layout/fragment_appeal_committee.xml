@@ -1,19 +1,416 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.cassio.Graduation_Project._AppealFragments.AppealCommittee">
+    android:background="@drawable/aboutus"
+    android:orientation="vertical"
+    tools:context="com.example.cassio.Graduation_Project.AppealFragments.AppealCommittee">
 
-    <EditText
-        android:id="@+id/testtxt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
-    <Button
-        android:id="@+id/testadd"
+    <android.support.v7.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="55dp"
-        android:text="add"/>
+        android:layout_gravity="right|top"
+        app:cardCornerRadius="5dp">
 
-</FrameLayout>
+        <TextView
+            android:id="@+id/btn_add"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:background="@color/Transparent"
+            android:drawableRight="@drawable/ic_add_black_24dp"
+            android:elevation="10dp"
+            android:gravity="center"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="save my appeal" />
+
+    </android.support.v7.widget.CardView>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="25dp"
+        android:fontFamily="@font/respective"
+        android:text="Shout Out"
+        android:textColor="@color/dot_dark_screen2"
+        android:textSize="25dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/indiellower"
+        android:gravity="center"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:text="@string/introductionCommittee" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="30dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="190dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <View
+
+                android:layout_width="200dp"
+                android:layout_height="4dp"
+                android:layout_marginLeft="5dp"
+                android:alpha=".9"
+                android:background="@drawable/account" />
+
+            <android.support.v7.widget.CardView
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp">
+
+
+                <LinearLayout
+                    android:layout_width="200dp"
+                    android:layout_height="70dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/theme_id"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/indiellower"
+                            android:padding="5dp"
+                            android:text="The event topic?" />
+
+                        <ImageView
+                            android:id="@+id/vision_id"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginLeft="50dp"
+                            android:layout_marginTop="5dp"
+                            android:background="#c6eaad9e"
+                            android:elevation="10dp"
+                            android:padding="5dp"
+                            android:src="@drawable/confused"
+                            android:textColor="@color/white"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+
+                    <EditText
+                        android:id="@+id/visiontxt_id"
+                        android:layout_width="170dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:background="@drawable/edittext"
+                        android:fontFamily="@font/orbitronregular"
+                        android:lines="3"
+                        android:textSize="15dp" />
+
+
+                </LinearLayout>
+
+
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="205dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="3dp"
+            android:orientation="vertical">
+
+            <View
+
+                android:layout_width="wrap_content"
+                android:layout_height="4dp"
+                android:alpha=".9"
+                android:background="@drawable/account" />
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp">
+
+
+                <LinearLayout
+                    android:layout_width="200dp"
+                    android:layout_height="70dp"
+                    android:layout_marginLeft="5dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/indiellower"
+                            android:padding="5dp"
+                            android:text="what is the idea ?" />
+
+                        <ImageView
+                            android:id="@+id/content_id"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginLeft="35dp"
+                            android:layout_marginTop="5dp"
+                            android:background="#c6eaad9e"
+                            android:elevation="10dp"
+                            android:padding="5dp"
+
+                            android:src="@drawable/confused"
+                            android:textColor="@color/white"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+
+                    <EditText
+                        android:id="@+id/contenttxt_id"
+                        android:layout_width="170dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:background="@drawable/edittext"
+                        android:fontFamily="@font/orbitronregular"
+                        android:lines="3"
+                        android:textSize="15dp" />
+
+                </LinearLayout>
+
+
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="190dp"
+            android:layout_height="110dp"
+            android:orientation="horizontal">
+
+
+            <android.support.v7.widget.CardView
+                android:layout_width="190dp"
+                android:layout_height="120dp">
+
+
+                <LinearLayout
+                    android:layout_width="190dp"
+                    android:layout_height="70dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="5dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/where_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/indiellower"
+                        android:padding="5dp"
+
+                        android:text="where is the event ?" />
+
+                    <android.support.v7.widget.AppCompatAutoCompleteTextView
+                        android:id="@+id/autoCompleteTextView"
+                        android:layout_width="160dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:background="@drawable/edittext"
+                        android:fontFamily="@font/orbitronregular"
+                        android:lines="3"
+                        android:textSize="15dp" />
+
+
+                </LinearLayout>
+
+                <View
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="4dp"
+                    android:alpha=".9"
+                    android:background="@drawable/account" />
+
+
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="210dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <View
+
+                android:layout_width="wrap_content"
+                android:layout_height="4dp"
+                android:alpha=".9"
+                android:background="@drawable/account" />
+
+            <android.support.v7.widget.CardView
+                android:layout_width="210dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp">
+
+
+                <LinearLayout
+                    android:layout_width="210dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/salar_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/indiellower"
+                        android:padding="5dp"
+                        android:text="Paid/Volunteer ?" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <EditText
+                            android:id="@+id/salartext_id"
+                            android:layout_width="130dp"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/edittext"
+                            android:fontFamily="@font/orbitronregular"
+                            android:lines="3"
+                            android:textSize="15dp" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/paid_id"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="5dp"
+                                android:background="#c6eaad9e"
+                                android:elevation="10dp"
+                                android:padding="5dp"
+                                android:src="@drawable/ic_attach_money_black_24dp"
+                                android:textColor="@color/white"
+                                android:textStyle="bold"
+                                android:tint="@color/white" />
+
+                            <ImageView
+                                android:id="@+id/notpaid_id"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:background="#c6eaad9e"
+                                android:elevation="10dp"
+                                android:padding="5dp"
+                                android:src="@drawable/ic_money_off_black_24dp"
+                                android:textColor="@color/white"
+                                android:textStyle="bold"
+                                android:tint="@color/white" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+
+        <View
+
+            android:layout_width="wrap_content"
+            android:layout_height="4dp"
+            android:alpha=".9"
+            android:background="@drawable/account" />
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginLeft="5dp"
+
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/committee_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/indiellower"
+                    android:padding="5dp"
+                    android:text="what profile do you appeal for ?" />
+
+                <EditText
+                    android:id="@+id/profiletxt_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edittext"
+                    android:fontFamily="@font/orbitronregular"
+                    android:lines="3"
+                    android:textSize="15dp" />
+
+                <TextView
+                    android:id="@+id/committee_sug_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="250dp"
+                    android:layout_marginTop="-27dp"
+                    android:background="#c6eaad9e"
+                    android:elevation="10dp"
+                    android:padding="5dp"
+                    android:text="Suggestions"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+
+        </android.support.v7.widget.CardView>
+
+    </LinearLayout>
+
+
+</LinearLayout>
+
+
+
+

@@ -6,9 +6,20 @@ package com.example.cassio.Graduation_Project.models;
 
 public class Post {
     String post ;
+    String image ;
 
-    public Post(String post) {
+    public Post(String post ,String image) {
         this.post = post;
+        this.image = image;
+
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public Post() {

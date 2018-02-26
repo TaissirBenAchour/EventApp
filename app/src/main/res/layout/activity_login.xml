@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/aboutus"
     android:orientation="vertical"
-    tools:context="com.example.cassio.Graduation_Project.loginActivity">
+    tools:context="com.example.cassio.Graduation_Project.StartApp.loginActivity">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -52,10 +52,12 @@
         android:orientation="horizontal"
         android:gravity="center"
         android:layout_marginTop="10dp">
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/fb"/>
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/login_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
         <ImageView
             android:layout_width="20dp"
             android:layout_height="20dp"

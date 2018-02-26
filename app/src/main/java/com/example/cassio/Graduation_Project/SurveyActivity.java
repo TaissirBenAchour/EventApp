@@ -27,7 +27,7 @@ public class SurveyActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.survey);
+        setContentView(R.layout.survey_activity);
 
         useful_btn = (Button) findViewById(R.id.yes_id);
         not_useful_btn = (Button) findViewById(R.id.no_id);

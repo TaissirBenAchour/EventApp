@@ -8,14 +8,48 @@ import android.os.Parcelable;
  */
 
 public class Committee implements Parcelable {
-    String test ;
 
-    public Committee(String test) {
-        this.test = test;
+String topic;
+    String idea ;
+String where;
+String money;
+String profile;
+
+    public Committee() {
+    }
+
+    public Committee(String topic, String idea , String where, String money, String profile) {
+        this.topic = topic;
+        this.idea = idea;
+        this.where = where;
+        this.money = money;
+        this.profile = profile;
+    }
+
+    public Committee(String topic) {
+        this.topic = topic;
     }
 
     protected Committee(Parcel in) {
-        test = in.readString();
+        idea = in.readString();
+        topic = in.readString();
+        where = in.readString();
+        money = in.readString();
+        profile = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(idea);
+        dest.writeString(topic);
+        dest.writeString(where);
+        dest.writeString(money);
+        dest.writeString(profile);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<Committee> CREATOR = new Creator<Committee>() {
@@ -30,24 +64,43 @@ public class Committee implements Parcelable {
         }
     };
 
-    public String getTest() {
-        return test;
+    public String getIdea() {
+        return idea;
     }
 
-    public void setTest(String test) {
-        this.test = test;
+    public void setIdea(String idea) {
+        this.idea = idea;
     }
 
-    public Committee() {
+    public String getTopic() {
+        return topic;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public void setTopic(String topic) {
+        this.topic = topic;
     }
 
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(test);
+    public String getWhere() {
+        return where;
+    }
+
+    public void setWhere(String where) {
+        this.where = where;
+    }
+
+    public String getMoney() {
+        return money;
+    }
+
+    public void setMoney(String money) {
+        this.money = money;
+    }
+
+    public String getProfile() {
+        return profile;
+    }
+
+    public void setProfile(String profile) {
+        this.profile = profile;
     }
 }

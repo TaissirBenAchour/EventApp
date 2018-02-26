@@ -1,35 +1,57 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
     tools:context="com.example.cassio.Graduation_Project.profileFragment.profileFragment">
-
-
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:orientation="vertical"
-        android:layout_marginTop="5dp">
-
-
-
-
-<TextView
-    android:id="@+id/txt_id"
-    android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+    <LinearLayout
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:text="no events "/>
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/posts_id"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/relative_header"
-            android:paddingRight="10dip"
-            android:scrollbarStyle="outsideInset">
+    android:layout_marginBottom="10dp"
+    android:layout_marginTop="5dp"
+    android:orientation="vertical">
 
 
-        </android.support.v7.widget.RecyclerView>
+    <TextView
+        android:id="@+id/txt_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="no events " />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/posts_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/relative_header"
+        android:paddingRight="10dip"
+        android:scrollbarStyle="outsideInset">
+
+
+    </android.support.v7.widget.RecyclerView>
+</LinearLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/postappeals_id"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v7.widget.RecyclerView>
     </LinearLayout>
-</FrameLayout>
+</ScrollView>
+
+
+
+    <TextView
+        android:id="@+id/noposts_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="no appeals posted" />
+</LinearLayout>
