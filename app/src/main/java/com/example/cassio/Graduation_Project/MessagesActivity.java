@@ -66,7 +66,7 @@ public class MessagesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.messages_list_layout);
+        setContentView(R.layout.activity_message_history);
         messageRecieverId = getIntent().getExtras().get("targed_person_id").toString();
         messageRecieverName =getIntent().getExtras().get("user_name").toString();
 
@@ -95,10 +95,11 @@ public class MessagesActivity extends AppCompatActivity {
         sentMessages =(RecyclerView)findViewById(R.id.message_list_id);
         swipeIt =  (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout_id) ;
         linearLayoutManager = new LinearLayoutManager(this);
-        sentMessages.setHasFixedSize(true);
         linearLayoutManager.setStackFromEnd(true);
         sentMessages.setLayoutManager(linearLayoutManager);
         sentMessages.setAdapter(messageAdapter);
+        sentMessages.setHasFixedSize(true);
+
         bringMessages();
 
 

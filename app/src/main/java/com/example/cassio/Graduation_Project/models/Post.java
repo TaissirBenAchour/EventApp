@@ -7,11 +7,29 @@ package com.example.cassio.Graduation_Project.models;
 public class Post {
     String post ;
     String image ;
+    String time;
 
-    public Post(String post ,String image) {
+    public Post(String post ,String image,String time) {
         this.post = post;
         this.image = image;
+        this.time=time;
 
+    }
+
+
+    public Post(String image) {
+        this.image = image;
+    }
+
+    public Post() {
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 
     public String getImage() {
@@ -20,9 +38,6 @@ public class Post {
 
     public void setImage(String image) {
         this.image = image;
-    }
-
-    public Post() {
     }
 
     public String getPost() {

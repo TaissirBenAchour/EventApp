@@ -6,10 +6,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.cassio.Graduation_Project.R;
 import com.example.cassio.Graduation_Project.models.HomeListPost;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -26,7 +28,7 @@ public class freindspostAdapter extends RecyclerView.Adapter<freindspostAdapter.
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.friendslist_item, parent, false);
+                .inflate(R.layout.post_layout, parent, false);
 
         return new MyViewHolder(itemView);
     }
@@ -35,6 +37,9 @@ public class freindspostAdapter extends RecyclerView.Adapter<freindspostAdapter.
     public void onBindViewHolder(MyViewHolder holder, int position) {
         HomeListPost homeListPost = homeListPostList.get(position);
         holder.title.setText(homeListPost.getTitle());
+        holder.time.setText(homeListPost.getTime());
+        Picasso.with(context).load(homeListPost.getEventImage())
+                .placeholder(R.drawable.profile_pic).into(holder.imagePost);
 
 
     }
@@ -45,13 +50,15 @@ public class freindspostAdapter extends RecyclerView.Adapter<freindspostAdapter.
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView title;
+        public TextView title,time;
+        public ImageView imagePost;
+
 
         public MyViewHolder(View view) {
             super(view);
-            title = (TextView) view.findViewById(R.id.post_id);
-
-
+            title = (TextView) view.findViewById(R.id.post_txt);
+            time = (TextView)view.findViewById(R.id.timepost_id);
+            imagePost = (ImageView)view.findViewById(R.id.postimage_id);
         }
 
 

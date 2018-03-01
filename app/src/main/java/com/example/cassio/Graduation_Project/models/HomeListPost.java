@@ -20,6 +20,25 @@ public class HomeListPost {
         this.time=time;
     }
 
+    public HomeListPost(String title, String time, String userImage) {
+        this.title = title;
+        this.time = time;
+        this.userImage = userImage;
+    }
+
+    public HomeListPost(String title, String time) {
+        this.title=title;
+        this.time=time;
+    }
+
+
+    public HomeListPost(String title) {
+        this.title = title;
+    }
+
+    public HomeListPost() {
+    }
+
     public String getTime() {
         return time;
     }
@@ -35,16 +54,6 @@ public class HomeListPost {
     public void setEventImage(String eventImage) {
         this.eventImage = eventImage;
     }
-
-    public HomeListPost(String title) {
-        this.title = title;
-    }
-
-    public HomeListPost() {
-    }
-
-
-
 
     public String getName() {
         return name;

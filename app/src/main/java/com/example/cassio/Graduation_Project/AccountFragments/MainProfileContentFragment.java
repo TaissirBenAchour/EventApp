@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,7 +17,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.cassio.Graduation_Project.AddEventActivity;
 import com.example.cassio.Graduation_Project.R;
@@ -98,7 +96,6 @@ public class MainProfileContentFragment extends Fragment {
                                         public void onDataChange(DataSnapshot dataSnapshot) {
                                             for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                                 long tuto = dataSnapshot.getChildrenCount();
-                                                Toast.makeText(getContext(), snapshot.toString(), Toast.LENGTH_SHORT).show();
                                                 String rate = snapshot.child("rate").getValue().toString();
                                                 float ratenumber = Float.valueOf(rate);
                                                 i = Math.round((i + ratenumber) / 3);
@@ -326,12 +323,10 @@ public class MainProfileContentFragment extends Fragment {
 
     public static class PostsViewHolder extends RecyclerView.ViewHolder {
         View mView;
-        CardView cardevent;
 
         public PostsViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
-            cardevent = (CardView) mView.findViewById(R.id.card_view);
 
         }
 

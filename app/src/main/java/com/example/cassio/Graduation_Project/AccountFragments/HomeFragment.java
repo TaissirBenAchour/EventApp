@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.cassio.Graduation_Project.Adapters.HomeAdapter;
 import com.example.cassio.Graduation_Project.FriendsProfileActivity;
@@ -189,7 +190,6 @@ public class HomeFragment extends Fragment {
                                     String name = snapshot.child("userName").getValue().toString();
                                     String Image = snapshot.child("userImage").getValue().toString();
                                     String userId = snapshot.child("userId").getValue().toString();
-
                                     users.add(new AllUsersClass(name, Image, userId));
                                     uUsersAdapter adapter = new uUsersAdapter(users, getContext());
                                     userslist.setAdapter(adapter);
@@ -273,7 +273,6 @@ public class HomeFragment extends Fragment {
                                         if (!dataSnapshot.getKey().equals(dataSnapshot1.getKey())) {
                                             final String targed_person_id = users.getUserId();
 
-//                           Toast.makeText(context, targed_person_id, Toast.LENGTH_SHORT).show();
                                             Intent intent = new Intent(getContext(), FriendsProfileActivity.class);
                                             intent.putExtra("targed_person_id", targed_person_id);
                                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -281,6 +280,9 @@ public class HomeFragment extends Fragment {
                                             getActivity().finish();
 
 
+                                        }
+                                        else {
+                                            Toast.makeText(getContext(), "ok", Toast.LENGTH_SHORT).show();
                                         }
                                     }
                                 }
