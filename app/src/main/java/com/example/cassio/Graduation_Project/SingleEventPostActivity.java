@@ -17,6 +17,8 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.cassio.Graduation_Project.Adapters.UserAdapter;
+import com.example.cassio.Graduation_Project.models.AllUsersClass;
 import com.example.cassio.Graduation_Project.models.feeds;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -47,7 +49,7 @@ public class SingleEventPostActivity extends AppCompatActivity {
     private boolean saveProcess = true;
     private FirebaseAuth mAuth;
     private List<String> listofmonths = new ArrayList<String>();
-    private RecyclerView listOfComments;
+    private RecyclerView listOfComments, listofinterested;
     private EditText addcommenttext;
     private Button submitcomment;
     private String key_id;
@@ -56,12 +58,12 @@ public class SingleEventPostActivity extends AppCompatActivity {
     private RatingBar ratingBar;
     private Button btnSubmit;
 
-public static String date(){
-    Calendar date = Calendar.getInstance();
-    final SimpleDateFormat currentDate = new SimpleDateFormat("dd-MMM-yyyy");
-    final String saveCurrentDate = currentDate.format(date.getTime());
-    return saveCurrentDate;
-}
+    public static String date() {
+        Calendar date = Calendar.getInstance();
+        final SimpleDateFormat currentDate = new SimpleDateFormat("dd-MMM-yyyy");
+        final String saveCurrentDate = currentDate.format(date.getTime());
+        return saveCurrentDate;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,8 +93,7 @@ public static String date(){
         btnSubmit = (Button) findViewById(R.id.submit);
         interestedText = (TextView) findViewById(R.id.intrested_text);
         notInterested = (ImageView) findViewById(R.id.btn_noneIntresstedInEvent_id);
-        // interestedText.setVisibility(View.INVISIBLE);
-
+        listofinterested = (RecyclerView) findViewById(R.id.listofinterested_id);
         listofmonths.add("January");
         listofmonths.add("February");
         listofmonths.add("March");
@@ -111,6 +112,11 @@ public static String date(){
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         listOfComments.setLayoutManager(linearLayoutManager);
         listOfComments.setHasFixedSize(true);
+
+        LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(this);
+        listofinterested.setLayoutManager(linearLayoutManager1);
+        linearLayoutManager1.setOrientation(LinearLayoutManager.HORIZONTAL);
+        listofinterested.setHasFixedSize(true);
         addcommenttext = (EditText) findViewById(R.id.addcomment_id);
         submitcomment = (Button) findViewById(R.id.submitcommentbtn);
         submitcomment.setOnClickListener(new View.OnClickListener() {
@@ -118,6 +124,53 @@ public static String date(){
             public void onClick(View view) {
                 addComment();
                 addcommenttext.setText("");
+
+            }
+        });
+
+        savedEventsDBRefrence.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                final List<AllUsersClass> users = new ArrayList<>();
+
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    String parent_id = snapshot.getKey();
+                    for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                        for (DataSnapshot snapshot2 : snapshot1.getChildren()) {
+                            if (key_id.equals(snapshot2.getKey())) {
+
+                                userRef.child(parent_id).addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                        String userImage = dataSnapshot.child("userImage").getValue().toString();
+                                        Toast.makeText(SingleEventPostActivity.this, userImage, Toast.LENGTH_SHORT).show();
+
+                                        users.add(new AllUsersClass(userImage));
+                                        UserAdapter adapter = new UserAdapter(users, SingleEventPostActivity.this);
+                                        listofinterested.setAdapter(adapter);
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
+
+                            }
+
+                        }
+
+//
+
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
 
             }
         });
@@ -160,8 +213,7 @@ public static String date(){
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
 
-                        String saveCurrentDate= date();
-
+                        String saveCurrentDate = date();
 
 
                         if (month.equals("0"))
@@ -183,8 +235,7 @@ public static String date(){
                             savedEventsDBRefrence.child(my_id).child("March").child(key_id).child("title").setValue(titleevent);
 
 
-                        }
-                        else if (month.equals("3")) {
+                        } else if (month.equals("3")) {
                             savedEventsDBRefrence.child(my_id).child("April").child(key_id).child("savedIn").setValue(saveCurrentDate);
                             savedEventsDBRefrence.child(my_id).child("April").child(key_id).child("month").setValue(month);
                             savedEventsDBRefrence.child(my_id).child("April").child(key_id).child("title").setValue(titleevent);
@@ -249,17 +300,15 @@ public static String date(){
                 savedEventsDBRefrence.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        if (!saveProcess){
+                        if (!saveProcess) {
 
                             String i = month;
                             int j = Integer.parseInt(i);
                             String searchedMonth = listofmonths.get(j);
-                            Toast.makeText(SingleEventPostActivity.this, "ok", Toast.LENGTH_SHORT).show();
                             savedEventsDBRefrence.child(my_id).child(searchedMonth).child(key_id).removeValue();
 
 
                         }
-
 
 
                         saveProcess = true;
@@ -282,16 +331,12 @@ public static String date(){
 
                     final String ParentKey = snapshot.getValue().toString();
                     if (ParentKey.contains(key_id)) {
-                        Toast.makeText(SingleEventPostActivity.this, event_id, Toast.LENGTH_SHORT).show();
-                        //     intressted_btn.setVisibility(View.INVISIBLE);
                         interestedText.setVisibility(View.VISIBLE);
                         notInterested.setVisibility(View.VISIBLE);
                         intressted_btn.setVisibility(View.INVISIBLE);
 
                     } else {
-                        Toast.makeText(SingleEventPostActivity.this, "not ok", Toast.LENGTH_SHORT).show();
 
-//                    intressted_btn.setVisibility(View.VISIBLE);
                         interestedText.setVisibility(View.INVISIBLE);
                         notInterested.setVisibility(View.INVISIBLE);
                         intressted_btn.setVisibility(View.VISIBLE);
@@ -359,14 +404,12 @@ public static String date(){
 
             }
         };
-        listOfComments.setAdapter(firebaseRecyclerAdapter);
+
 
     }
 
     public void rateMe(View view) {
 
-        Toast.makeText(getApplicationContext(),
-                String.valueOf(ratingBar.getRating()), Toast.LENGTH_LONG).show();
         DatabaseReference newComment = rateRef.child(key_id).child(my_id);
         newComment.child("rate").setValue(String.valueOf(ratingBar.getRating()));
 

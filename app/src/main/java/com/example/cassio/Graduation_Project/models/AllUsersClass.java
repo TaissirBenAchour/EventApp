@@ -1,8 +1,5 @@
 package com.example.cassio.Graduation_Project.models;
 
-import com.google.firebase.database.Exclude;
-import com.google.firebase.database.IgnoreExtraProperties;
-
 /**
  * Created by cassio on 22/12/17.
  */
@@ -23,6 +20,19 @@ public class AllUsersClass {
 
     }
 
+    public AllUsersClass() {
+    }
+
+    public AllUsersClass(String userImage) {
+        this.userImage = userImage;
+    }
+
+    public AllUsersClass(String userName, String userImage,String userId) {
+        this.userImage=userImage;
+        this.userName=userName;
+        this.userId=userId;
+    }
+
     public String getTxt() {
         return txt;
     }
@@ -31,25 +41,12 @@ public class AllUsersClass {
         this.txt = txt;
     }
 
-    public AllUsersClass() {
-    }
-
-    public AllUsersClass(String userId) {
-        this.userId = userId;
-    }
-
     public String getUserId() {
         return userId;
     }
 
     public void setUserId(String userId) {
         this.userId = userId;
-    }
-
-    public AllUsersClass(String userName, String userImage,String userId) {
-        this.userImage=userImage;
-        this.userName=userName;
-        this.userId=userId;
     }
 
     public String getUserName() {

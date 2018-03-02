@@ -137,6 +137,16 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
 
 
                                         }
+                                        else if (month.equals("1"))
+
+                                        {
+                                            savedRef.child("February").child(idEvent).child("savedIn").setValue(saveCurrentDate);
+                                            savedRef.child("February").child(idEvent).child("month").setValue(month);
+                                            savedRef.child("February").child(idEvent).child("title").setValue(homeListPost.getTitle());
+                                            holder.interestbtn.setText("saved !");
+
+
+                                        }
                                         saveProcess = false;
                                     }
                                 }

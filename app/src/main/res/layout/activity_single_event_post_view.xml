@@ -41,13 +41,13 @@
                             android:id="@+id/intrested_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="You are intrested in this post"
+                            android:layout_marginTop="-35dp"
                             android:background="@color/jaune"
-                            android:textColor="@color/white"
+                            android:fontFamily="@font/kaushanscriptregular"
                             android:paddingLeft="10dp"
                             android:paddingRight="10dp"
-                            android:layout_marginTop="-35dp"
-                            android:fontFamily="@font/kaushanscriptregular"/>
+                            android:text="You are intrested in this post"
+                            android:textColor="@color/white"/>
 
 
                     </LinearLayout>
@@ -161,6 +161,7 @@
                 android:orientation="vertical">
 
                 <TextView
+
                     android:id="@+id/EventDescpription"
 
                     android:layout_width="match_parent"
@@ -182,8 +183,8 @@
                     android:background="@color/white"
                     android:fontFamily="@font/opensanslight"
                     android:padding="15dp"
-                    android:textStyle="bold"
-                    android:text="here is the event description" />
+                    android:text="here is the event description"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/SingleView_EventPrice"
@@ -201,83 +202,21 @@
                     android:textColor="@color/white"
                     android:textSize="25dp" />
             </LinearLayout>
-            <!--<LinearLayout-->
-            <!--android:id="@+id/linearLayoutbtn_id"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_below="@+id/desc_id"-->
-            <!--android:layout_marginBottom="25dp"-->
-            <!--android:layout_marginTop="45dp"-->
-            <!--android:gravity="center"-->
-            <!--android:orientation="horizontal">-->
-            <!--<LinearLayout-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginLeft="12dp"-->
-            <!--android:orientation="horizontal"-->
-            <!--&gt;-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="15dp"
+                android:text="People interested in this event  "/>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/listofinterested_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp">
 
+            </android.support.v7.widget.RecyclerView>
 
-            <!--<Button-->
-            <!--android:id="@+id/btn_intresstedInEvent_id"-->
-            <!--style="@android:style/Widget.Material.Light.Button.Borderless"-->
-            <!--android:layout_width="140dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:background="@drawable/grad1"-->
-            <!--android:fontFamily="cursive"-->
-            <!--android:paddingLeft="40dp"-->
-            <!--android:text="Intrested"-->
-            <!--android:textAllCaps="false"-->
-            <!--android:textColor="@color/white"-->
-            <!--android:textSize="20dp" />-->
-            <!--<ImageView-->
-            <!--android:layout_width="40dp"-->
-            <!--android:layout_height="40dp"-->
-            <!--android:layout_marginLeft="-140dp"-->
-            <!--android:layout_marginTop="20dp"-->
-            <!--android:background="@drawable/interested"-->
-            <!--android:padding="9dp"-->
-            <!--android:src="@drawable/ic_bookmark_black_24dp"-->
-            <!--android:tint="@color/background1"/>-->
-
-            <!--</LinearLayout>-->
-
-            <!--<LinearLayout-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginLeft="12dp"-->
-            <!--android:orientation="horizontal"-->
-            <!--&gt;-->
-
-
-            <!--<Button-->
-            <!--android:id="@+id/btn_joinEvent_id"-->
-            <!--style="@android:style/Widget.Material.Light.Button.Borderless"-->
-            <!--android:layout_width="140dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:background="@drawable/grad1"-->
-            <!--android:fontFamily="cursive"-->
-            <!--android:paddingLeft="40dp"-->
-            <!--android:text="I am in"-->
-            <!--android:textAllCaps="false"-->
-            <!--android:textColor="@color/white"-->
-
-
-            <!--android:textSize="20dp" />-->
-            <!--<ImageView-->
-            <!--android:layout_width="40dp"-->
-            <!--android:layout_height="40dp"-->
-            <!--android:layout_marginLeft="-140dp"-->
-            <!--android:layout_marginTop="20dp"-->
-            <!--android:background="@drawable/interested"-->
-            <!--android:padding="9dp"-->
-            <!--android:src="@drawable/ic_pan_tool_black_24dp"-->
-            <!--android:tint="@color/background1"/>-->
-
-            <!--</LinearLayout>-->
-
-
-            <!--</LinearLayout>-->
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -294,23 +233,23 @@
                         android:id="@+id/txtrating1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Rate this event"
-android:fontFamily="@font/grandhotelregular"
+                        android:fontFamily="@font/grandhotelregular"
+android:text="Rate this event"
                         android:textSize="15dp"
                         />
                     <View
                         android:layout_width="wrap_content"
                         android:layout_height="1dp"
-                        android:background="@color/black"
                         android:alpha="0.2"
+                        android:background="@color/black"
                         />
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:gravity="center"
+    android:layout_gravity="center"
     android:background="#f1f1f1"
-    android:layout_gravity="center">
+    android:gravity="center"
+    android:orientation="horizontal">
     <RatingBar
         android:id="@+id/rating_rating_bar"
         style="@android:style/Widget.Material.RatingBar.Indicator"
@@ -329,10 +268,10 @@ android:fontFamily="@font/grandhotelregular"
         android:layout_marginLeft="15dp"
         android:background="@color/Transparent"
         android:fontFamily="@font/indiellower"
-        android:textColor="#414041"
-        android:textStyle="bold"
         android:onClick="rateMe"
-        android:text="Submit !" />
+        android:text="Submit !"
+        android:textColor="#414041"
+        android:textStyle="bold" />
 
 </LinearLayout>
 
@@ -351,15 +290,15 @@ android:fontFamily="@font/grandhotelregular"
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Leave a comment"
             android:fontFamily="@font/grandhotelregular"
+            android:text="Leave a comment"
             android:textSize="15dp"
             />
         <View
             android:layout_width="wrap_content"
             android:layout_height="1dp"
-            android:background="@color/black"
             android:alpha="0.2"
+            android:background="@color/black"
             />
         <EditText
 
@@ -367,23 +306,23 @@ android:fontFamily="@font/grandhotelregular"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/txtrating"
+            android:layout_marginTop="5dp"
             android:background="@drawable/addappeal"
-            android:lines="3"
-            android:layout_marginTop="5dp"/>
+            android:lines="3"/>
 
         <Button
             android:id="@+id/submitcommentbtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/addcomment_id"
-            android:text="Send"
-            android:fontFamily="@font/indiellower"
-            android:textStyle="bold"
-            android:background="@drawable/white_border"
-            android:layout_marginTop="-30dp"
-            android:layout_marginRight="15dp"
             android:layout_gravity="right"
-            android:layout_marginBottom="5dp"/>
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="-30dp"
+            android:background="@drawable/white_border"
+            android:fontFamily="@font/indiellower"
+            android:text="Send"
+            android:textStyle="bold"/>
 
     </LinearLayout>
 </android.support.v7.widget.CardView>
