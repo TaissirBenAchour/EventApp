@@ -71,73 +71,6 @@ public class HomeFragment extends Fragment {
         layoutManager1.setOrientation(LinearLayoutManager.HORIZONTAL);
 
 
-        communityRef.child(my_id).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                final List<HomeListPost> homeListPostList = new ArrayList<>();
-                for (final DataSnapshot snapshot : dataSnapshot.getChildren()) {
-
-                    postRef.child(snapshot.getKey()).addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            TextView txt = (TextView) mView.findViewById(R.id.noevent_id);
-                            txt.setVisibility(View.INVISIBLE);
-                            for (final DataSnapshot snapshot1 : dataSnapshot.getChildren()) {
-                                final String post = snapshot1.child("post").getValue().toString();
-                                final String time = snapshot1.child("time").getValue().toString();
-
-                                userRef.child(snapshot.getKey()).addValueEventListener(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(DataSnapshot dataSnapshot) {
-
-
-                                        final String name = dataSnapshot.child("userName").getValue().toString();
-                                        final String Image = dataSnapshot.child("userImage").getValue().toString();
-
-                                        eventRef.child(snapshot.getKey()).child(snapshot1.getKey()).addValueEventListener(new ValueEventListener() {
-                                            @Override
-                                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                                String eventImage = dataSnapshot.child("imageEvent").getValue().toString();
-                                                homeListPostList.add(new HomeListPost(name, Image, post, eventImage, time));
-                                                HomeAdapter adapter = new HomeAdapter(homeListPostList, getContext());
-                                                recyclerView.setAdapter(adapter);
-                                            }
-
-                                            @Override
-                                            public void onCancelled(DatabaseError databaseError) {
-
-                                            }
-                                        });
-
-
-                                    }
-
-                                    @Override
-                                    public void onCancelled(DatabaseError databaseError) {
-
-                                    }
-                                });
-
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
-
-
-                }
-
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
 
         communityRef.addChildEventListener(new ChildEventListener() {
             @Override
@@ -232,6 +165,81 @@ public class HomeFragment extends Fragment {
         return mView;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        communityRef.child(my_id).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                final List<HomeListPost> homeListPostList = new ArrayList<>();
+                for (final DataSnapshot snapshot : dataSnapshot.getChildren()) {
+
+                    postRef.child(snapshot.getKey()).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            TextView txt = (TextView) mView.findViewById(R.id.noevent_id);
+                            txt.setVisibility(View.INVISIBLE);
+                            for (final DataSnapshot snapshot1 : dataSnapshot.getChildren()) {
+                                final String post = snapshot1.child("post").getValue().toString();
+                                final String time = snapshot1.child("time").getValue().toString();
+
+                                userRef.child(snapshot.getKey()).addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+
+                                        final String name = dataSnapshot.child("userName").getValue().toString();
+                                        final String Image = dataSnapshot.child("userImage").getValue().toString();
+
+                                        eventRef.child(snapshot.getKey()).child(snapshot1.getKey()).addValueEventListener(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                                String eventImage = dataSnapshot.child("imageEvent").getValue().toString();
+                                                String idEvent = dataSnapshot.child("pushId").getValue().toString();
+                                                String month = dataSnapshot.child("month").getValue().toString();
+
+                                                homeListPostList.add(new HomeListPost(name, Image, post, eventImage, time,idEvent,month));
+                                                HomeAdapter adapter = new HomeAdapter(homeListPostList, getContext());
+                                                recyclerView.setAdapter(adapter);
+                                            }
+
+                                            @Override
+                                            public void onCancelled(DatabaseError databaseError) {
+
+                                            }
+                                        });
+
+
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
+
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
+
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+    }
 
     public class uUsersAdapter extends RecyclerView.Adapter<uUsersAdapter.MyViewHolder> {
 
@@ -273,8 +281,11 @@ public class HomeFragment extends Fragment {
                                         if (!dataSnapshot.getKey().equals(dataSnapshot1.getKey())) {
                                             final String targed_person_id = users.getUserId();
 
+                                            Bundle bundle= new Bundle();
+                                            bundle.putString("targed_person_id", targed_person_id);
+                                            bundle.putString("user_name",users.getUserName());
                                             Intent intent = new Intent(getContext(), FriendsProfileActivity.class);
-                                            intent.putExtra("targed_person_id", targed_person_id);
+                                            intent.putExtras(bundle);
                                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                             startActivity(intent);
                                             getActivity().finish();

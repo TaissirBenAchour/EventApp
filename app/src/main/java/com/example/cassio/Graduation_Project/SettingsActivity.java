@@ -15,7 +15,11 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,21 +35,26 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
+
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 
-public class SettingsActivity extends AppCompatActivity {
+public class SettingsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     public  static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 123;
     private final static int galery_pick = 1;
- private RoundedImageView imageProfileSittings;
-    private TextView userNameSettings;
-    private TextView statusUserSettings;
+    private CircleImageView imageProfileSittings;
+    private TextView userNameSettings,statusUserSettings,save;
     private ImageButton changePictureBtnSettings;
-    private DatabaseReference storedDataReference;
+    private EditText newNametxt,newBiotxt,newPhonetxt,newEmailtxt;
+    private Spinner spinner;
+    private DatabaseReference userRef;
     private StorageReference storedProfileReference;
     private FirebaseAuth mAuth;
     private ProgressDialog progressDialog;
@@ -57,17 +66,52 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
         mAuth = FirebaseAuth.getInstance();
         String get_Unique_Id = mAuth.getInstance().getCurrentUser().getUid();
-        storedDataReference = FirebaseDatabase.getInstance().getReference().child("Users").child(get_Unique_Id);
-        storedDataReference.keepSynced(true);
+        userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(get_Unique_Id);
+        userRef.keepSynced(true);
         storedProfileReference = FirebaseStorage.getInstance().getReference().child("Profile_images");
-        imageProfileSittings = (RoundedImageView) findViewById(R.id.imageProfile);
+        imageProfileSittings = (CircleImageView) findViewById(R.id.imageProfile);
         userNameSettings = (TextView)findViewById(R.id.userName);
         statusUserSettings = (TextView)findViewById(R.id.userStatus);
         changePictureBtnSettings = (ImageButton) findViewById(R.id.changeImage);
+        newNametxt = (EditText) findViewById(R.id.newName_id);
+        newPhonetxt = (EditText) findViewById(R.id.newphone_id);
+        newEmailtxt =(EditText) findViewById(R.id.newemail_id);
+
+        newBiotxt =(EditText) findViewById(R.id.bio_id);
+        spinner = (Spinner) findViewById(R.id.spinner_status_id);
+        save=(TextView) findViewById(R.id.save_id);
+        spinner.setOnItemSelectedListener(SettingsActivity.this);
+        List<String> status = new ArrayList<String>();
+        status.add("Event planner");
+        status.add("Event Seeker ");
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, status);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(dataAdapter);
 
 
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String newName = newNametxt.getText().toString().trim();
+                String newBio = newBiotxt.getText().toString().trim();
+                String newPhone = newPhonetxt.getText().toString().trim();
+                String newEmail = newEmailtxt.getText().toString().trim();
+                userRef.child("userName").setValue(newName);
+                userRef.child("userBio").setValue(newBio);
+                userRef.child("userPhone").setValue(newPhone);
+                userRef.child("userEmail").setValue(newEmail);
+                Intent intent = new Intent(SettingsActivity.this,FragmentsUnionActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
+                Toast.makeText(SettingsActivity.this, "change saved", Toast.LENGTH_SHORT).show();
 
-        storedDataReference.addValueEventListener(new ValueEventListener() {
+
+            }
+        });
+
+
+        userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String name = dataSnapshot.child("userName").getValue().toString();
@@ -122,6 +166,12 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
 
+
+
+
+
+
+
     protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
         super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
 
@@ -161,7 +211,7 @@ public class SettingsActivity extends AppCompatActivity {
                             Toast.makeText(SettingsActivity.this, "Upload successful", Toast.LENGTH_SHORT).show();
                             progressDialog.dismiss();
                             String downloadPic = task.getResult().getDownloadUrl().toString();
-                            storedDataReference.child("userImage").setValue(downloadPic)
+                            userRef.child("userImage").setValue(downloadPic)
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
@@ -183,8 +233,6 @@ default:break;
 
                 }
     }
-
-
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            String[] permissions, int[] grantResults) {
@@ -247,4 +295,14 @@ default:break;
         alert.show();
     }
 
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        String newStatus = parent.getItemAtPosition(position).toString();
+        userRef.child("userStatus").setValue(newStatus);
+
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {}
 }

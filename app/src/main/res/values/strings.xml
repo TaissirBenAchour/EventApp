@@ -61,5 +61,6 @@
     <string name="introductionAppeals">Here you will find people interested in creating events for you , make an appeal to let them hear your voice.</string>
 <string name="introductionCommittee">"You have an event budget, idea, plan ?  but you still need more engaged devoted committee with you to bring the event to life !\n Make an appeal "</string>
     <string name="agreement">This is not an official agreement and this application does not to be considered as a legal proof to garantee any side right\'s</string>
+    <string name="event_status">event status</string>
 
 </resources>

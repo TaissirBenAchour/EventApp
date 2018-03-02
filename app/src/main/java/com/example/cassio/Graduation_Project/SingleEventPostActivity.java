@@ -56,6 +56,13 @@ public class SingleEventPostActivity extends AppCompatActivity {
     private RatingBar ratingBar;
     private Button btnSubmit;
 
+public static String date(){
+    Calendar date = Calendar.getInstance();
+    final SimpleDateFormat currentDate = new SimpleDateFormat("dd-MMM-yyyy");
+    final String saveCurrentDate = currentDate.format(date.getTime());
+    return saveCurrentDate;
+}
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -153,10 +160,10 @@ public class SingleEventPostActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
 
+                        String saveCurrentDate= date();
 
-                        Calendar date = Calendar.getInstance();
-                        final SimpleDateFormat currentDate = new SimpleDateFormat("dd-MMM-yyyy");
-                        final String saveCurrentDate = currentDate.format(date.getTime());
+
+
                         if (month.equals("0"))
 
                         {
@@ -301,7 +308,6 @@ public class SingleEventPostActivity extends AppCompatActivity {
         });
 
     }
-
 
     @Override
     protected void onStart() {

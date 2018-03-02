@@ -1,93 +1,209 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/grad12"
+    android:orientation="vertical"
     tools:context="com.example.cassio.Graduation_Project.SettingsActivity">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-    <com.makeramen.roundedimageview.RoundedImageView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/imageProfile"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="center"
-        android:layout_marginTop="67dp"
-        android:src="@drawable/profile_pic"
-        app:riv_border_color="@color/background1"
-        app:riv_border_width="10dip"
-        app:riv_corner_radius="30dip"
-        app:riv_mutate_background="true" />
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="20dp"
-    android:gravity="center"
     android:orientation="horizontal">
-    <ImageButton
-        android:id="@+id/changeImage"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginLeft="-70dp"
-        android:background="@drawable/white_border"
-        android:tint="@color/background1"
-        app:srcCompat="@drawable/ic_mode_edit_black_24dp"></ImageButton>
-    <TextView
-        android:id="@+id/userName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/imageProfile"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="center"
-        android:layout_marginLeft="20dp"
-        android:fontFamily="casual"
-        android:text="userName"
-        android:textSize="22.5sp"/>
-
 
 
 </LinearLayout>
+    <TextView
+    android:id="@+id/save_id"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="right"
+    android:layout_marginRight="10dp"
+    android:layout_marginTop="5dp"
+    android:background="@color/jaune"
+    android:paddingBottom="5dp"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingTop="5dp"
+    android:text="SAVE"
+    android:textColor="@color/lightorange"/>
+    <RelativeLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+        android:layout_gravity="center"
+      >
+      <de.hdodenhof.circleimageview.CircleImageView
+          android:id="@+id/imageProfile"
+          android:layout_width="140dp"
+          android:layout_height="140dp"
+          android:layout_marginTop="-20dp"
+          android:src="@drawable/profile_pic"
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:gravity="center"
-            android:orientation="horizontal">
-            <ImageButton
-                android:id="@+id/changeUserStatus"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_alignParentBottom="true"
-                android:layout_marginLeft="-70dp"
-                android:background="@drawable/white_border"
-                android:src="@drawable/ic_mode_edit_black_24dp"
-                android:textColor="@color/background1"
-                android:tint="@color/background1"
-                />
-            <TextView
-                android:id="@+id/userStatus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/imageProfile"
-                android:layout_marginLeft="20dp"
-                android:fontFamily="casual"
-                android:text="userName"
            />
+      <ImageButton
+          android:id="@+id/changeImage"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="130dp"
+          android:layout_marginTop="120dp"
+          android:background="@color/Transparent"
+          android:src="@drawable/ic_camera_alt_black_24dp"/>
+  </RelativeLayout>
 
 
 
-        </LinearLayout>
+
+        <TextView
+            android:id="@+id/userName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imageProfile"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            android:fontFamily="casual"
+            android:gravity="center"
+            android:text="userName"
+            />
+
+            <EditText
+                android:id="@+id/newName_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/addappeal"
+                android:hint="edit your name"
+                android:paddingBottom="5dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="5dp"
+                android:textColorHint="@color/graylight"
+                android:textSize="15dp"/>
+
+
+        <TextView
+            android:id="@+id/userStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imageProfile"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="casual"
+            android:text="userStatus"
+            />
+
+
+            <Spinner
+                android:id="@+id/spinner_status_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:paddingLeft="5dp"
+                android:prompt="@string/event_status"/>
+
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imageProfile"
+            android:layout_marginLeft="20dp"
+            android:fontFamily="casual"
+            android:gravity="center"
+            android:text="Bio" />
+            <EditText
+                android:id="@+id/bio_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/addappeal"
+                android:hint="edit your bio"
+                android:paddingBottom="5dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+                android:textColorHint="@color/graylight"
+                android:textSize="15dp"/>
+
+
+
 
 
 
 
     </LinearLayout>
-</RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imageProfile"
+            android:layout_marginLeft="20dp"
+            android:fontFamily="casual"
+            android:gravity="center"
+            android:text="phone" />
+
+        <EditText
+            android:id="@+id/newphone_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@drawable/addappeal"
+            android:hint="edit your phone number"
+            android:inputType="phone"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:paddingTop="5dp"
+            android:textColorHint="@color/graylight"
+            android:textSize="15dp" />
+
+
+
+
+
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imageProfile"
+            android:layout_marginLeft="20dp"
+            android:fontFamily="casual"
+            android:gravity="center"
+            android:text="Email address" />
+
+        <EditText
+            android:id="@+id/newemail_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@drawable/addappeal"
+            android:hint="edit your email address"
+            android:inputType="textEmailAddress"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:paddingTop="5dp"
+            android:textColorHint="@color/graylight"
+            android:textSize="15dp" />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

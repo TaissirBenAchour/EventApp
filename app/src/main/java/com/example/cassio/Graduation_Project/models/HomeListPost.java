@@ -11,13 +11,17 @@ public class HomeListPost {
     String title;
     String eventImage;
     String time;
+    String idEvent;
+    String month ;
 
-    public HomeListPost(String name, String userImage, String title,String eventImage,String time) {
+    public HomeListPost(String name, String userImage, String title, String eventImage, String time, String idEvent,String month) {
         this.name = name;
         this.userImage = userImage;
         this.title = title;
         this.eventImage=eventImage;
         this.time=time;
+        this.idEvent=idEvent;
+        this.month=month;
     }
 
     public HomeListPost(String title, String time, String userImage) {
@@ -31,12 +35,27 @@ public class HomeListPost {
         this.time=time;
     }
 
-
     public HomeListPost(String title) {
         this.title = title;
     }
 
     public HomeListPost() {
+    }
+
+    public String getIdEvent() {
+        return idEvent;
+    }
+
+    public void setIdEvent(String idEvent) {
+        this.idEvent = idEvent;
+    }
+
+    public String getMonth() {
+        return month;
+    }
+
+    public void setMonth(String month) {
+        this.month = month;
     }
 
     public String getTime() {

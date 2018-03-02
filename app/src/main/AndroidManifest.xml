@@ -101,7 +101,6 @@
             android:name=".SponsoringActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".StartApp.Afterloggingwithfacebook" />
-        <activity android:name=".InsightsActivity"></activity>
     </application>
 
 </manifest>

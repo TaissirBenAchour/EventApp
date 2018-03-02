@@ -37,7 +37,7 @@ public class FriendsProfileActivity extends AppCompatActivity {
     private DatabaseReference referenceTolistReqs, referenceToUsersList, rateRef, communityDBReference, eventsRef;
     private String relation_state;
     private FirebaseAuth mAuth;
-    private String my_current_id, targed_person_id, myString;
+    private String my_current_id, targed_person_id, name;
     private DatabaseReference notificationReference;
     private ViewPager myMainViewPager;
     private TabLayout mytabLayout;
@@ -67,6 +67,9 @@ public class FriendsProfileActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         my_current_id = mAuth.getCurrentUser().getUid();
         targed_person_id = getIntent().getExtras().get("targed_person_id").toString();
+        name = getIntent().getExtras().get("user_name").toString();
+
+
         referenceToUsersList = FirebaseDatabase.getInstance().getReference().child("Users");
         referenceTolistReqs = FirebaseDatabase.getInstance().getReference().child("join_Community_requests");
         communityDBReference = FirebaseDatabase.getInstance().getReference().child("Community");
@@ -269,6 +272,9 @@ public class FriendsProfileActivity extends AppCompatActivity {
 
     public String getMyData() {
         return targed_person_id;
+    }
+    public String getMyDataname() {
+        return name;
     }
 
     private void unJoinComunity() {

@@ -109,7 +109,7 @@ public class RegisterActivity extends AppCompatActivity {
 
 
 
-    private void userAccount(final String name, String email, String password, final String gender , final String phone, final String status, final String age) {
+    private void userAccount(final String name, final String email, String password, final String gender , final String phone, final String status, final String age) {
 
         if (TextUtils.isEmpty(name)) {
             Toast.makeText(this, "Please check your name field ",
@@ -166,6 +166,8 @@ public class RegisterActivity extends AppCompatActivity {
                                 DefaultReference.child("usergender").setValue(gender);
                                 DefaultReference.child("userId").setValue(currentUserID);
                                 DefaultReference.child("age").setValue(age);
+                                DefaultReference.child("userBio").setValue("");
+                                DefaultReference.child("userEmail").setValue(email);
                                 DefaultReference.child("userPhone").setValue(phone)
                                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
