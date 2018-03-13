@@ -79,15 +79,7 @@
                             android:paddingTop="9dp"
                             android:src="@drawable/ic_bookmark_black_24dp"
                             android:tint="@color/background1" />
-                        <ImageView
-                            android:id="@+id/btn_noneIntresstedInEvent_id"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            android:background="@drawable/interested"
-                            android:paddingTop="9dp"
-                            android:src="@drawable/ic_bookmark_border_black_24dp"
-                            android:tint="@color/background1" />
+
                     </LinearLayout>
 
                 </LinearLayout>

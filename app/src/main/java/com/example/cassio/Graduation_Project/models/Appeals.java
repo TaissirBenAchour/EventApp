@@ -9,17 +9,32 @@ import android.os.Parcelable;
 
 public class Appeals implements Parcelable {
 
+    public static final Creator<Appeals> CREATOR = new Creator<Appeals>() {
+        @Override
+        public Appeals createFromParcel(Parcel in) {
+            return new Appeals(in);
+        }
+
+        @Override
+        public Appeals[] newArray(int size) {
+            return new Appeals[size];
+        }
+    };
     String vision ;
     String content;
     String address;
+    String name;
+    String id;
 
     public Appeals() {
     }
 
-    public Appeals(String vision, String content, String address) {
+    public Appeals(String vision, String content, String address, String name,String id) {
         this.vision = vision;
         this.content = content;
         this.address = address;
+        this.name=name;
+        this.id=id;
     }
 
     public Appeals(String vision) {
@@ -32,17 +47,21 @@ public class Appeals implements Parcelable {
         address = in.readString();
     }
 
-    public static final Creator<Appeals> CREATOR = new Creator<Appeals>() {
-        @Override
-        public Appeals createFromParcel(Parcel in) {
-            return new Appeals(in);
-        }
+    public String getId() {
+        return id;
+    }
 
-        @Override
-        public Appeals[] newArray(int size) {
-            return new Appeals[size];
-        }
-    };
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getVision() {
         return vision;

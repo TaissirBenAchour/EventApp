@@ -72,6 +72,7 @@ public class HomeFragment extends Fragment {
 
 
 
+
         communityRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(final DataSnapshot dataSnapshot1, String s) {

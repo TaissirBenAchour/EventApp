@@ -9,21 +9,36 @@ import android.os.Parcelable;
 
 public class Committee implements Parcelable {
 
+    public static final Creator<Committee> CREATOR = new Creator<Committee>() {
+        @Override
+        public Committee createFromParcel(Parcel in) {
+            return new Committee(in);
+        }
+
+        @Override
+        public Committee[] newArray(int size) {
+            return new Committee[size];
+        }
+    };
 String topic;
     String idea ;
 String where;
 String money;
 String profile;
+String name;
+String id;
 
     public Committee() {
     }
 
-    public Committee(String topic, String idea , String where, String money, String profile) {
+    public Committee(String topic, String idea , String where, String money, String profile,String name, String id) {
         this.topic = topic;
         this.idea = idea;
         this.where = where;
         this.money = money;
         this.profile = profile;
+        this.name=name;
+        this.id=id;
     }
 
     public Committee(String topic) {
@@ -36,6 +51,22 @@ String profile;
         where = in.readString();
         money = in.readString();
         profile = in.readString();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     @Override
@@ -51,18 +82,6 @@ String profile;
     public int describeContents() {
         return 0;
     }
-
-    public static final Creator<Committee> CREATOR = new Creator<Committee>() {
-        @Override
-        public Committee createFromParcel(Parcel in) {
-            return new Committee(in);
-        }
-
-        @Override
-        public Committee[] newArray(int size) {
-            return new Committee[size];
-        }
-    };
 
     public String getIdea() {
         return idea;

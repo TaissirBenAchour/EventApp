@@ -21,7 +21,6 @@ import android.widget.Toast;
 
 import com.example.cassio.Graduation_Project.MessagesActivity;
 import com.example.cassio.Graduation_Project.R;
-import com.example.cassio.Graduation_Project.models.AllUsersClass;
 import com.example.cassio.Graduation_Project.models.messagesClass;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -68,7 +67,6 @@ public class MessagesListContentFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 final List<messagesClass> lastmessage = new ArrayList<>();
-                final List<AllUsersClass> users = new ArrayList<>();
 
                 for (final DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     lastMessageRef.child(my_id).child(snapshot.getKey()).addValueEventListener(new ValueEventListener() {
@@ -86,7 +84,7 @@ public class MessagesListContentFragment extends Fragment {
                                                 String message = snapshot1.child("message").getValue().toString();
                                                 String time = snapshot1.child("msgtime").getValue().toString();
                                                 String from = dataSnapshot.child("userName").getValue().toString();
-                                                String idReciever = snapshot1.child("from").getValue().toString();
+                                                String idReciever = snapshot1.child("idReciever").getValue().toString();
                                                 String recieverName = dataSnapshot.child("userName").getValue().toString();
                                                 String image = dataSnapshot.child("userImage").getValue().toString();
                                                 lastmessage.add(new messagesClass(message, time, from, recieverName, idReciever, image));
@@ -161,6 +159,8 @@ public class MessagesListContentFragment extends Fragment {
             Picasso.with(ctx).load(messagesClass.getImage())
                     .placeholder(R.drawable.profile_pic).
                     into(holder.image);
+            final String targed_person_id = messagesClass.getIdReciever();
+
             holder.linear.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -168,7 +168,6 @@ public class MessagesListContentFragment extends Fragment {
                     lastMessageRef.child(my_id).addChildEventListener(new ChildEventListener() {
                         @Override
                         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                            final String targed_person_id = messagesClass.getIdReciever();
 
                             Bundle bundle = new Bundle();
                             bundle.putString("targed_person_id", targed_person_id);

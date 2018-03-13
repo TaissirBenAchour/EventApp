@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Events App</string>
+    <string name="app_name">Aya.Nbarmjou</string>
 
     <string name="action_settings">Settings</string>
     <string name="login">Se connecter</string>
@@ -62,5 +62,6 @@
 <string name="introductionCommittee">"You have an event budget, idea, plan ?  but you still need more engaged devoted committee with you to bring the event to life !\n Make an appeal "</string>
     <string name="agreement">This is not an official agreement and this application does not to be considered as a legal proof to garantee any side right\'s</string>
     <string name="event_status">event status</string>
+    <string name="event_category">event category</string>
 
 </resources>

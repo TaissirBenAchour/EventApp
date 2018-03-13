@@ -1,5 +1,6 @@
 package com.example.cassio.Graduation_Project.AppealFragments;
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,14 +11,16 @@ import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.cassio.Graduation_Project.MessagesActivity;
 import com.example.cassio.Graduation_Project.R;
 import com.example.cassio.Graduation_Project.models.Appeals;
 import com.example.cassio.Graduation_Project.models.Committee;
-import com.example.cassio.Graduation_Project.models.ParentEventList;
 import com.example.cassio.Graduation_Project.models.ParentCommitteeList;
+import com.example.cassio.Graduation_Project.models.ParentEventList;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -37,7 +40,7 @@ import java.util.List;
  */
 
 public class AppealsList extends android.support.v4.app.Fragment {
-    DatabaseReference parentReference, parentReference_com;
+    DatabaseReference parentReference, parentReference_com, parentReferenceusers;
     View mView;
     private FirebaseAuth mAuth;
     private String my_id;
@@ -61,7 +64,7 @@ public class AppealsList extends android.support.v4.app.Fragment {
         my_id = mAuth.getCurrentUser().getUid();
         parentReference = database.getReference().child("Appeals");
         parentReference_com = database.getReference().child("AppealsCommittee");
-        final DatabaseReference parentReferenceusers = database.getReference().child("Users");
+        parentReferenceusers = database.getReference().child("Users");
         parentReference.addValueEventListener(new ValueEventListener() {
 
             @Override
@@ -72,46 +75,49 @@ public class AppealsList extends android.support.v4.app.Fragment {
 
                     parentReference.child(parents).addValueEventListener(new ValueEventListener() {
                         @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
+                        public void onDataChange(final DataSnapshot dataSnapshot2) {
                             final List<Appeals> Child = new ArrayList<>();
-                            for (final DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                parentReference.child(parents).child(snapshot.getKey()).addValueEventListener(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(final DataSnapshot dataSnapshot) {
-
-
-                                        String vision = dataSnapshot.child("vision").getValue().toString();
-                                        String content = dataSnapshot.child("content").getValue().toString();
-                                        String address = dataSnapshot.child("address").getValue().toString();
-                                        Child.add(new Appeals(vision, content, address));
-
-                                    }
-
-                                    @Override
-                                    public void onCancelled(DatabaseError databaseError) {
-
-
-                                    }
-                                });
-
-
-                            }
                             parentReferenceusers.child(parents).addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
-                                    String name = dataSnapshot.child("userName").getValue().toString();
+                                    final String name = dataSnapshot.child("userName").getValue().toString();
+                                    final String id = dataSnapshot.child("userId").getValue().toString();
+
 
                                     if (!parents.equals(my_id)) {
                                         Parent.add(new ParentEventList(name, Child));
-                                        DocExpandableRecyclerAdapter adapter = new DocExpandableRecyclerAdapter(Parent);
+                                        DocExpandableRecyclerAdapter adapter1 = new DocExpandableRecyclerAdapter(Parent);
 
 
-                                        recycler_view_event.setAdapter(adapter);
+                                        for (final DataSnapshot snapshot : dataSnapshot2.getChildren()) {
+                                            parentReference.child(parents).child(snapshot.getKey()).addValueEventListener(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(final DataSnapshot dataSnapshot1) {
+
+
+                                                    String vision = dataSnapshot1.child("vision").getValue().toString();
+                                                    String content = dataSnapshot1.child("content").getValue().toString();
+                                                    String address = dataSnapshot1.child("address").getValue().toString();
+
+                                                    Child.add(new Appeals(vision, content, address, name,id));
+
+
+                                                }
+
+
+                                                @Override
+                                                public void onCancelled(DatabaseError databaseError) {
+
+
+                                                }
+                                            });
+
+
+                                        }
+                                        recycler_view_event.setAdapter(adapter1);
 
 
                                     }
-
-
                                 }
 
                                 @Override
@@ -151,9 +157,15 @@ public class AppealsList extends android.support.v4.app.Fragment {
 
                     parentReference_com.child(parents).addValueEventListener(new ValueEventListener() {
                         @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
+                        public void onDataChange(final DataSnapshot dataSnapshot1) {
                             final List<Committee> Child = new ArrayList<>();
-                            for (final DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            parentReferenceusers.child(parents).addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    final String name = dataSnapshot.child("userName").getValue().toString();
+                                    final String id = dataSnapshot.child("userId").getValue().toString();
+
+                                    for (final DataSnapshot snapshot : dataSnapshot1.getChildren()) {
                                 parentReference_com.child(parents).child(snapshot.getKey()).addValueEventListener(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(final DataSnapshot dataSnapshot) {
@@ -166,7 +178,7 @@ public class AppealsList extends android.support.v4.app.Fragment {
                                         String profile = dataSnapshot.child("profile").getValue().toString();
 
 
-                                        Child.add(new Committee(topic, idea, where, money, profile));
+                                        Child.add(new Committee(topic, idea, where, money, profile,name,id));
 
 
                                     }
@@ -180,10 +192,7 @@ public class AppealsList extends android.support.v4.app.Fragment {
 
 
                             }
-                            parentReferenceusers.child(parents).addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(DataSnapshot dataSnapshot) {
-                                    String name = dataSnapshot.child("userName").getValue().toString();
+
                                     if (!parents.equals(my_id)) {
                                         Parent.add(new ParentCommitteeList(name, Child));
                                         DocExpandableRecyclerAdapter_com adapter1 = new DocExpandableRecyclerAdapter_com(Parent);
@@ -255,6 +264,23 @@ public class AppealsList extends android.support.v4.app.Fragment {
             final Appeals childItem = ((ParentEventList) group).getItems().get(childIndex);
 
             holder.onBind(childItem.getVision(), childItem.getContent(), childItem.getAddress());
+             final String name = childItem.getName();
+             final String id = childItem.getId();
+            holder.message.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(getContext(), name, Toast.LENGTH_SHORT).show();
+                    bundle.putString("user_name", name);
+                    bundle.putString("targed_person_id", id);
+
+
+                    Intent intent = new Intent(getContext(), MessagesActivity.class);
+                    intent.putExtras(bundle);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    getActivity().finish();
+                }
+            });
 
         }
 
@@ -279,12 +305,12 @@ public class AppealsList extends android.support.v4.app.Fragment {
     public class MyChildViewHolder extends ChildViewHolder {
 
         public TextView text;
+        public ImageButton message;
 
         public MyChildViewHolder(View itemView) {
             super(itemView);
             text = (TextView) itemView.findViewById(R.id.txt_id);
-
-
+            message = (ImageButton) itemView.findViewById(R.id.message_appeal_event);
         }
 
         public void onBind(String vision, String _content, String _address) {
@@ -294,9 +320,47 @@ public class AppealsList extends android.support.v4.app.Fragment {
             spannable.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.background)), ("This is an appeal for organizing a ").length(), ("This is an appeal for organizing a " + vision).length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             spannable.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.layout1)), ("This is an appeal for organizing a " + vision + " event , precisely ").length(), ("This is an appeal for organizing a " + vision + " event , precisely " + _content).length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             spannable.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.dot_dark_screen2)), ("This is an appeal for organizing a " + vision + " event , precisely " + _content + " in ").length(), (paragraph).length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-
             text.setText(spannable, TextView.BufferType.SPANNABLE);
+            message.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    parentReference.addValueEventListener(new ValueEventListener() {
+
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            for (final DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                final String parents = snapshot.getKey();
+                                parentReferenceusers.child(parents).addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        String name = dataSnapshot.child("userName").getValue().toString();
+                                        if (!parents.equals(my_id)) {
+                                            Toast.makeText(getContext(), name, Toast.LENGTH_SHORT).show();
+
+                                        }
+
+
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
+
+
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+
+                    });
+
+                }
+            });
 
 
         }
@@ -311,6 +375,7 @@ public class AppealsList extends android.support.v4.app.Fragment {
         public MyParentViewHolder(View itemView) {
             super(itemView);
             title = (TextView) itemView.findViewById(R.id.listParent);
+
 
 
         }
@@ -349,7 +414,23 @@ public class AppealsList extends android.support.v4.app.Fragment {
             final Committee childItem = ((ParentCommitteeList) group).getItems().get(childIndex);
 
             holder.onBind(childItem.getTopic(), childItem.getIdea(), childItem.getWhere(), childItem.getMoney(), childItem.getProfile());
+            final String name = childItem.getName();
+            final String id = childItem.getId();
+            holder.message.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(getContext(), name, Toast.LENGTH_SHORT).show();
+                    bundle.putString("user_name", name);
+                    bundle.putString("targed_person_id", id);
 
+
+                    Intent intent = new Intent(getContext(), MessagesActivity.class);
+                    intent.putExtras(bundle);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    getActivity().finish();
+                }
+            });
         }
 
         @Override
@@ -373,12 +454,13 @@ public class AppealsList extends android.support.v4.app.Fragment {
     public class MyChildcomViewHolder extends ChildViewHolder {
 
         public TextView test;
-        public LinearLayout layout;
+        public ImageButton message;
 
         public MyChildcomViewHolder(View itemView) {
             super(itemView);
             test = (TextView) itemView.findViewById(R.id.txt_id);
-            layout = (LinearLayout) itemView.findViewById(R.id.layout_id);
+            message = (ImageButton) itemView.findViewById(R.id.message_com_id);
+
 
 
         }

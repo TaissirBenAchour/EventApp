@@ -11,5 +11,59 @@
         <item>#FFEA899E</item>
 
     </string-array>
+    <string-array name="theme_item">
+        <item>Networking</item>
+        <item>Music</item>
+        <item>Sport</item>
+        <item>kids</item>
+        <item>theatre</item>
+        <item>Campain</item>
+        <item>Excursion</item>
+    </string-array>
+    <string-array name="options_content_networking">
+        <item>computer science developpers meeting</item>
+        <item>engineers meeting</item>
+    </string-array>
+    <string-array name="options_content_music">
+        <item>Concert underground</item>
+        <item>street Concert </item>
+        <item>Sport</item>
+        <item>kids</item>
+        <item>theatre</item>
+        <item>Campain</item>
+        <item>Excursion</item>
+    </string-array>
+    <string-array name="options_content_sport">
+        <item>football</item>
+        <item>volleyball</item>
+        <item>beach-ball</item>
+    </string-array>
+    <string-array name="options_content_kids">
+        <item>concert</item>
+        <item>kids meeting</item>
+        <item>tech workshop kids</item>
+        <item>theatre kids</item>
+    </string-array>
+    <string-array name="options_content_theatre">
+        <item>street theatre</item>
+    </string-array>
+    <string-array name="options_content_campain">
+        <item>health</item>
+        <item>politics</item>
+    </string-array>
+    <string-array name="options_content_excursion">
+        <item>Sud</item>
+        <item>Nord</item>
+        <item>center</item>
+    </string-array>
+    <string-array name="committee_profile">
+        <item>developer</item>
+        <item>information manager</item>
+        <item>marketer</item>
+        <item>photographer</item>
+        <item>logistic manager</item>
+        <item>cordinator</item>
+        <item>security manager</item>
 
+    </string-array>
 </resources>

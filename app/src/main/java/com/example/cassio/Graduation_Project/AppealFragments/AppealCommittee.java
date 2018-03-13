@@ -48,15 +48,6 @@ public class AppealCommittee extends Fragment implements View.OnClickListener {
             new LatLng(37.398160, -122.180831), new LatLng(37.430610, -121.972090));
     View mView;
     String txt;
-    private CharSequence[] options = new CharSequence[]{"Networking", "Music", "Sport", "kids", "theatre", "Campain", "Excursion"};
-    private CharSequence options_content_networking[] = new CharSequence[]{"computer science developpers meeting", "engineers meeting"};
-    private CharSequence options_content_music[] = new CharSequence[]{"Concert underground", "street Concert "};
-    private CharSequence options_content_sport[] = new CharSequence[]{"football", "volleyball", "beach-ball"};
-    private CharSequence options_content_kids[] = new CharSequence[]{"concert", "kids meeting", "tech workshop kids", "theatre kids"};
-    private CharSequence options_content_theatre[] = new CharSequence[]{"street theatre", ".."};
-    private CharSequence options_content_campain[] = new CharSequence[]{"health", "politics", ".."};
-    private CharSequence options_content_excursion[] = new CharSequence[]{"Sud", "Nord", "center", "camping"};
-    private CharSequence[] committee_profile = new CharSequence[]{"developer", "information manager", "marketer", "photographer", "logistic manager", "cordinator", "security manager"};
     private AutoCompleteTextView mAutocompleteTextView;
     private GoogleApiClient mGoogleApiClient;
     private AddressListAdapter mAddressListAdapter;
@@ -316,6 +307,8 @@ public class AppealCommittee extends Fragment implements View.OnClickListener {
     }
 
     public String themeEvent() {
+        final CharSequence[] options = getResources().getStringArray(R.array.theme_item);
+
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
         builder.setTitle("Suggestions");
@@ -337,6 +330,8 @@ public class AppealCommittee extends Fragment implements View.OnClickListener {
     }
 
     public String committeeProfile() {
+        final CharSequence[] committee_profile = getResources().getStringArray(R.array.committee_profile);
+
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
         builder.setTitle("Suggestions");
@@ -358,6 +353,14 @@ public class AppealCommittee extends Fragment implements View.OnClickListener {
     }
 
     public void eventContent(String themeEvent) {
+        final CharSequence[] options_content_music = getResources().getStringArray(R.array.options_content_music);
+        final CharSequence options_content_networking[] = getResources().getStringArray(R.array.options_content_networking);
+        final CharSequence options_content_sport[] = getResources().getStringArray(R.array.options_content_sport);
+        final CharSequence options_content_kids[] = getResources().getStringArray(R.array.options_content_kids);
+        final CharSequence options_content_theatre[] = getResources().getStringArray(R.array.options_content_theatre);
+        final CharSequence options_content_campain[] = getResources().getStringArray(R.array.options_content_campain);
+        final CharSequence options_content_excursion[] = getResources().getStringArray(R.array.options_content_excursion);
+
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         Bundle bundle = new Bundle();
         bundle.putString("themeEvent", themeEvent);
@@ -437,8 +440,7 @@ public class AppealCommittee extends Fragment implements View.OnClickListener {
 
         builder.show();
 
-        mFirebaseAnalytics.setUserProperty("favorite_food", themeEvent);
-        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
 
 
     }

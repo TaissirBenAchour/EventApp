@@ -4,7 +4,9 @@ package com.example.cassio.Graduation_Project.AccountFragments;
  * Created by cassio on 16/12/17.
  */
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,8 +19,10 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.cassio.Graduation_Project.AddEventActivity;
+import com.example.cassio.Graduation_Project.FragmentsUnionActivity;
 import com.example.cassio.Graduation_Project.R;
 import com.example.cassio.Graduation_Project.SingleEventPostActivity;
 import com.example.cassio.Graduation_Project.models.EventClass;
@@ -46,7 +50,7 @@ public class MainProfileContentFragment extends Fragment {
     private DatabaseReference UsersRef, eventsRef, rateRef, postRef;
     private FirebaseAuth mAuth;
     private TextView username, userstatus, rated, numevents;
-    private ImageButton addevent;
+    private ImageButton addevent, morebtn;
     private RatingBar ratingbar;
     private Bundle bundle = new Bundle();
 
@@ -64,12 +68,8 @@ public class MainProfileContentFragment extends Fragment {
         ratingbar = (RatingBar) view.findViewById(R.id.ratebar);
         numevents = (TextView) view.findViewById(R.id.numevents);
         imageProfile = (CircleImageView) view.findViewById(R.id.circleImageView);
-
-
         mAuth = FirebaseAuth.getInstance();
         my_id = mAuth.getCurrentUser().getUid();
-
-
         UsersRef = FirebaseDatabase.getInstance().getReference().child("Users");
         rateRef = FirebaseDatabase.getInstance().getReference().child("Rate");
         postRef = FirebaseDatabase.getInstance().getReference().child("Post").child(my_id);
@@ -77,6 +77,35 @@ public class MainProfileContentFragment extends Fragment {
         eventsRef = FirebaseDatabase.getInstance().getReference().child("Events").child(my_id);
         eventsRef.keepSynced(true);
 
+        listOfposts = (RecyclerView) view.findViewById(R.id.posts_id);
+        listofeventposts = (RecyclerView) view.findViewById(R.id.listofposts_id);
+        LinearLayoutManager layoutManagerevents = new LinearLayoutManager(getActivity());
+        LinearLayoutManager layoutManagerposts = new LinearLayoutManager(getActivity());
+
+        listofeventposts.setLayoutManager(layoutManagerposts);
+        listOfposts.setLayoutManager(layoutManagerevents);
+        layoutManagerevents.setReverseLayout(true);
+        layoutManagerposts.setReverseLayout(true);
+        layoutManagerevents.setStackFromEnd(true);
+
+
+        listOfposts.setHasFixedSize(true);
+        listofeventposts.setHasFixedSize(true);
+        layoutManagerevents.setOrientation(LinearLayoutManager.HORIZONTAL);
+
+
+        addevent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent addEventList = new Intent(getContext(), AddEventActivity.class);
+                startActivity(addEventList);
+            }
+        });
+
+
+
+
+        layoutManagerevents.setAutoMeasureEnabled(true);
 
         eventsRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -134,35 +163,7 @@ public class MainProfileContentFragment extends Fragment {
             }
         });
 
-        listOfposts = (RecyclerView) view.findViewById(R.id.posts_id);
-        listofeventposts = (RecyclerView) view.findViewById(R.id.listofposts_id);
-        LinearLayoutManager layoutManagerevents = new LinearLayoutManager(getActivity());
-        LinearLayoutManager layoutManagerposts = new LinearLayoutManager(getActivity());
-
-        listofeventposts.setLayoutManager(layoutManagerposts);
-        listOfposts.setLayoutManager(layoutManagerevents);
-        layoutManagerevents.setReverseLayout(true);
-        layoutManagerposts.setReverseLayout(true);
-        layoutManagerevents.setStackFromEnd(true);
-
-
-        listOfposts.setHasFixedSize(true);
-        listofeventposts.setHasFixedSize(true);
-        layoutManagerevents.setOrientation(LinearLayoutManager.HORIZONTAL);
-
-
-        addevent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent addEventList = new Intent(getContext(), AddEventActivity.class);
-                startActivity(addEventList);
-            }
-        });
-
-
-        layoutManagerevents.setAutoMeasureEnabled(true);
-
-        FirebaseRecyclerAdapter<Post, PostsViewHolder> firebaseRecyclerAdapter1
+        final FirebaseRecyclerAdapter<Post, PostsViewHolder> firebaseRecyclerAdapter1
                 = new FirebaseRecyclerAdapter<Post, PostsViewHolder>
                 (
                         Post.class,
@@ -171,8 +172,8 @@ public class MainProfileContentFragment extends Fragment {
                         postRef
                 ) {
             @Override
-            protected void populateViewHolder(final PostsViewHolder viewHolder, Post model, int position) {
-                String post_id = getRef(position).getKey();
+            protected void populateViewHolder(final PostsViewHolder viewHolder, Post model, final int position) {
+                final String post_id = getRef(position).getKey();
                 postRef.child(post_id).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -226,10 +227,36 @@ public class MainProfileContentFragment extends Fragment {
 
                     }
                 });
+                viewHolder.morebtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
+                CharSequence option [] = new CharSequence[]{"Delet post"};
+                dialog.setItems(option, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        postRef.child(post_id).removeValue();
+                        notifyItemChanged(position);
+                        notifyItemRangeChanged(position, listofeventposts.getChildCount());
+                        Intent intent = new Intent(getContext(),FragmentsUnionActivity.class);
+                        startActivity(intent);
+                        Toast.makeText(getContext(), "post deleted successfully", Toast.LENGTH_SHORT).show();
 
+
+                    }
+
+                });
+                dialog.show();
+
+                    }
+
+                });
             }
+
         };
         listofeventposts.setAdapter(firebaseRecyclerAdapter1);
+
+
 
 
         return view;
@@ -323,10 +350,13 @@ public class MainProfileContentFragment extends Fragment {
 
     public static class PostsViewHolder extends RecyclerView.ViewHolder {
         View mView;
+        ImageButton morebtn;
+
 
         public PostsViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
+            morebtn = (ImageButton) mView.findViewById(R.id.more_id);
 
         }
 

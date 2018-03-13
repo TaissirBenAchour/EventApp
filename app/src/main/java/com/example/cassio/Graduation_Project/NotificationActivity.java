@@ -15,8 +15,11 @@ public class NotificationActivity extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
+
+
+
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.ic_notifications_active_black_24dp)
+               .setSmallIcon(R.drawable.ic_notifications_active_black_24dp)
                 .setContentTitle("Notification")
                 .setContentText("You have recieved a notification");
 

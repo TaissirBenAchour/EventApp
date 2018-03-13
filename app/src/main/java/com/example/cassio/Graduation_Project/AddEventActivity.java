@@ -20,11 +20,13 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -39,13 +41,17 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -55,7 +61,7 @@ import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 
 public class AddEventActivity extends AppCompatActivity implements
         GoogleApiClient.OnConnectionFailedListener,
-        GoogleApiClient.ConnectionCallbacks {
+        GoogleApiClient.ConnectionCallbacks, AdapterView.OnItemSelectedListener {
 
     public static final int MULTIPLE_PERMISSIONS = 10;
     private final static int galery_pick = 1;
@@ -83,6 +89,7 @@ public class AddEventActivity extends AppCompatActivity implements
     private int mYear, mMonth, mDay, mHour, mMinute;
     private Button addEventButton;
     private ProgressDialog progressing;
+    private Spinner category;
     private AutoCompleteTextView mAutocompleteTextView;
     private GoogleApiClient mGoogleApiClient;
     private AddressListAdapter mAddressListAdapter;
@@ -123,6 +130,12 @@ public class AddEventActivity extends AppCompatActivity implements
         postsRef= FirebaseDatabase.getInstance().getReference().child("Post");
         mStoreEvent_dataReference = FirebaseDatabase.getInstance().getReference().child("Events");
         mStoreEvent_dataReference.keepSynced(true);
+        category = (Spinner) findViewById(R.id.spinner_category_id);
+        category.setOnItemSelectedListener(AddEventActivity.this);
+        List<String> categories = Arrays.asList(getResources().getStringArray(R.array.theme_item));
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        category.setAdapter(dataAdapter);
 
         mtoolbar = (Toolbar) findViewById(R.id.toolbar_id);
         imageOfEvent = (ImageButton) findViewById(R.id.image_event_id);
@@ -235,75 +248,122 @@ public class AddEventActivity extends AppCompatActivity implements
         }
 
 
-        progressing.setMessage(" image is being downloading .. ");
-        progressing.show();
+
         final String title = eventTitle.getText().toString().trim();
         final String description = eventDescription.getText().toString().trim();
         final String price = eventPrice.getText().toString().trim();
         final String date = txtDate.getText().toString().trim();
         final String time = txtTime.getText().toString().trim();
         final String address = mAutocompleteTextView.getText().toString().trim();
+        final String categoryEvent = category.getSelectedItem().toString();
         if (!TextUtils.isEmpty(title) && !TextUtils.isEmpty(description) && !TextUtils.isEmpty(price)
                 && !TextUtils.isEmpty(date) && !TextUtils.isEmpty(time) && !TextUtils.isEmpty(address)) {
 
-            StorageReference filePath = mStoreEventReference.child("imageevent_" + title);
-          filePath.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {               @Override
+            final StorageReference filePath = mStoreEventReference.child("imageevent_" + title);
+          try{
+
+              filePath.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {               @Override
               public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Uri downloadUri = taskSnapshot.getDownloadUrl();
-             if (!downloadUri.equals(null)) {
-                 DatabaseReference keyRef = mStoreEvent_dataReference.child(my_id).push();
-                 final DatabaseReference newEvent = keyRef;
-                 final String pushRef = keyRef.getKey();
+                  Uri downloadUri = taskSnapshot.getDownloadUrl();
+                  if (!downloadUri.equals(null)) {
+                      progressing.setMessage(" image is being downloading .. ");
+                      progressing.show();
+                      DatabaseReference keyRef = mStoreEvent_dataReference.child(my_id).push();
+                      final DatabaseReference newEvent = keyRef;
+                      final String pushRef = keyRef.getKey();
+                      newEvent.child("title").setValue(title);
+                      newEvent.child("description").setValue(description);
+                      newEvent.child("price").setValue(price);
+                      newEvent.child("date").setValue(date);
+                      newEvent.child("time").setValue(time);
+                      newEvent.child("address").setValue(address);
+                      newEvent.child("month").setValue(_Month);
+                      newEvent.child("pushId").setValue(pushRef);
+                      newEvent.child("eventId").setValue(my_id);
+                      newEvent.child("imageEvent").setValue(downloadUri.toString());
+                      newEvent.child("category").setValue(categoryEvent);
+                      progressing.dismiss();
 
 
-                 newEvent.child("title").setValue(title);
-                 newEvent.child("description").setValue(description);
-                 newEvent.child("price").setValue(price);
-                 newEvent.child("date").setValue(date);
-                 newEvent.child("time").setValue(time);
-                 newEvent.child("address").setValue(address);
-                 newEvent.child("month").setValue(_Month);
-                 newEvent.child("pushId").setValue(pushRef);
-                 newEvent.child("eventId").setValue(my_id);
-                 newEvent.child("imageEvent").setValue(downloadUri.toString());
-                 progressing.dismiss();
+                      // if added event's category exist in the preferedEvents node , a notification
+                      //related to that matter will be added , so an alert be send to users interested
+                      // in such kind categories
+                      DatabaseReference preferedEventRef = FirebaseDatabase.getInstance().getReference().child("myPreferedEvents");
+                      preferedEventRef.addValueEventListener(new ValueEventListener() {
+                          @Override
+                          public void onDataChange(DataSnapshot dataSnapshot) {
+                              for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                                  String id = snapshot.getKey();
+                                  for (int i =0 ; i<3;i++){
+                                      String category = snapshot.child(String.valueOf(i)).getValue().toString();
+                                      // i need to add condition to not count my added events later ! i am keeping it now for test matter
+                                  if (category.equals(categoryEvent) ){
+                                      Toast.makeText(AddEventActivity.this, "done", Toast.LENGTH_SHORT).show();
+                                  DatabaseReference notificationNewEventAddedRef =  FirebaseDatabase.getInstance().getReference().child("NotificationNewEventAdded").child(id).child(pushRef);
+                                  notificationNewEventAddedRef.child("notif").setValue("sent");
+                                  notificationNewEventAddedRef.child("addedBy").setValue(my_id);
+
+                                  }
+                                  else {
+
+                                  }
+
+                                  }
+
+                              }
+                          }
+
+                          @Override
+                          public void onCancelled(DatabaseError databaseError) {
+
+                          }
+                      });
 
 
-                 final AlertDialog.Builder builder = new AlertDialog.Builder(AddEventActivity.this);
-                 SimpleDateFormat formatter = new SimpleDateFormat("hh:mm");
-                 final String dateString = formatter.format(new Date());
-
-                 builder.setTitle("You HAVE A NEW EVENT !")
-                         .setMessage("do you want to add a post about how great your new event is going to be?")
-                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                             public void onClick(DialogInterface dialog, int which) {
-                                 String new_Event = "I am sharing a new Event called " + title + ", Come and check ! ";
-
-                                 DatabaseReference keyRef = postsRef.child(my_id).child(pushRef);
-                                 final DatabaseReference newEvent = keyRef;
-                                 newEvent.child("post").setValue(new_Event);
-                                 newEvent.child("time").setValue(dateString);
-                                 Intent goBackToEventList = new Intent(AddEventActivity.this, FragmentsUnionActivity.class);
-                                 startActivity(goBackToEventList);
-
-                             }
-                         })
-                         .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                             public void onClick(DialogInterface dialog, int which) {
-                                 Intent goBackToEventList = new Intent(AddEventActivity.this, FragmentsUnionActivity.class);
-                                 goBackToEventList.putExtra("keyRef", pushRef);
-                                 startActivity(goBackToEventList);
-                             }
-                         });
-                 builder.show();
 
 
-             }
-          else {
-                 Toast.makeText(AddEventActivity.this, "pick a photo for the event please", Toast.LENGTH_SHORT).show();
-             }
+
+                      final AlertDialog.Builder builder = new AlertDialog.Builder(AddEventActivity.this);
+                      SimpleDateFormat formatter = new SimpleDateFormat("hh:mm");
+                      final String dateString = formatter.format(new Date());
+
+                      builder.setTitle("You HAVE A NEW EVENT !")
+                              .setMessage("do you want to add a post about how great your new event is going to be?")
+                              .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                  public void onClick(DialogInterface dialog, int which) {
+                                      String new_Event = "I am sharing a new Event called " + title + ", Come and check ! ";
+
+                                      DatabaseReference keyRef = postsRef.child(my_id).child(pushRef);
+                                      final DatabaseReference newEvent = keyRef;
+                                      newEvent.child("post").setValue(new_Event);
+                                      newEvent.child("time").setValue(dateString);
+                                      Intent goBackToEventList = new Intent(AddEventActivity.this, FragmentsUnionActivity.class);
+                                      startActivity(goBackToEventList);
+
+                                  }
+                              })
+                              .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                                  public void onClick(DialogInterface dialog, int which) {
+                                      Intent goBackToEventList = new Intent(AddEventActivity.this, FragmentsUnionActivity.class);
+                                      goBackToEventList.putExtra("keyRef", pushRef);
+                                      startActivity(goBackToEventList);
+                                  }
+                              });
+                      builder.show();
+
+
+                  }
+                  else {
+                      Toast.makeText(AddEventActivity.this, "Error Encountered", Toast.LENGTH_SHORT).show();
+                  }
+              }
+              });
           }
-            });
+          catch (Exception e){
+              Toast.makeText(AddEventActivity.this, "pick a photo for the event please", Toast.LENGTH_SHORT).show();
+
+          }
+
 
 
         }
@@ -358,6 +418,15 @@ public class AddEventActivity extends AppCompatActivity implements
         }
     }
 
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
 }
 
 

@@ -65,7 +65,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
-                    android:background="@color/addeventfieldscolor">
+                    android:background="@color/addeventfieldscolor"
+                    android:orientation="vertical">
 
                     <EditText
                         android:id="@+id/title_id"
@@ -80,6 +81,13 @@
                         android:inputType="textPersonName"
                         android:padding="10dp"
                         android:singleLine="true" />
+                    <Spinner
+                        android:id="@+id/spinner_category_id"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:paddingLeft="5dp"
+                        android:prompt="@string/event_category"/>
                 </LinearLayout>
 
                 <LinearLayout

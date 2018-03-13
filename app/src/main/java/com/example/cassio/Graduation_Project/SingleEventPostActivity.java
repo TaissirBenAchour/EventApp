@@ -21,6 +21,7 @@ import com.example.cassio.Graduation_Project.Adapters.UserAdapter;
 import com.example.cassio.Graduation_Project.models.AllUsersClass;
 import com.example.cassio.Graduation_Project.models.feeds;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -46,7 +47,7 @@ public class SingleEventPostActivity extends AppCompatActivity {
     private ImageView intressted_btn, notInterested;
     private TextView interestedText;
     private ImageView image_Event;
-    private boolean saveProcess = true;
+    private Boolean saveProcess = true;
     private FirebaseAuth mAuth;
     private List<String> listofmonths = new ArrayList<String>();
     private RecyclerView listOfComments, listofinterested;
@@ -57,6 +58,8 @@ public class SingleEventPostActivity extends AppCompatActivity {
     private String y;
     private RatingBar ratingBar;
     private Button btnSubmit;
+    private FirebaseAnalytics mFirebaseAnalytics;
+    private Bundle Abundle = new Bundle();
 
     public static String date() {
         Calendar date = Calendar.getInstance();
@@ -69,6 +72,8 @@ public class SingleEventPostActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_event_post_view);
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+
         mAuth = FirebaseAuth.getInstance();
         my_id = mAuth.getCurrentUser().getUid();
 
@@ -92,7 +97,6 @@ public class SingleEventPostActivity extends AppCompatActivity {
         ratingBar = (RatingBar) findViewById(R.id.rating_rating_bar);
         btnSubmit = (Button) findViewById(R.id.submit);
         interestedText = (TextView) findViewById(R.id.intrested_text);
-        notInterested = (ImageView) findViewById(R.id.btn_noneIntresstedInEvent_id);
         listofinterested = (RecyclerView) findViewById(R.id.listofinterested_id);
         listofmonths.add("January");
         listofmonths.add("February");
@@ -144,7 +148,6 @@ public class SingleEventPostActivity extends AppCompatActivity {
                                     public void onDataChange(DataSnapshot dataSnapshot) {
 
                                         String userImage = dataSnapshot.child("userImage").getValue().toString();
-                                        Toast.makeText(SingleEventPostActivity.this, userImage, Toast.LENGTH_SHORT).show();
 
                                         users.add(new AllUsersClass(userImage));
                                         UserAdapter adapter = new UserAdapter(users, SingleEventPostActivity.this);
@@ -161,7 +164,6 @@ public class SingleEventPostActivity extends AppCompatActivity {
 
                         }
 
-//
 
                     }
                 }
@@ -204,146 +206,226 @@ public class SingleEventPostActivity extends AppCompatActivity {
             }
         });
 
+        intressted_btn.setImageResource(R.drawable.ic_bookmark_black_24dp);
+        interestedText.setVisibility(View.INVISIBLE);
         intressted_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 saveProcess = true;
 
-                savedEventsDBRefrence.addValueEventListener(new ValueEventListener() {
+                savedEventsDBRefrence.child(my_id).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
+                        String saveCurrentDate = SingleEventPostActivity.date();
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                                if (saveProcess) {
+                                    if (snapshot1.getKey().equals(key_id)) {
+                                        String i = month;
+                                        int j = Integer.parseInt(i);
+                                        String searchedMonth = listofmonths.get(j);
+                                        savedEventsDBRefrence.child(my_id).child(searchedMonth).child(key_id).removeValue();
+                                        intressted_btn.setImageResource(R.drawable.ic_bookmark_black_24dp);
+                                        interestedText.setVisibility(View.INVISIBLE);
 
-                        String saveCurrentDate = date();
+
+                                        saveProcess = false;
+                                    } else {
+                                        interestedText.setVisibility(View.INVISIBLE);
+
+                                        if (month.equals("1"))
+
+                                        {
+                                            savedEventsDBRefrence.child(my_id).child("February").child(key_id).child("savedIn").setValue(saveCurrentDate);
+                                            savedEventsDBRefrence.child(my_id).child("February").child(key_id).child("month").setValue(month);
+                                            savedEventsDBRefrence.child(my_id).child("February").child(key_id).child("title").setValue(titleevent);
+                                            intressted_btn.setImageResource(R.drawable.ic_bookmark_border_black_24dp);
 
 
-                        if (month.equals("0"))
-
-                        {
-                            savedEventsDBRefrence.child(my_id).child("January").child(key_id).child("savedIn").setValue(saveCurrentDate);
-                            savedEventsDBRefrence.child(my_id).child("January").child(key_id).child("month").setValue(month);
-                            savedEventsDBRefrence.child(my_id).child("January").child(key_id).child("title").setValue(titleevent);
-
-
+                                        }
+                                        Abundle.putString(FirebaseAnalytics.Param.START_DATE, month);
+                                        Abundle.putString(FirebaseAnalytics.Param.ITEM_NAME, titleevent);
+                                        mFirebaseAnalytics.logEvent("saved_events", Abundle);
+                                        saveProcess = false;
+                                    }
+                                }
+                            }
                         }
-//                                   else if(month.equals("1"))
-//                                   { savedEventsDBRefrence.child(my_id).child("February")
-//                                           .child(key_id).child("savedIn").setValue(saveCurrentDate);}
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+
+//                savedEventsDBRefrence.addValueEventListener(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(DataSnapshot dataSnapshot) {
+//                        for (final DataSnapshot snapshot : dataSnapshot.getChildren()) {
 //
-                        else if (month.equals("2")) {
-                            savedEventsDBRefrence.child(my_id).child("March").child(key_id).child("savedIn").setValue(saveCurrentDate);
-                            savedEventsDBRefrence.child(my_id).child("March").child(key_id).child("month").setValue(month);
-                            savedEventsDBRefrence.child(my_id).child("March").child(key_id).child("title").setValue(titleevent);
-
-
-                        } else if (month.equals("3")) {
-                            savedEventsDBRefrence.child(my_id).child("April").child(key_id).child("savedIn").setValue(saveCurrentDate);
-                            savedEventsDBRefrence.child(my_id).child("April").child(key_id).child("month").setValue(month);
-                            savedEventsDBRefrence.child(my_id).child("April").child(key_id).child("title").setValue(titleevent);
-
-
-                        }
-//                                else if(month.equals("3")){
+//
+//                            final String ParentKey = snapshot.getValue().toString();
+//                            if (!ParentKey.contains(key_id)) {
+//                                String saveCurrentDate = date();
+//
+//
+//                                if (month.equals("0"))
+//
+//                                {
+//                                    savedEventsDBRefrence.child(my_id).child("January").child(key_id).child("savedIn").setValue(saveCurrentDate);
+//                                    savedEventsDBRefrence.child(my_id).child("January").child(key_id).child("month").setValue(month);
+//                                    savedEventsDBRefrence.child(my_id).child("January").child(key_id).child("title").setValue(titleevent);
+//
+//
+//                                } else if (month.equals("1")) {
+//                                    savedEventsDBRefrence.child(my_id).child("February").child(key_id).child("savedIn").setValue(saveCurrentDate);
+//                                    savedEventsDBRefrence.child(my_id).child("February").child(key_id).child("month").setValue(month);
+//                                    savedEventsDBRefrence.child(my_id).child("February").child(key_id).child("title").setValue(titleevent);
+//
+//                                } else if (month.equals("2")) {
+//                                    savedEventsDBRefrence.child(my_id).child("March").child(key_id).child("savedIn").setValue(saveCurrentDate);
+//                                    savedEventsDBRefrence.child(my_id).child("March").child(key_id).child("month").setValue(month);
+//                                    savedEventsDBRefrence.child(my_id).child("March").child(key_id).child("title").setValue(titleevent);
+//
+//
+//                                } else if (month.equals("3")) {
 //                                    savedEventsDBRefrence.child(my_id).child("April").child(key_id).child("savedIn").setValue(saveCurrentDate);
+//                                    savedEventsDBRefrence.child(my_id).child("April").child(key_id).child("month").setValue(month);
+//                                    savedEventsDBRefrence.child(my_id).child("April").child(key_id).child("title").setValue(titleevent);
 //
 //
 //                                }
-//                                else if(month.equals("4")){
-//                                    savedEventsDBRefrence.child(my_id).child("May").child(key_id).child("savedIn").setValue(saveCurrentDate);
 //
-//                                }
-//                                else if(month.equals("5")){
-//                                   savedEventsDBRefrence.child(my_id).child("June").child(key_id).child("savedIn").setValue(saveCurrentDate);
+//                                Abundle.putString(FirebaseAnalytics.Param.START_DATE, month);
+//                                Abundle.putString(FirebaseAnalytics.Param.ITEM_NAME, titleevent);
+//                                mFirebaseAnalytics.logEvent("saved_events", Abundle);
+//                                intressted_btn.setImageResource(R.drawable.ic_bookmark_border_black_24dp);
 //
-//                                }
-//                                else if(month.equals("6")){
-//                                    savedEventsDBRefrence.child(my_id).child("July").child(key_id).child("savedIn").setValue(saveCurrentDate);
 //
-//                                }
-//                                else if(month.equals("7")){
-//                                    savedEventsDBRefrence.child(my_id).child("August").child(key_id).child("savedIn").setValue(saveCurrentDate);
+//                            } else {
 //
-//                                }
-//                                else if(month.equals("8")){
-//                                    savedEventsDBRefrence.child(my_id).child("September").child(key_id).child("savedIn").setValue(saveCurrentDate);
 //
-//                                }
-//                                else if(month.equals("9")){
-//                                    savedEventsDBRefrence.child(my_id).child("October").child(key_id).child("savedIn").setValue(saveCurrentDate);
+//                                String i = month;
+//                                int j = Integer.parseInt(i);
+//                                String searchedMonth = listofmonths.get(j);
+//                                savedEventsDBRefrence.child(my_id).child(searchedMonth).child(key_id).removeValue();
 //
-//                                }
-//                                else if(month.equals("10")){
-//                                    savedEventsDBRefrence.child(my_id).child("November").child(key_id).child("savedIn").setValue(saveCurrentDate);
 //
-//                                }
-//                                else if(month.equals("11")){
-//                                    savedEventsDBRefrence.child(my_id).child("December").child(key_id).child("savedIn").setValue(saveCurrentDate);
+//                                intressted_btn.setImageResource(R.drawable.ic_bookmark_black_24dp);
 //
-//                                }
+//
+//                            }
+//                        }
+//
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(DatabaseError databaseError) {
+//
+//                    }
+//                });
 
 
-                        saveProcess = false;
-
-
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
+//
+//                if (saveProcess.equals("not pressed")) {
+//                    savedEventsDBRefrence.addValueEventListener(new ValueEventListener() {
+//                        @Override
+//                        public void onDataChange(DataSnapshot dataSnapshot) {
+//
+//                            String saveCurrentDate = date();
+//
+//
+//                            if (month.equals("0"))
+//
+//                            {
+//                                savedEventsDBRefrence.child(my_id).child("January").child(key_id).child("savedIn").setValue(saveCurrentDate);
+//                                savedEventsDBRefrence.child(my_id).child("January").child(key_id).child("month").setValue(month);
+//                                savedEventsDBRefrence.child(my_id).child("January").child(key_id).child("title").setValue(titleevent);
+//
+//
+//                            } else if (month.equals("1")) {
+//                                savedEventsDBRefrence.child(my_id).child("February").child(key_id).child("savedIn").setValue(saveCurrentDate);
+//                                savedEventsDBRefrence.child(my_id).child("February").child(key_id).child("month").setValue(month);
+//                                savedEventsDBRefrence.child(my_id).child("February").child(key_id).child("title").setValue(titleevent);
+//
+//                            } else if (month.equals("2")) {
+//                                savedEventsDBRefrence.child(my_id).child("March").child(key_id).child("savedIn").setValue(saveCurrentDate);
+//                                savedEventsDBRefrence.child(my_id).child("March").child(key_id).child("month").setValue(month);
+//                                savedEventsDBRefrence.child(my_id).child("March").child(key_id).child("title").setValue(titleevent);
+//
+//
+//                            } else if (month.equals("3")) {
+//                                savedEventsDBRefrence.child(my_id).child("April").child(key_id).child("savedIn").setValue(saveCurrentDate);
+//                                savedEventsDBRefrence.child(my_id).child("April").child(key_id).child("month").setValue(month);
+//                                savedEventsDBRefrence.child(my_id).child("April").child(key_id).child("title").setValue(titleevent);
+//
+//
+//                            }
+//
+//                            Abundle.putString(FirebaseAnalytics.Param.START_DATE, month);
+//                            Abundle.putString(FirebaseAnalytics.Param.ITEM_NAME, titleevent);
+//                            mFirebaseAnalytics.logEvent("saved_events", Abundle);
+//                            intressted_btn.setImageResource(R.drawable.ic_bookmark_border_black_24dp);
+//
+//
+//                        }
+//
+//                        @Override
+//                        public void onCancelled(DatabaseError databaseError) {
+//
+//                        }
+//                    });
+//                    saveProcess = "pressed";
+//                }
+//                else if (saveProcess.equals("pressed")) {
+//                    savedEventsDBRefrence.addValueEventListener(new ValueEventListener() {
+//                        @Override
+//                        public void onDataChange(DataSnapshot dataSnapshot) {
+//
+//
+//                            intressted_btn.setImageResource(R.drawable.ic_bookmark_black_24dp);
+//
+//                            String i = month;
+//                            int j = Integer.parseInt(i);
+//                            String searchedMonth = listofmonths.get(j);
+//                            savedEventsDBRefrence.child(my_id).child(searchedMonth).child(key_id).removeValue();
+//
+//
+//                        }
+//
+//
+//                        @Override
+//                        public void onCancelled(DatabaseError databaseError) {
+//
+//                        }
+//                    });
+//                    saveProcess = "not pressed";
+//                }
             }
         });
-        notInterested.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                savedEventsDBRefrence.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        if (!saveProcess) {
-
-                            String i = month;
-                            int j = Integer.parseInt(i);
-                            String searchedMonth = listofmonths.get(j);
-                            savedEventsDBRefrence.child(my_id).child(searchedMonth).child(key_id).removeValue();
 
 
-                        }
-
-
-                        saveProcess = true;
-
-                    }
-
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-            }
-        });
-        savedEventsDBRefrence.addValueEventListener(new ValueEventListener() {
+        savedEventsDBRefrence.child(my_id).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (final DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    for (DataSnapshot snapshot1 : snapshot.getChildren()) {
 
+                            if (snapshot1.getKey().equals(key_id)) {
+                                interestedText.setVisibility(View.VISIBLE);
+                                intressted_btn.setImageResource(R.drawable.ic_bookmark_border_black_24dp);
 
-                    final String ParentKey = snapshot.getValue().toString();
-                    if (ParentKey.contains(key_id)) {
-                        interestedText.setVisibility(View.VISIBLE);
-                        notInterested.setVisibility(View.VISIBLE);
-                        intressted_btn.setVisibility(View.INVISIBLE);
+                            }
+                            else{
 
-                    } else {
-
-                        interestedText.setVisibility(View.INVISIBLE);
-                        notInterested.setVisibility(View.INVISIBLE);
-                        intressted_btn.setVisibility(View.VISIBLE);
+                            }
 
                     }
                 }
-
             }
 
             @Override
@@ -351,6 +433,7 @@ public class SingleEventPostActivity extends AppCompatActivity {
 
             }
         });
+
 
     }
 

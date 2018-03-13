@@ -9,13 +9,15 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
 
     <application
         android:name=".OfflineModeActivity"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <meta-data
@@ -101,6 +103,9 @@
             android:name=".SponsoringActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".StartApp.Afterloggingwithfacebook" />
+
+        <receiver android:name=".MyBroadcastReceiver" >
+        </receiver>
     </application>
 
 </manifest>
