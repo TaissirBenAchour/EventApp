@@ -188,28 +188,29 @@ public class MainProfileContentFragment extends Fragment {
                             eventsRef.child(dataSnapshot.getKey()).addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(final DataSnapshot dataSnapshot) {
-                                    String image = dataSnapshot.child("imageEvent").getValue().toString();
+                                    if (dataSnapshot.exists()) {
+                                        String image = dataSnapshot.child("imageEvent").getValue().toString();
 
-                                    viewHolder.setImage(image, getContext());
-                                    viewHolder.mView.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            String eventId = dataSnapshot.child("eventId").getValue().toString();
-                                            String pushId = dataSnapshot.child("pushId").getValue().toString();
-                                            String month = dataSnapshot.child("month").getValue().toString();
+                                        viewHolder.setImage(image, getContext());
+                                        viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                String eventId = dataSnapshot.child("eventId").getValue().toString();
+                                                String pushId = dataSnapshot.child("pushId").getValue().toString();
+                                                String month = dataSnapshot.child("month").getValue().toString();
 
 
-                                            bundle.putString("push_id", pushId);
-                                            bundle.putString("event_id", eventId);
-                                            bundle.putString("month", month);
-                                            bundle.putString("title", dataSnapshot.child("title").getValue().toString());
-                                            Intent intent = new Intent(getContext(), SingleEventPostActivity.class);
-                                            intent.putExtras(bundle);
-                                            startActivity(intent);
+                                                bundle.putString("push_id", pushId);
+                                                bundle.putString("event_id", eventId);
+                                                bundle.putString("month", month);
+                                                bundle.putString("title", dataSnapshot.child("title").getValue().toString());
+                                                Intent intent = new Intent(getContext(), SingleEventPostActivity.class);
+                                                intent.putExtras(bundle);
+                                                startActivity(intent);
 
-                                        }
-                                    });
-                                }
+                                            }
+                                        });
+                                    } }
 
                                 @Override
                                 public void onCancelled(DatabaseError databaseError) {

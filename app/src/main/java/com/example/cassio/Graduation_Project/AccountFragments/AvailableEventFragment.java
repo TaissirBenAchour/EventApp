@@ -40,7 +40,7 @@ import java.util.List;
 
 
 public class AvailableEventFragment extends Fragment {
-    DatabaseReference parentReference;
+    DatabaseReference parentReference,parentReferenceusers;
     private FirebaseAuth mAuth;
     private String my_id;
     private Bundle bundle = new Bundle();
@@ -66,7 +66,7 @@ public class AvailableEventFragment extends Fragment {
         my_id = mAuth.getCurrentUser().getUid();
 
         parentReference = database.getReference().child("Events");
-        final DatabaseReference parentReferenceusers = database.getReference().child("Users");
+        parentReferenceusers = database.getReference().child("Users");
         searchbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,7 +80,15 @@ public class AvailableEventFragment extends Fragment {
 
             }
         });
+        return mView;
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
         parentReference.addValueEventListener(new ValueEventListener() {
+
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -97,23 +105,25 @@ public class AvailableEventFragment extends Fragment {
                                 parentReference.child(parents).child(snapshot.getKey()).addValueEventListener(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(final DataSnapshot dataSnapshot) {
+if (dataSnapshot.exists()){
 
-                                        String desc = dataSnapshot.child("description").getValue().toString();
-                                        String date = dataSnapshot.child("date").getValue().toString();
-                                        String eventId = dataSnapshot.child("eventId").getValue().toString();
-                                        String pushId = dataSnapshot.child("pushId").getValue().toString();
-                                        String month = dataSnapshot.child("month").getValue().toString();
-                                        String image = dataSnapshot.child("imageEvent").getValue().toString();
-
-
-                                        bundle.putString("push_id", snapshot.getKey());
-                                        bundle.putString("event_id", parents);
-                                        bundle.putString("month", month);
-                                        bundle.putString("month", dataSnapshot.child("title").getValue().toString());
-
-                                        Child.add(new EventClass(dataSnapshot.child("title").getValue().toString(), desc, date, eventId, pushId, month, image));
+    String desc = dataSnapshot.child("description").getValue().toString();
+    String date = dataSnapshot.child("date").getValue().toString();
+    String eventId = dataSnapshot.child("eventId").getValue().toString();
+    String pushId = dataSnapshot.child("pushId").getValue().toString();
+    String month = dataSnapshot.child("month").getValue().toString();
+    String image = dataSnapshot.child("imageEvent").getValue().toString();
 
 
+    bundle.putString("push_id", snapshot.getKey());
+    bundle.putString("event_id", parents);
+    bundle.putString("month", month);
+    bundle.putString("month", dataSnapshot.child("title").getValue().toString());
+
+    Child.add(new EventClass(dataSnapshot.child("title").getValue().toString(), desc, date, eventId, pushId, month, image));
+
+
+}
                                     }
 
                                     @Override
@@ -154,7 +164,9 @@ public class AvailableEventFragment extends Fragment {
 
                         }
                     });
+
                 }
+
 
             }
 
@@ -162,8 +174,9 @@ public class AvailableEventFragment extends Fragment {
             public void onCancelled(DatabaseError databaseError) {
 
             }
+
+
         });
-        return mView;
 
     }
 

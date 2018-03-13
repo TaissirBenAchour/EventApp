@@ -1,6 +1,9 @@
 package com.example.cassio.Graduation_Project;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.icu.text.SimpleDateFormat;
 import android.icu.util.Calendar;
 import android.os.Bundle;
@@ -12,6 +15,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -36,7 +40,7 @@ import java.util.List;
 public class SingleEventPostActivity extends AppCompatActivity {
 
     private static final String TAG = "SingleEventPostActivity";
-    DatabaseReference mFirebaseDatabase_event, savedEventsDBRefrence, feedsRef, userRef, rateRef;
+    DatabaseReference mFirebaseDatabase_event, postRef, savedEventsDBRefrence, feedsRef, userRef, rateRef;
     String my_id;
     private TextView title;
     private TextView date;
@@ -59,6 +63,7 @@ public class SingleEventPostActivity extends AppCompatActivity {
     private RatingBar ratingBar;
     private Button btnSubmit;
     private FirebaseAnalytics mFirebaseAnalytics;
+    private ImageButton morebtn;
     private Bundle Abundle = new Bundle();
 
     public static String date() {
@@ -73,7 +78,7 @@ public class SingleEventPostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_event_post_view);
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
-
+morebtn=(ImageButton)findViewById(R.id.more_event_id);
         mAuth = FirebaseAuth.getInstance();
         my_id = mAuth.getCurrentUser().getUid();
 
@@ -102,6 +107,7 @@ public class SingleEventPostActivity extends AppCompatActivity {
         listofmonths.add("February");
         listofmonths.add("March");
         mFirebaseDatabase_event = FirebaseDatabase.getInstance().getReference().child("Events");
+        postRef = FirebaseDatabase.getInstance().getReference().child("Post");
         rateRef = FirebaseDatabase.getInstance().getReference().child("Rate");
 
         mFirebaseDatabase_event.keepSynced(true);
@@ -131,6 +137,64 @@ public class SingleEventPostActivity extends AppCompatActivity {
 
             }
         });
+
+        morebtn.setVisibility(View.INVISIBLE);
+        mFirebaseDatabase_event.child(my_id).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.child(key_id).exists()){
+                    morebtn.setVisibility(View.VISIBLE);
+                    morebtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            AlertDialog.Builder dialog = new AlertDialog.Builder(SingleEventPostActivity.this);
+                            CharSequence option [] = new CharSequence[]{"Delet post"};
+                            dialog.setItems(option, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    postRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(DataSnapshot dataSnapshot) {
+                                            if (dataSnapshot.child(my_id).child(key_id).exists()){
+                                                Toast.makeText(SingleEventPostActivity.this, "ok", Toast.LENGTH_SHORT).show();
+                                                postRef.child(my_id).child(key_id).removeValue();
+                                            }
+                                            mFirebaseDatabase_event.child(my_id).child(key_id).removeValue();
+                                            Toast.makeText(SingleEventPostActivity.this, "ooook", Toast.LENGTH_SHORT).show();
+
+                                            Toast.makeText(SingleEventPostActivity.this, "event deleted successfully", Toast.LENGTH_SHORT).show();
+                                            Intent intent = new Intent(SingleEventPostActivity.this,FragmentsUnionActivity.class);
+                                            startActivity(intent);
+                                            finish();
+
+                                        }
+
+                                        @Override
+                                        public void onCancelled(DatabaseError databaseError) {
+
+                                        }
+                                    });
+
+
+                                }
+
+                            });
+                            dialog.show();
+                        }
+
+                    });
+
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
 
         savedEventsDBRefrence.addValueEventListener(new ValueEventListener() {
             @Override
@@ -181,22 +245,25 @@ public class SingleEventPostActivity extends AppCompatActivity {
         mFirebaseDatabase_event.child(event_id).child(key_id).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String _title = dataSnapshot.child("title").getValue().toString();
-                String _time = dataSnapshot.child("time").getValue().toString();
-                String _address = dataSnapshot.child("address").getValue().toString();
-                String _description = dataSnapshot.child("description").getValue().toString();
-                String _fees = dataSnapshot.child("price").getValue().toString();
-                String _image = dataSnapshot.child("imageEvent").getValue().toString();
+                if (dataSnapshot.exists()){
+                    String _title = dataSnapshot.child("title").getValue().toString();
+                    String _time = dataSnapshot.child("time").getValue().toString();
+                    String _address = dataSnapshot.child("address").getValue().toString();
+                    String _description = dataSnapshot.child("description").getValue().toString();
+                    String _fees = dataSnapshot.child("price").getValue().toString();
+                    String _image = dataSnapshot.child("imageEvent").getValue().toString();
 
-                String _date = dataSnapshot.child("date").getValue().toString();
-                title.setText(_title);
-                description.setText(_description);
-                date.setText(_date);
-                time.setText(_time);
-                address.setText(_address);
-                fees.setText(_fees);
-                Picasso.with(SingleEventPostActivity.this).load(_image).placeholder(R.drawable.profile_pic).into(image_Event);
+                    String _date = dataSnapshot.child("date").getValue().toString();
+                    title.setText(_title);
+                    description.setText(_description);
+                    date.setText(_date);
+                    time.setText(_time);
+                    address.setText(_address);
+                    fees.setText(_fees);
+                    Picasso.with(SingleEventPostActivity.this).load(_image).placeholder(R.drawable.profile_pic).into(image_Event);
 
+
+                }
 
             }
 
