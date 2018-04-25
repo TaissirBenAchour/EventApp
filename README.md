@@ -31,3 +31,7 @@ Development of an android mobile application for events management
 ### 6. Messages history screen 
 
 ![sendmessage](https://user-images.githubusercontent.com/10968758/39190888-76ce5f48-47cd-11e8-8d3c-8358c95b3c57.png)
+
+### 7. Push notifications received 
+
+![7](https://user-images.githubusercontent.com/10968758/39233594-b0cd9bdc-4868-11e8-948c-4fa84b9b026d.png)
